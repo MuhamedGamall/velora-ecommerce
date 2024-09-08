@@ -35,6 +35,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+
+
 # hide personal filder | files
 original-code
 original-api

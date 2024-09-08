@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
+import AuthSessionProvider from "@/components/providers/SessionProvder";
+import RegisterModel from "@/components/models/RegisterModal";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,9 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AuthSessionProvider>
+          <RegisterModel />
+          {children}
+        </AuthSessionProvider>
       </body>
     </html>
   );
