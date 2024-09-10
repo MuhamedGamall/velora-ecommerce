@@ -29,9 +29,21 @@ export const user = defineType({
       hidden: true,
     }),
     defineField({
+      readOnly: true, 
       name: "emailVerified",
       type: "datetime",
-      hidden: true,
+    }),
+    defineField({
+      name: "role",
+      type: "string",
+      title: "Role",
+      options: {
+        list: [
+          { title: "Admin", value: "admin" },
+          { title: "User", value: "user" },
+        ],
+        layout: "radio",
+      },
     }),
   ],
 });
@@ -41,6 +53,7 @@ export const account = defineType({
   name: "account",
   title: "Accounts",
   type: "document",
+  readOnly: true,
   fields: [
     {
       name: "providerType",
@@ -81,6 +94,8 @@ export const verificationToken = defineType({
   name: "verification-token",
   title: "Verification Tokens",
   type: "document",
+  readOnly: true,
+
   fields: [
     {
       name: "identifier",
