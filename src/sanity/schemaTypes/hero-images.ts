@@ -25,7 +25,7 @@ const heroImages = defineType({
         Rule.required()
           .min(1)
           .max(8)
-          .error("You must include between 1 and 3 images"),
+          .error("You must include between 1 and 8 images"),
     }),
   ],
 });
