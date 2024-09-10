@@ -13,44 +13,11 @@ export const authOptions: AuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
-    // CredentialsProvider({
-    //   name: "credentials" as string,
-    //   credentials: {
-    //     email: { label: "email", type: "text" },
-    //     password: { label: "password", type: "password" },
-    //   },
-    //   async authorize(credentials) {
-    //     if (!credentials?.email || !credentials?.password) {
-    //       throw new Error("Invalid credentials");
-    //     }
-
-    //     // const user = await prisma.user.findUnique({
-    //     //   where: {
-    //     //     email: credentials.email,
-    //     //   },
-    //     // });
-
-    //     // if (!user || !user?.hashedPassword) {
-    //     //   throw new Error("Invalid credentials");
-    //     // }
-
-    //     const isValid = await bcrypt.compare(
-    //       credentials.password,
-    //       user.hashedPassword
-    //     );
-    //     if (!isValid) {
-    //       throw new Error("Invalid Password");
-    //     }
-
-    //     return user;
-    //   },
-    // }),
   ],
   callbacks: {
-    async session({ session, token }: any) {
+    async session({ session }: any) {
       const email = session?.user?.email as string;
       try {
-        const userEmail = token.email;
         const user = await getUser({ email });
         const newSession = {
           ...session,
@@ -59,7 +26,6 @@ export const authOptions: AuthOptions = {
             ...user,
           },
         };
-
         return newSession;
       } catch (error: any) {
         console.error("Error retrieving user data: ", error.message);
@@ -68,18 +34,14 @@ export const authOptions: AuthOptions = {
     },
     async signIn({ user }) {
       try {
-        console.log(process.env.CEO_EMAIL , user?.email);
+        console.log(process.env.CEO_EMAIL, user?.email);
         if (!user || !user?.email) return false;
-
         if (process.env.CEO_EMAIL === user?.email) {
           const updateUser = await updateUserRole({
             email: user.email,
             newRole: "admin",
           });
-
-          console.log({ updateUser });
         }
-
         return true;
       } catch (error) {
         console.log("Error signing in", error);
@@ -100,9 +62,8 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: "/auth/signIn",
     signOut: "/",
-    // error: "/auth/signIn",
   },
-  // debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",
   },
