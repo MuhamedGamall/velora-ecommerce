@@ -18,8 +18,10 @@ const brands = [
 ];
 export default async function HeroSection() {
   const res = await getHeroCoverImage();
-  const image = urlFor(res?.image?.asset?._ref).toString();
-  const heroImage = image || "/hero-image.jpg";
+  console.log(res);
+
+  const image = urlFor(res).toString();
+  const heroImage = image;
 
   return (
     <section className="relative  max-h-[250px]   sm:max-h-[500px] overflow-hidden w-full">
