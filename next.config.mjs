@@ -5,6 +5,7 @@ const nextConfig = {
       "www.mrporter.com",
       "img.icons8.com",
       "lh3.googleusercontent.com",
+      "cdn.sanity.io",
     ],
   },
 };

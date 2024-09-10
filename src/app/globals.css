@@ -71,6 +71,6 @@ body,
     @apply bg-background text-foreground ;
   }
   .containerWrapper {
-    @apply max-w-screen-2xl   px-4;
+    @apply max-w-screen-xl   px-4;
   }
 }

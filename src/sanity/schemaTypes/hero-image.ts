@@ -6,6 +6,21 @@ const heroImage = defineType({
   type: "document",
   fields: [
     defineField({
+      name: "title",
+      title: "Title",
+      type: "text",
+
+      validation: (Rule) =>
+        Rule.required().min(5).max(20).error("Title is required"),
+    }),
+    defineField({
+      name: "descripteion",
+      title: "Descripteion",
+      type: "text",
+      validation: (Rule) =>
+        Rule.required().min(10).max(35).error("Descripteion is required"),
+    }),
+    defineField({
       name: "image",
       title: "Image",
       type: "image",
