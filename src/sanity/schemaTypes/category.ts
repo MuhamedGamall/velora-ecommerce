@@ -37,15 +37,7 @@ export default defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: "categoryImageCoverPage",
-      title: "Image Cover for Category Page",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
-      validation: (Rule) => Rule.required(),
-    }),
+  
     // defineField({
     //   name: "products",
     //   type: "array",
