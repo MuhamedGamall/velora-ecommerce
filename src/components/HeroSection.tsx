@@ -1,4 +1,4 @@
-import { getHeroCoverImage } from "@/actions/get-hero-cover-image";
+import { getHeroSection } from "@/actions/get-hero-section";
 import { urlFor } from "@/sanity/lib/image";
 import { ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
@@ -17,11 +17,9 @@ const brands = [
   "/brands/slam-jam.webp",
 ];
 export default async function HeroSection() {
-  const res = await getHeroCoverImage();
-  console.log(res);
+  const data = await getHeroSection();
 
-  const image = urlFor(res).toString();
-  const heroImage = image;
+  const heroImage = data?.image || "/hero-image.jpg";
 
   return (
     <section className="relative  max-h-[250px]   sm:max-h-[500px] overflow-hidden w-full">
@@ -51,17 +49,17 @@ export default async function HeroSection() {
       <div className=" absolute bottom-2 md:top-20  left-0 md:px-5 w-full ">
         <div className="  w-full containerWrapper mx-auto flex flex-col   overflow-hidden justify-start ">
           <h1 className="capitalize text-[20px] sm:text-[28px] md:text-[70px] font-serif leading-[1] text-white font-bold">
-            The Fall Collection
+            {data?.title || "The Fall Collection"}
           </h1>
           <p className="text-white text-[10px] md:text-[15px] font-bold uppercase">
-            NEW READY-TO-WEAR FROM OUR FAVORITE BRANDS
+            {data?.description || "NEW READY-TO-WEAR FROM OUR FAVORITE BRANDS"}
           </p>
           <div className="flex items-center max-md:justify-between gap-3 mt-5 w-full">
             <Link
               href={""}
               className=" px-2 md:px-3 py-1 md:py-2 text-white max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
-              Mui Mui{" "}
+              Mui Mui
               <ChevronRightIcon
                 className="text-white max-md:hidden "
                 size={30}
@@ -71,7 +69,7 @@ export default async function HeroSection() {
               href={""}
               className=" px-2 md:px-3 py-1 md:py-2 text-white  max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
-              Gucci{" "}
+              Gucci
               <ChevronRightIcon
                 className="text-white  max-md:hidden"
                 size={30}
@@ -81,7 +79,7 @@ export default async function HeroSection() {
               href={""}
               className=" px-2 md:px-3 py-1 md:py-2 text-white  max-md:justify-center  max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
-              Nodaleto{" "}
+              Nodaleto
               <ChevronRightIcon
                 className="text-white  max-md:hidden"
                 size={30}

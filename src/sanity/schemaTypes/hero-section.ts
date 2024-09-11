@@ -1,24 +1,21 @@
 import { defineField, defineType } from "sanity";
 
-const heroImage = defineType({
-  name: "heroImage",
-  title: "Hero Image",
+const heroSection = defineType({
+  name: "heroSection",
+  title: "Hero Section",
   type: "document",
   fields: [
     defineField({
       name: "title",
       title: "Title",
-      type: "text",
-
-      validation: (Rule) =>
-        Rule.required().min(5).max(20).error("Title is required"),
+      type: "string",
+      validation: (Rule) => Rule.required().min(5).max(30),
     }),
     defineField({
-      name: "descripteion",
-      title: "Descripteion",
-      type: "text",
-      validation: (Rule) =>
-        Rule.required().min(10).max(35).error("Descripteion is required"),
+      name: "description",
+      title: "Description",
+      type: "string",
+      validation: (Rule) => Rule.required().min(10).max(50),
     }),
     defineField({
       name: "image",
@@ -33,4 +30,4 @@ const heroImage = defineType({
     }),
   ],
 });
-export default heroImage;
+export default heroSection;

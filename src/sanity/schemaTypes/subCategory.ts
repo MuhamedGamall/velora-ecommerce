@@ -15,20 +15,14 @@ export default defineType({
           .max(50)
           .error("Title must be between 1 and 50 characters"),
     }),
-    // defineField({
-    //   name: "products",
-    //   type: "array",
-    //   title: "Products",
-    //   of: [{ type: "reference", to: [{ type: "product" }] }],
-    // }),
     defineField({
-      name: "categories",
+      name: "products",
       type: "array",
-      title: "Categories",
+      title: "Products",
       of: [
         {
           type: "reference",
-          to: [{ type: "category" }],
+          to: [{ type: "product" }],
         },
       ],
       validation: (Rule) => Rule.unique().required(),

@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 export default function Navber() {
   const pathname = usePathname();
   if (["/auth/signIn", "/auth/register"].includes(pathname)) return;
+  const isPrivacyPolicy = pathname.includes("/privacy-policy");
+
   const isStudioPage = pathname.includes("/studio");
   return (
     <header
@@ -22,14 +24,26 @@ export default function Navber() {
       <div className="h-[70px] flex justify-between gap-2 flex-nowrap px-5 items-center containerWrapper mx-auto w-full">
         {!isStudioPage && (
           <div className="md:hidden ">
-            <Menu strokeWidth={1.7}  scale={25} className="text-white" />
+            <Menu strokeWidth={1.7} scale={25} className="text-white" />
           </div>
         )}
-     
-        <Image src={"/logo.png"} alt="logo" width={100} height={50} className="md:hidden block "/>
-        <Image src={"/logo.png"} alt="logo" width={152} height={50} className="max-md:hidden"/>
 
-        {!isStudioPage && (
+        <Image
+          src={"/logo.png"}
+          alt="logo"
+          width={100}
+          height={50}
+          className="md:hidden block "
+        />
+        <Image
+          src={"/logo.png"}
+          alt="logo"
+          width={152}
+          height={50}
+          className="max-md:hidden"
+        />
+
+        {!isStudioPage && !isPrivacyPolicy && (
           <div className="flex items-center gap-2">
             <Search />
             <ProfileMenu />

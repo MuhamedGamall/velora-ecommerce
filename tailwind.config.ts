@@ -11,8 +11,12 @@ const config: Config = {
     extend: {
       boxShadow: {
         menu: "0px 159px 95px rgba(13,12,34,0.01), 0px 71px 71px rgba(13,12,34,0.02), 0px 18px 39px rgba(13,12,34,0.02), 0px 0px 0px rgba(13,12,34,0.02)",
-        searchBar:
-          " #00000045 1px 414px 45px 366px",
+        searchBar: " #00000045 1px 414px 45px 366px",
+      },
+      screens: {
+        xxxl: "1800px",
+        sliderSm: "490px",
+        xxs: "329px",
       },
       colors: {
         mainBlack: "#303030",

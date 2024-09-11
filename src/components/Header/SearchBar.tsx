@@ -1,8 +1,8 @@
 "use client";
+import { cn } from "@/lib/utils";
+import { SearchIcon, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
-import { SearchIcon, X } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export default function Search() {
   const [open, setOpen] = useState(false);
@@ -23,7 +23,7 @@ export default function Search() {
     if (open) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto"; 
+      document.body.style.overflow = "auto";
     }
     return () => {
       document.body.style.overflow = "auto";
@@ -50,7 +50,7 @@ export default function Search() {
           onClick={() => setOpen(true)}
           className={cn("", { hidden: open })}
         >
-          <SearchIcon className="max-md:text-white   "size={17}  />
+          <SearchIcon className="max-md:text-white   " size={17} />
         </button>
         <button
           onClick={() => setOpen(false)}
