@@ -1,6 +1,7 @@
 "use client";
 import getCategories from "@/actions/get-categories";
-import { ChevronRight, Dot, Github, Linkedin } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -14,7 +15,6 @@ const Footer = () => {
     getCategories()
       .then((data) => {
         setCategories(data);
-        console.log({ data });
       })
       .catch((error) => {
         setCategories([]);
@@ -33,18 +33,22 @@ const Footer = () => {
                   key={category._id}
                   className="flex flex-col  gap-2 ml-5 capitalize"
                 >
-                  <a
+                  <Link
                     href="#"
                     className=" hover:underline font-bold text-[16px]"
                   >
                     {category.title}
-                  </a>
+                  </Link>
                   <div className="flex flex-col  gap-1 w-full text-[13px]">
                     {category?.subCategories?.map(
-                      (subCategory: any, index: number) => (
-                        <a href="#" className=" capitalize  hover:underline ">
+                      (subCategory: any) => (
+                        <Link 
+                          key={subCategory.title}
+                          href="#"
+                          className=" capitalize  hover:underline "
+                        >
                           {subCategory.title}
-                        </a>
+                        </Link>
                       )
                     )}
                   </div>
@@ -58,21 +62,21 @@ const Footer = () => {
               <div>
                 <h4 className="font-bold text-lg mb-4">Follow us</h4>
                 <div className="flex gap-4 mb-6  ml-5">
-                  <a href="#" className=" hover:underline">
+                  <Link href="https://linkedin.com/in/muhamed-gamal-468339241" className=" hover:bg-white p-2 border hover:text-mainBlack rounded-full">
                     <Linkedin size={24} />
-                  </a>
-                  <a href="#" className=" hover:underline">
+                  </Link>
+                  <Link href="https://github.com/MuhamedGamall" className=" hover:bg-white p-2 border hover:text-mainBlack rounded-full">
                     <Github size={24} />
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div>
                 <h4 className="font-bold text-lg mb-4">About VELORA</h4>
                 <ul className=" ml-5">
                   <li>
-                    <a href="#" className=" hover:underline">
+                    <Link href="#" className=" hover:underline">
                       About us - FAQ
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -84,7 +88,7 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Enter your email address here"
-                className="p-2 rounded-l bg-gray-800 text-gray-300 w-full focus:outline-none"
+                className="p-2 rounded-l bg-black border text-gray-300 w-full focus:outline-none"
               />
               <button className="bg-white text-gray-900 font-semibold px-4 py-2 rounded-r">
                 OK
@@ -96,15 +100,15 @@ const Footer = () => {
         <div className="mt-8 flex items-center gap-4 pt-6  text-center">
           <p>©{year} VEROLA</p>
           <div className="flex justify-center gap-2">
-            <a href="/privacy-policy" className="hover:underline">
+            <Link href="/privacy-policy" className="hover:underline">
               Privacy Policy
-            </a>
-            <a
+            </Link>
+            <Link
               href={"mailto:muhamedgamal250@gmaill"}
               className="hover:underline"
             >
               Contact us
-            </a>
+            </Link>
           </div>
         </div>
       </div>

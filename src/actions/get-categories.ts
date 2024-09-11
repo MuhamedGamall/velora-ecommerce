@@ -18,7 +18,6 @@ export default async function getCategories() {
   try {
     let categories = await client.fetch(categoriesQuery);
     categories = categories.slice(0, -1);
-    console.log(categories);
 
     return categories as any;
   } catch (error: any) {

@@ -75,6 +75,7 @@ export default async function Categories() {
         <div className="grid grid-cols-1 sm:grid-cols-2 flex-[2] gap-2 ">
           {categoriesWithOutBaby?.map((category: any, i: number) => (
             <Link
+              key={category?.title}
               href="/category/new"
               className="relative flex flex-1 gap-2 overflow-hidden w-full"
             >
