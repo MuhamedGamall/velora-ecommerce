@@ -8,6 +8,7 @@ import CartMenu from "./CartMenu";
 import WishlistMenu from "./WishlistMenu";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import Navigation from "./Navigation";
 
 export default function Navber() {
   const pathname = usePathname();
@@ -16,42 +17,45 @@ export default function Navber() {
 
   const isStudioPage = pathname.includes("/studio");
   return (
-    <header
-      className={cn("bg-mainBlack overflow-hidden", {
-        "bg-[#13141b]": isStudioPage,
-      })}
-    >
-      <div className="h-[70px] flex justify-between gap-2 flex-nowrap px-5 items-center containerWrapper mx-auto w-full">
-        {!isStudioPage && (
-          <div className="md:hidden ">
-            <Menu strokeWidth={1.7} scale={25} className="text-white" />
-          </div>
-        )}
+    <header>
+      <div
+        className={cn("bg-mainBlack overflow-hidden", {
+          "bg-[#13141b]": isStudioPage,
+        })}
+      >
+        <div className="h-[70px] flex justify-between gap-2 flex-nowrap px-5 items-center containerWrapper mx-auto w-full">
+          {!isStudioPage && (
+            <div className="md:hidden ">
+              <Menu strokeWidth={1.7} scale={25} className="text-white" />
+            </div>
+          )}
 
-        <Image
-          src={"/logo.png"}
-          alt="logo"
-          width={100}
-          height={50}
-          className="md:hidden block "
-        />
-        <Image
-          src={"/logo.png"}
-          alt="logo"
-          width={152}
-          height={50}
-          className="max-md:hidden"
-        />
+          <Image
+            src={"/logo.png"}
+            alt="logo"
+            width={100}
+            height={50}
+            className="md:hidden block "
+          />
+          <Image
+            src={"/logo.png"}
+            alt="logo"
+            width={152}
+            height={50}
+            className="max-md:hidden"
+          />
 
-        {!isStudioPage && !isPrivacyPolicy && (
-          <div className="flex items-center gap-2">
-            <Search />
-            <ProfileMenu />
-            <WishlistMenu />
-            <CartMenu />
-          </div>
-        )}
+          {!isStudioPage && !isPrivacyPolicy && (
+            <div className="flex items-center gap-2">
+              <Search />
+              <ProfileMenu />
+              <WishlistMenu />
+              <CartMenu />
+            </div>
+          )}
+        </div>
       </div>
+      <Navigation />
     </header>
   );
 }
