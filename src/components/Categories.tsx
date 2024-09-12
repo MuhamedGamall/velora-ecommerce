@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import getCategories from "@/actions/get-categories";
-import { toUrl } from "@/lib/utils";
 
 export default async function Categories() {
   const categories = await getCategories();
@@ -80,7 +79,7 @@ export default async function Categories() {
               className="relative flex flex-1 gap-2 overflow-hidden w-full"
             >
               <Image
-                src={toUrl(category?.categoryImage?.asset?._ref)}
+                src={(category?.categoryImage?.asset?.url)}
                 width={1000}
                 height={1000}
                 alt={"Cat Image #" + category?.title}

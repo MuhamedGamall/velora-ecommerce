@@ -2,8 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product } from "@/types";
 import { urlFor } from "@/sanity/lib/image";
-import { cn, formatPrice, toUrl, truncateText } from "@/lib/utils";
 import { Box } from "lucide-react";
+import { cn, formatPrice, truncateText } from "@/lib/utils";
 
 export default function Card({
   _id,
@@ -13,15 +13,17 @@ export default function Card({
   price,
   salesCount,
   desc,
+  category,
+  subCategory,
+  brand,
   isNew,
   oldPrice,
 }: Product) {
   return (
     <div className=" text-mainBlack  flex  justify-center  max-h-[500px]">
       <Link
-        href={`/product/${_id}`}
+        href={`/${category?.title}/${subCategory?.title}/${brand}/product/${_id}`}
         className="mb-12 flex flex-col gap-2 xxs:w-[38vw] xxs:min-w-[7rem] sm:w-[23vw] sm:max-w-none md:w-[23vw] lg:w-[18vw] 2xl:max-w-[20rem]"
-
       >
         <div className="group relative h-[95vw] min-h-[12rem] w-full overflow-hidden xxs:h-[65vw] xxs:max-h-[400px] sm:max-h-[240px] md:max-h-[280px] lg:max-h-[300px] 2xl:max-h-[350px] xxxl:max-h-[45vh] xxxl:min-h-[450px]">
           {isNew && (
@@ -42,24 +44,28 @@ export default function Card({
             </span>
           )}
           {oldPrice > 0 && (
-            <span className={"absolute bottom-0 right-0  z-30 shadow-sm bg-red-500/70  py-1 text-xs font-medium text-white px-3 "}>
+            <span
+              className={
+                "absolute bottom-0 right-0  z-30 shadow-sm bg-red-500/70  py-1 text-xs font-medium text-white px-3 "
+              }
+            >
               Sale
             </span>
           )}
           <Image
             width={600}
             height={600}
-            src={toUrl(images?.[0]?.asset?._ref)}
-            alt={toUrl(secondaryImage?.asset?._ref)}
+            src={images?.[0]?.asset?.url}
+            alt={secondaryImage?.asset?.url}
             className="absolute z-10 h-full w-full object-cover"
             loading="lazy"
           />
-          {toUrl(secondaryImage?.asset?._ref) && (
+          {secondaryImage?.asset?.url && (
             <Image
               width={600}
               height={600}
-              src={toUrl(secondaryImage?.asset?._ref)}
-              alt={toUrl(secondaryImage?.asset?._ref) + "-alt image"}
+              src={secondaryImage?.asset?.url}
+              alt={secondaryImage?.asset?.url + "-alt image"}
               className="absolute h-full w-full object-cover group-hover:z-20"
               loading="lazy"
             />

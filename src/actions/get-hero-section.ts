@@ -1,5 +1,4 @@
 "use server";
-import { urlFor } from "@/sanity/lib/image";
 import { client } from "../sanity/lib/client";
 
 export const getHeroSection = async (): Promise<{
@@ -8,11 +7,21 @@ export const getHeroSection = async (): Promise<{
   description: string;
 } | null> => {
   try {
-    const query = '*[_type == "heroSection"][0]';
+    const query = `*[_type == "heroSection"][0]{
+      title,
+      description,
+      image {
+        asset->{
+          _id,
+          url
+        }
+      }
+    }`;
+
     const { image, title, description } = await client.fetch(query);
 
     return {
-      image: urlFor(image?.asset?._ref).toString(),
+      image: image?.asset?.url,
       title,
       description,
     };

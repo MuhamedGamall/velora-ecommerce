@@ -9,6 +9,7 @@ import WishlistMenu from "./WishlistMenu";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Navigation from "./Navigation";
+import Link from "next/link";
 
 export default function Navber() {
   const pathname = usePathname();
@@ -23,20 +24,28 @@ export default function Navber() {
           "bg-[#13141b]": isStudioPage,
         })}
       >
-        <div className="h-[70px] flex justify-between gap-2 flex-nowrap px-5 items-center containerWrapper mx-auto w-full">
+        <div
+          className={cn(
+            "h-[70px] flex justify-between gap-2 flex-nowrap px-5 items-center w-full",
+            {
+              " containerWrapper mx-auto ": !isStudioPage,
+            }
+          )}
+        >
           {!isStudioPage && (
             <div className="md:hidden ">
               <Menu strokeWidth={1.7} scale={25} className="text-white" />
             </div>
           )}
-
-          <Image
-            src={"/logo.png"}
-            alt="logo"
-            width={100}
-            height={50}
-            className="md:hidden block "
-          />
+          <Link href={"/"}>
+            <Image
+              src={"/logo.png"}
+              alt="logo"
+              width={100}
+              height={50}
+              className="md:hidden block "
+            />
+          </Link>
           <Image
             src={"/logo.png"}
             alt="logo"
@@ -55,7 +64,8 @@ export default function Navber() {
           )}
         </div>
       </div>
-      <Navigation />
+
+      {!isStudioPage && !isPrivacyPolicy && <Navigation />}
     </header>
   );
 }

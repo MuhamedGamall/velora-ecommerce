@@ -16,14 +16,13 @@ export interface CurrentServerSession {
   expires: Date;
 }
 
-export type ProductType = "featured" | "trending" | "normal";
+export type ProductType = "featured" | "trending" | "related";
 
 export interface Product {
   _createdAt: string;
   brand: string;
   images: ImageObject[];
   secondaryImage: ImageObject;
-  description: string;
   moreInformation: MoreInformationObject[];
   oldPrice: number;
   isNew: boolean;
@@ -32,11 +31,11 @@ export interface Product {
   _rev: string;
   type: ProductType;
   maxPurchaseQty: number;
-  category: CategoryObject[];
+  category: CategoryObject;
   colour: string;
   salesCount: number;
-  subCategory: SubCategoryObject[];
-  patterns: string;
+  subCategory: SubCategoryObject;
+  pattern: string;
   _type: string;
   _id: string;
   _updatedAt: string;
@@ -46,25 +45,39 @@ export interface Product {
   sizes: string[];
 }
 
-interface ImageObject {
+export interface ImageObject {
   _type: "image";
   asset: {
-    _ref: string;
-    _type: string;
+    _ref?: string;
+    _type?: string;
+    _id?: string;
+    url: string;
   };
 }
 
 interface CategoryObject {
-  _ref: string;
-  _type: string;
-  _key: string;
+  _ref?: string;
+  _type?: string;
+  _key?: string;
+  _id?: string;
+  title?: string;
+  categoryImage?: {
+    asset: {
+      _id: string;
+      url: string;
+    };
+  };
 }
-interface MoreInformationObject {
-  infoText: string;
-  _key: string;
-}
+
 interface SubCategoryObject {
-  _ref: string;
-  _type: string;
+  _ref?: string;
+  _type?: string;
+  _key?: string;
+  _id?: string;
+  title?: string;
+}
+
+export interface MoreInformationObject {
+  infoText: string;
   _key: string;
 }

@@ -2,42 +2,64 @@
 import { isNew } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/types";
-const productsQuery = `*[_type == "product" && type == "trending"]{
+const productsQuery = `*[_type == "product" && "featured" in type]{
     _id,
     _createdAt,
     title,
     desc,
     oldPrice,
     price,
-    images[]{
-      asset{
-        _ref,
+    brand,
+    category->{
+      _id,
+      title,
+    },
+    subCategory->{
+      _id,
+      title,
+    },
+  images[] {
+    asset->{
+      _id,
+      url
+    }
+  },
+  secondaryImage {
+    asset->{
+      _id,
+      url
+    }
+  }
+    }`;
+const allDataQuery = `*[_type == "product"][0...10]{
+    _id,
+    _createdAt,
+    title,
+    desc,
+    oldPrice,
+    price,
+    brand,
+    category->{
+      _id,
+      title,
+    },
+    subCategory->{
+      _id,
+      title,
+    },
+ images[]{
+      asset->{
+        _id,
+        url
       }
     },
     secondaryImage{
-      asset{
-        _ref,
+      asset->{
+        _id,
+        url
       }
-      },
-    }`;
-const allDataQuery = `*[_type == "product"][0...10]{
-      _id,
-      _createdAt,
-      title,
-      desc,
-      oldPrice,
-      price,
-      images[]{
-        asset{
-          _ref,
-        }
-      },
-      secondaryImage{
-        asset{
-          _ref,
-        }
-        },
-      }`;
+    }
+  }`;
 export default async function getFeaturedProducts() {
   try {
     let products = await client.fetch(productsQuery);

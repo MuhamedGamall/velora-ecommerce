@@ -7,6 +7,7 @@ body,
   height: 100%;
 }
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -65,7 +66,7 @@ body,
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border font-normal;
   }
   body {
     @apply bg-background text-foreground ;
@@ -73,4 +74,13 @@ body,
   .containerWrapper {
     @apply max-w-screen-xl   px-4;
   }
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 12px;
 }

@@ -1,7 +1,6 @@
 "use server";
 import { client } from "@/sanity/lib/client";
 import { UserProfile } from "@/types";
-import React from "react";
 
 export default async function getUser({ email }: { email: string }) {
   try {

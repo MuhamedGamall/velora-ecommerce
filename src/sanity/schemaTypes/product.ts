@@ -21,12 +21,13 @@ export const product = defineType({
       name: "moreInformation",
       title: "More Information",
       type: "array",
+      initialValue: [],
       of: [
         {
           type: "object", // Use "object" if "information" is a custom object type
           title: "Information",
           fields: [
-            { 
+            {
               name: "infoText",
               title: "Info Text",
               type: "text",
@@ -37,7 +38,7 @@ export const product = defineType({
       ],
       validation: (Rule) => Rule.min(1).max(20),
     }),
-    
+
     defineField({
       name: "images",
       title: "Images",
@@ -67,7 +68,8 @@ export const product = defineType({
       name: "price",
       title: "Price",
       type: "number",
-      validation: (Rule) => Rule.precision(2).required().positive().greaterThan(1),
+      validation: (Rule) =>
+        Rule.precision(2).required().positive().greaterThan(1),
     }),
     defineField({
       name: "oldPrice",
@@ -188,7 +190,6 @@ export const product = defineType({
           { title: "Brooks", value: "brooks" },
         ],
       },
-      
     }),
     defineField({
       name: "qtyInStock",
@@ -235,7 +236,6 @@ export const product = defineType({
       name: "material",
       title: "Material",
       type: "string",
-
       options: {
         list: [
           { title: "Acetate", value: "acetate" },
@@ -248,10 +248,11 @@ export const product = defineType({
           { title: "Cotton", value: "cotton" },
         ],
       },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "patterns",
-      title: "Patterns",
+      name: "pattern",
+      title: "Pattern",
       type: "string",
 
       options: {
@@ -291,51 +292,29 @@ export const product = defineType({
     defineField({
       name: "category",
       title: "Category",
-      type: "array",
-      of: [
-        {
-          type: "reference",
-          to: [
-            {
-              type: "category",
-              validation: (Rule) => Rule.unique().required(),
-            },
-          ],
-        },
-      ],
-      validation: (Rule) => Rule.required().min(1).max(1),
+      type: "reference",
+      to: [{ type: "category" }],
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "subCategory",
       title: "Sub Category",
-      type: "array",
-      of: [
-        {
-          type: "reference",
-          to: [
-            {
-              type: "subCategory",
-              validation: (Rule) => Rule.unique().required(),
-            },
-          ],
-        },
-      ],
-      validation: (Rule) => Rule.required().min(1).max(1),
+      type: "reference",
+      to: [{ type: "subCategory" }],
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "type",
       title: "Type",
-      type: "string",
-      initialValue: "normal",
+      type: "array",
+      of: [{ type: "string" }],
       options: {
         list: [
-          { title: "Normal", value: "normal" },
           { title: "Featured", value: "featured" },
           { title: "Trending", value: "trending" },
         ],
       },
-
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().min(1),
     }),
   ],
 });

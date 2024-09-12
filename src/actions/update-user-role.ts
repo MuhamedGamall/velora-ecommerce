@@ -1,6 +1,5 @@
 "use server";
 import { client } from "@/sanity/lib/client";
-import React from "react";
 import getUser from "./get-user";
 
 export default async function updateUserRole({

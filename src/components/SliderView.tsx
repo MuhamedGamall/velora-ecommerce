@@ -1,10 +1,7 @@
 "use client";
+import { Product } from "@/types";
 import Slider from "react-slick";
-import getFeaturedProducts from "@/actions/get-featured-products";
 import Card from "./Card";
-import { Product, ProductType } from "@/types";
-import { useEffect, useState } from "react";
-import getTrendingProducts from "@/actions/get-trending-products";
 
 const settings = (productsLength: number) => ({
   dots: false,
@@ -20,10 +17,10 @@ const settings = (productsLength: number) => ({
         : productsLength >= 2
           ? 2
           : 1,
-          
+
   slidesToScroll: 1,
   initialSlide: 0,
-  autoplay:true ,
+  autoplay: true,
 
   responsive: [
     {
@@ -47,29 +44,7 @@ const settings = (productsLength: number) => ({
   ],
 });
 
-const SliderView = ({ type }: { type: ProductType }) => {
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    if (type === "featured") {
-      getFeaturedProducts()
-        .then((data) => {
-          setProducts(data);
-        })
-        .catch((error) => {
-          setProducts([]);
-        });
-    } else if (type === "trending") {
-      getTrendingProducts()
-        .then((data) => {
-          setProducts(data);
-        })
-        .catch((error) => {
-          setProducts([]);
-        });
-    }
-  }, [type]);
-
+const SliderView = ({ products }: { products: Product[] }) => {
   return (
     <Slider {...settings(products.length)} className="flex gap-5 ">
       {products.map((item) => (
