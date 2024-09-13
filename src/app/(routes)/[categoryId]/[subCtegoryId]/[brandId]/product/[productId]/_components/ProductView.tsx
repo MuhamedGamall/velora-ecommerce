@@ -2,25 +2,32 @@
 
 import { useState } from "react";
 
-import AddToCart from "./AddToCart";
+import AddToCart from "./AddToBag";
 import AddToWishlist from "./AddToWishlist";
 import Details from "./Details";
 import Sizes from "./Sizes";
 import Images from "./Images";
-import { Product } from "@/types";
+import { CurrentClientSession, Product, ShoppingBag } from "@/types";
 import { notFound } from "next/navigation";
 import { cn, formatPrice } from "@/lib/utils";
 import Quantity from "./Quantity";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useClient } from "sanity";
 const ProductView = ({
-  productId,
   product,
+  shoppingBag,
 }: {
-  productId: string;
   product: Product | null;
+  shoppingBag: ShoppingBag[];
 }) => {
-  const [quantity, setQuantity] = useState<number>(1);
+  const isExist = shoppingBag.find(
+    (item) => item?.product?._id === product?._id
+  );
 
+  const [quantity, setQuantity] = useState<number>(isExist?.quantity || 1);
+  const [size, setSize] = useState<string>(isExist?.size || "");
+  const session = useSession() as any;
   if (!product) notFound();
 
   return (
@@ -56,10 +63,14 @@ const ProductView = ({
             )}
           </div>
         </div>
-        {product?.qtyInStock >= 1? (
-          <span className="bg-green-100 text-sm  px-3 py-1 w-fit">In Stock</span>
+        {product?.qtyInStock >= 1 ? (
+          <span className="bg-green-100 text-sm  px-3 py-1 w-fit">
+            In Stock
+          </span>
         ) : (
-          <span className="bg-gray-300 text-sm px-3 py-1 w-fit">Out of Stock</span>
+          <span className="bg-gray-300 text-sm px-3 py-1 w-fit">
+            Out of Stock
+          </span>
         )}
         <div className="text-[13px]">
           <span className=" text-gray-700">
@@ -72,10 +83,17 @@ const ProductView = ({
           setQuantity={setQuantity}
           maxPurchase={product?.maxPurchaseQty}
         />
-        <Sizes sizes={product?.sizes} />
+        <Sizes sizes={product?.sizes} value={size} setValue={setSize} />
         <div className="flex flex-col gap-3">
-          <AddToCart quantity={quantity} size="" product={product} />
-          <AddToWishlist product={null} />
+          <AddToCart
+            shoppingBag={shoppingBag}
+            quantity={quantity}
+            size={size}
+            productId={product?._id}
+            session={session}
+            productTitle={product?.title}
+          />
+          <AddToWishlist userId={"userId"} productId={product?._id} />
         </div>
         <Details
           moreInformation={product?.moreInformation}

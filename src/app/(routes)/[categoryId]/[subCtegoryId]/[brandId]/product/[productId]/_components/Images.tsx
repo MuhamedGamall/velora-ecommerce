@@ -18,7 +18,7 @@ const Images = ({ images }: { images: ImageObject[] }) => {
   return (
     <div className="flex flex-col-reverse xs:flex-row md:flex-col-reverse lg:flex-row gap-5 sm:gap-12 items-center">
       <div className="flex  max-sm:hidden  sm:flex-col md:flex-row lg:flex-col  gap-2 ">
-        {images.map((img, index) => (
+        {images?.map((img, index) => (
           <div
             key={index}
             className={`w-[48px]  sm:w-[70px] md:w-[48px] p-1 cursor-pointer ${

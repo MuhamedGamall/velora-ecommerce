@@ -3,14 +3,16 @@ import { Product } from "@/types";
 import Slider from "react-slick";
 import Card from "./Card";
 
-const settings = (productsLength: number) => ({
+// Dynamic slider settings based on the number of products
+const sliderSettings = (productsLength: number) => ({
   dots: false,
-  infinite: productsLength >= 2,
+  infinite: productsLength > 1,
   arrows: false,
   speed: 500,
   autoplaySpeed: 2000,
+  autoplay: productsLength > 1,
   slidesToShow:
-    productsLength >= 4
+    productsLength >= 2
       ? 4
       : productsLength >= 3
         ? 3
@@ -20,8 +22,6 @@ const settings = (productsLength: number) => ({
 
   slidesToScroll: 1,
   initialSlide: 0,
-  autoplay: true,
-
   responsive: [
     {
       breakpoint: 1024,
@@ -46,9 +46,9 @@ const settings = (productsLength: number) => ({
 
 const SliderView = ({ products }: { products: Product[] }) => {
   return (
-    <Slider {...settings(products.length)} className="flex gap-5 ">
+    <Slider {...sliderSettings(products?.length)} className="w-full">
       {products.map((item) => (
-        <Card {...item} key={item._id} />
+        <Card {...item} key={item._id} productsLength={products?.length} />
       ))}
     </Slider>
   );

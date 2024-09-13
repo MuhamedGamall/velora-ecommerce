@@ -10,7 +10,7 @@ const ProductsSlider = ({
   products: Product[];
 }) => {
   return (
-    <div className={"mx-auto my-20  containerWrapper"}>
+    <div className={"mx-auto my-20   containerWrapper"}>
       <div
         className={cn(
           "flex flex-col text-center gap-2 items-center mb-10 text-slate-700  ",
@@ -21,9 +21,9 @@ const ProductsSlider = ({
       >
         <h3
           className={cn(
-            "font-bold font-serif capitalize  text-[30px] sm:text-[50px]",
+            "font-bold font-serif capitalize text-start  text-[30px] sm:text-[50px]",
             {
-              "text-[20px] sm:text-[40px]  ": type === "related",
+              "text-[30px] sm:text-[40px]  ": type === "related",
             }
           )}
         >
@@ -31,7 +31,7 @@ const ProductsSlider = ({
         </h3>
         <p
           className={cn(
-            "text-[16px] sm:text-[25px] font-semibold text-slate-800 max-w-[800px]",
+            "text-[16px] sm:text-[25px] max-sm:text-start font-semibold text-slate-800 max-w-[800px]",
             {
               "text-[13px] sm:text-[20px] ": type === "related",
             }
@@ -42,7 +42,10 @@ const ProductsSlider = ({
             : type === "related" && null}
         </p>
       </div>
+      <div className="ml-7">
+
       <SliderView products={products} />
+      </div>
     </div>
   );
 };

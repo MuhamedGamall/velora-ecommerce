@@ -1,5 +1,3 @@
-export interface ProjectInterface {}
-
 export interface UserProfile {
   _type: string;
   name: string;
@@ -9,19 +7,27 @@ export interface UserProfile {
   image: string;
   _createdAt: Date;
   _rev: string;
+  shoppingBag: ShoppingBag[];
 }
+
 
 export interface CurrentServerSession {
   user: UserProfile;
   expires: Date;
 }
-
+export interface CurrentClientSession {
+  data: CurrentServerSession;
+  status: "authenticated" | "loading" | "unauthenticated";
+  update: any;
+}
 export type ProductType = "featured" | "trending" | "related";
 
 export interface Product {
+  _ref?: string;
   _createdAt: string;
   brand: string;
   images: ImageObject[];
+  image?: ImageObject;
   secondaryImage: ImageObject;
   moreInformation: MoreInformationObject[];
   oldPrice: number;
@@ -44,7 +50,13 @@ export interface Product {
   material: string;
   sizes: string[];
 }
-
+export interface ShoppingBag {
+  _key: string;
+  _type: string;
+  product: Product;
+  size: string;
+  quantity: number;
+}
 export interface ImageObject {
   _type: "image";
   asset: {

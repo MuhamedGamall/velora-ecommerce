@@ -7,7 +7,6 @@ body,
   height: 100%;
 }
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -69,7 +68,7 @@ body,
     @apply border-border font-normal;
   }
   body {
-    @apply bg-background text-foreground ;
+    @apply bg-background text-foreground;
   }
   .containerWrapper {
     @apply max-w-screen-xl   px-4;

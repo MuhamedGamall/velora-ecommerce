@@ -18,9 +18,12 @@ export default function Card({
   brand,
   isNew,
   oldPrice,
-}: Product) {
+  productsLength
+}: Product & { productsLength: number }) {
   return (
-    <div className=" text-mainBlack  flex  justify-center  max-h-[500px]">
+    <div className={cn(" text-mainBlack  max-w-[215px]",{
+      'flex justify-center': productsLength > 2
+    })}>
       <Link
         href={`/${category?.title}/${subCategory?.title}/${brand}/product/${_id}`}
         className="mb-12 flex flex-col gap-2 xxs:w-[38vw] xxs:min-w-[7rem] sm:w-[23vw] sm:max-w-none md:w-[23vw] lg:w-[18vw] 2xl:max-w-[20rem]"

@@ -1,10 +1,11 @@
 "use server";
+import { authOptions } from "@/lib/auth-options";
 import { CurrentServerSession } from "@/types";
 import { getServerSession } from "next-auth";
 
 export default async function getCurrentSession() {
   try {
-    const user = (await getServerSession()) as CurrentServerSession;
+    const user = (await getServerSession(authOptions)) as CurrentServerSession;
     if (!user) {
       console.log("No user found in session");
       return null;

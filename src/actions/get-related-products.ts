@@ -31,7 +31,7 @@ const productsQuery = `*[_type == "product" && brand == $brand && _id != $exclud
       }
     }
     }`;
-const allDataQuery = `*[_type == "product"][0...10]{
+const allDataQuery = `*[_type == "product" && _id != $excludedId][0...10]{
     _id,
     _createdAt,
     title,
@@ -60,13 +60,24 @@ const allDataQuery = `*[_type == "product"][0...10]{
       }
     }
   }`;
-export default async function getRelatedProducts({ brand ,excludedId}: { brand: string ,excludedId: string}) {
+export default async function getRelatedProducts({
+  brand,
+  excludedId,
+}: {
+  brand: string;
+  excludedId: string;
+}) {
   try {
-    let products = await client.fetch(productsQuery, { brand,excludedId });
+    console.log(`brand: ${brand}, excludedId: ${excludedId}`);
+    
+    let products = await client.fetch(productsQuery, { brand, excludedId });
+    console.log(products);
     
     products =
-    products.length === 0 ? await client.fetch(allDataQuery) : products;
-    
+      products.length === 0
+        ? await client.fetch(allDataQuery, { excludedId })
+        : products;
+
     products = products.map((product: Product) => ({
       ...product,
       isNew: isNew(product?._createdAt),
