@@ -12,9 +12,10 @@ export default async function getUser({ email }: { email: string }) {
       `*[_type == "user" && email == $email][0]`,
       { email: email }
     );
+
     return user as UserProfile;
   } catch (error: any) {
-    console.error("Error retrieving user data: ", error.message);
+    console.error("Error retrieving user data: ", error);
     return null;
   }
 }

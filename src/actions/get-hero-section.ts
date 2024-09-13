@@ -26,7 +26,7 @@ export const getHeroSection = async (): Promise<{
       description,
     };
   } catch (error) {
-    console.log("Error fetching hero image: ", error);
+    console.error("Error fetching hero image: ", error);
     return null;
   }
 };

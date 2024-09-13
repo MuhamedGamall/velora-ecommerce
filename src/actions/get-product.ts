@@ -34,13 +34,13 @@ const productQuery = `*[_type == "product" && _id == $id][0]{
 
 export default async function getProduct({ _id }: { _id: string }) {
   try {
-    let product = await client.fetch(productQuery, { id: _id }) as any;
+    let product = (await client.fetch(productQuery, { id: _id })) as any;
     if (!product) {
-      throw new Error("Product not found");
+      throw "Product not found";
     }
     return product as Product | null;
   } catch (error: any) {
-    console.error("Error fetching product: ", error.message);
-    return null
+    console.error("Error fetching product: ", error);
+    return null;
   }
 }

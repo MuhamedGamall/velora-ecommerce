@@ -32,7 +32,7 @@ const sliderSettings = (productsLength: number) => ({
     {
       breakpoint: 640,
       settings: {
-        slidesToShow: 2,
+        slidesToShow:  productsLength == 1 ? 3:2,
       },
     },
     {

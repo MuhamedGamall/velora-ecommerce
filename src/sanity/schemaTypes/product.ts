@@ -9,13 +9,13 @@ export const product = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (Rule) => Rule.required().min(5).max(50),
+      validation: (Rule) => Rule.required().min(3).max(50),
     }),
     defineField({
       name: "desc",
       title: "Description",
       type: "text",
-      validation: (Rule) => Rule.required().min(20).max(300),
+      validation: (Rule) => Rule.required().min(10).max(300),
     }),
     defineField({
       name: "moreInformation",
@@ -24,14 +24,14 @@ export const product = defineType({
       initialValue: [],
       of: [
         {
-          type: "object", // Use "object" if "information" is a custom object type
+          type: "object",
           title: "Information",
           fields: [
             {
               name: "infoText",
               title: "Info Text",
-              type: "text",
-              validation: (Rule) => Rule.required().min(5).max(500),
+              type: "string",
+              validation: (Rule) => Rule.required().min(3).max(500),
             },
           ],
         },

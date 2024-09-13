@@ -72,7 +72,7 @@ export default async function getTrendingProducts() {
     }));
     return products as Product[];
   } catch (error: any) {
-    console.error("Error fetching trending products: ", error.message);
+    console.error("Error fetching trending products: ", error);
     return [];
   }
 }

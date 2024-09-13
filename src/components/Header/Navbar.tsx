@@ -12,11 +12,7 @@ import ProfileMenu from "./ProfileMenu";
 import Search from "./SearchBar";
 import WishlistMenu from "./WishlistMenu";
 
-export default function Navber({
-  shoppingBag,
-}: {
-  shoppingBag: ShoppingBag[];
-}) {
+export default function Navber() {
   const pathname = usePathname();
   if (["/auth/signIn", "/auth/register"].includes(pathname)) return;
   const isPrivacyPolicy = pathname.includes("/privacy-policy");
@@ -54,7 +50,7 @@ export default function Navber({
               <Search />
               <ProfileMenu />
               <WishlistMenu />
-              <CartMenu shoppingBag={shoppingBag} />
+              <CartMenu />
             </div>
           )}
         </div>

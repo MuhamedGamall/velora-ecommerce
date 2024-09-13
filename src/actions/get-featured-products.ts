@@ -73,7 +73,7 @@ export default async function getFeaturedProducts() {
     }));
     return products as Product[];
   } catch (error: any) {
-    console.error("Error fetching featured products: ", error.message);
+    console.error("Error fetching featured products: ", error);
     return [];
   }
 }

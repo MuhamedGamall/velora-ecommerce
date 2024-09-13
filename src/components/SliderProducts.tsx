@@ -43,8 +43,7 @@ const ProductsSlider = ({
         </p>
       </div>
       <div className="ml-7">
-
-      <SliderView products={products} />
+        <SliderView products={products} />
       </div>
     </div>
   );

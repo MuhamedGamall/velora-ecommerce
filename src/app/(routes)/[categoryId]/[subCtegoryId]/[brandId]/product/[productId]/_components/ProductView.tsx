@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import AddToCart from "./AddToBag";
 import AddToWishlist from "./AddToWishlist";
@@ -14,21 +14,25 @@ import Quantity from "./Quantity";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useClient } from "sanity";
-const ProductView = ({
-  product,
-  shoppingBag,
-}: {
-  product: Product | null;
-  shoppingBag: ShoppingBag[];
-}) => {
+import useShoppingBagStore from "@/zustand/store/cartStore";
+const ProductView = ({ product }: { product: Product | null }) => {
+  const { shoppingBag, fetchShoppingBag } = useShoppingBagStore();
+
+  const [quantity, setQuantity] = useState<number>(1);
+  const [size, setSize] = useState<string>("");
+  const session = useSession() as any;
+  if (!product) notFound();
+
+  useEffect(() => {
+    fetchShoppingBag();
+  }, []);
   const isExist = shoppingBag.find(
     (item) => item?.product?._id === product?._id
   );
-
-  const [quantity, setQuantity] = useState<number>(isExist?.quantity || 1);
-  const [size, setSize] = useState<string>(isExist?.size || "");
-  const session = useSession() as any;
-  if (!product) notFound();
+  useEffect(() => {
+    setQuantity(isExist?.quantity || 1);
+    setSize(isExist?.size || "");
+  }, [isExist]);
 
   return (
     <div className="flex items justify-between max-md:flex-col gap-[100px] containerWrapper mx-auto my-5  px-5  ">
@@ -89,9 +93,8 @@ const ProductView = ({
             shoppingBag={shoppingBag}
             quantity={quantity}
             size={size}
-            productId={product?._id}
             session={session}
-            productTitle={product?.title}
+            product={product}
           />
           <AddToWishlist userId={"userId"} productId={product?._id} />
         </div>

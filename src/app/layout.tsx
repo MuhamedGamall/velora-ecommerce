@@ -8,8 +8,6 @@ import "slick-carousel/slick/slick.css";
 import { Toaster } from "sonner";
 import "swiper/css";
 import "./globals.css";
-import getShoppingBag from "@/actions/get-shopping-bag";
-import getCurrentSession from "@/actions/get-current-session";
 const openSans = Open_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -25,16 +23,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getCurrentSession();
-  const { shoppingBag } = await getShoppingBag({
-    userId: session?.user?._id || "",
-  });
   return (
     <html lang="en">
       <body className={`${openSans.className} antialiased `}>
         <AuthSessionProvider>
           <Toaster duration={3000} />
-          <Navber shoppingBag={shoppingBag} />
+          <Navber />
           {children}
         </AuthSessionProvider>
       </body>

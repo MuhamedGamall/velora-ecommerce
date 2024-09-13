@@ -23,7 +23,7 @@ const userQuery = `
           _id,
           title,
         },
-        "image":images[0]{
+        images[0...1]{
           asset->{
             _id,
             url
@@ -39,23 +39,18 @@ const userQuery = `
 const getShoppingBag = async ({ userId }: { userId: string }) => {
   try {
     if (!userId) {
-      throw new Error("User ID is required");
+      throw "User ID is required";
     }
 
-    const user = (await client.fetch(userQuery, { userId })) as UserProfile;
+    const user = (await client.fetch(userQuery, {
+      userId: userId,
+    })) as UserProfile;
 
     if (!user) {
-      throw new Error("User not found");
+      throw "User not found";
     }
 
-    const { shoppingBag, _id }: { shoppingBag: ShoppingBag[]; _id: string } =
-      user;
-
-    if (!shoppingBag.length) {
-      throw new Error("User shopping bag not found");
-    }
-
-    return { shoppingBag, _id };
+    return user;
   } catch (error) {
     console.error("Error fetching user shopping bag: ", error);
     return { shoppingBag: [], _id: "" };

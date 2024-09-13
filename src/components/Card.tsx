@@ -21,8 +21,8 @@ export default function Card({
   productsLength
 }: Product & { productsLength: number }) {
   return (
-    <div className={cn(" text-mainBlack  max-w-[215px]",{
-      'flex justify-center': productsLength > 2
+    <div className={cn(" text-mainBlack  max-w-[215px] flex justify-center",{
+      'flex justify-center': true
     })}>
       <Link
         href={`/${category?.title}/${subCategory?.title}/${brand}/product/${_id}`}

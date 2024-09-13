@@ -11,13 +11,11 @@ export default async function updateUserRole({
 }) {
   try {
     if (!email) {
-      console.log("updateUserRole: email or newRole not provided");
-      return null;
+      throw "Email is required";
     }
     const user = await getUser({ email });
     if (!user) {
-      console.log("User not found with the provided email");
-      return null;
+      throw "User not found";
     }
 
     await client.patch(user._id).set({ role: newRole }).commit();

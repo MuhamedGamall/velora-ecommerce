@@ -21,7 +21,7 @@ export default async function getCategories() {
     let categories = await client.fetch(categoriesQuery);
     return categories as any;
   } catch (error: any) {
-    console.error("Error fetching categories: ", error.message);
+    console.error("Error fetching categories: ", error);
     return [];
   }
 }

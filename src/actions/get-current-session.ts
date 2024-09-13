@@ -12,7 +12,7 @@ export default async function getCurrentSession() {
     }
     return user;
   } catch (error: any) {
-    console.error("Error retrieving current user session: ", error.message);
+    console.error("Error retrieving current user session: ", error);
     return null;
   }
 }

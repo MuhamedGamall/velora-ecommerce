@@ -1,50 +1,45 @@
 "use client";
 
-import addProductToBag from "@/actions/add-to-bag";
-import removeProductFromBag from "@/actions/remove-from-bag";
 import { Button } from "@/components/ui/button";
-import useCartModal from "@/hooks/useCartModal";
-import { CurrentClientSession, ShoppingBag } from "@/types";
+import { CurrentClientSession, Product, ShoppingBag } from "@/types";
+import useShoppingBagStore from "@/zustand/store/cartStore";
 import { Loader2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 const AddToBag = ({
-  productId,
   quantity,
   size,
   session,
-  productTitle,
   shoppingBag,
+  product,
 }: {
-  productId: string;
-  productTitle: string;
   quantity: number;
   size: string;
   session: CurrentClientSession;
   shoppingBag: ShoppingBag[];
+  product: Product;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const userId = session?.data?.user?._id;
   const pathname = usePathname();
-  const { onOpen, onClose } = useCartModal();
-  const addToBag = async () => {
+
+  const { addToBag, removeFromBag, onOpen } = useShoppingBagStore();
+
+  const addproductToBag = async () => {
     try {
       if (!size) return toast.error("Please select a size");
       if (quantity <= 0)
         return toast.error("Quantity should be greater than 0");
-      await addProductToBag({
-        productId,
+      await addToBag({
+        product,
         quantity,
         size,
         userId,
-        productTitle,
         pathname,
       });
-      setTimeout(() => {
-        onOpen();
-        toast.success("Product added to bag");
-      }, 900);
+      toast.success("Product added to bag");
+      onOpen();
     } catch (error) {
       toast.error("Something went wrong", {
         description:
@@ -52,42 +47,42 @@ const AddToBag = ({
       });
     }
   };
-  const removeFromBag = async () => {
+  const removeProductFromBag = async () => {
     try {
-      await removeProductFromBag({
-        productId,
+      await removeFromBag({
+        productId: product?._id,
         userId,
         pathname,
       });
     } catch (error) {
       toast.error("Something went wrong", {
         description:
-          "Error removing product from the shopping bag, please try again",
+          "Failed to removing product from the shopping bag, please try again",
       });
     }
   };
 
-  const isExist = shoppingBag.find((item) => item?.product?._id === productId);
+  const isExist = shoppingBag.find(
+    (item) => item?.product?._id === product?._id
+  );
   const handleClick = async () => {
     try {
       if (loading) return;
       setLoading(true);
       if (!session) return toast.error("Please login first");
-      if (!productId) return toast.error("Please select a product");
       if (isExist) {
-        await removeFromBag();
+        removeProductFromBag();
       } else {
-        await addToBag();
+        addproductToBag();
       }
     } catch (error) {
       throw error;
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 900);
+      // setTimeout(() => {
+      setLoading(false);
+      // }, 900);
     }
   };
-
 
   return (
     <Button

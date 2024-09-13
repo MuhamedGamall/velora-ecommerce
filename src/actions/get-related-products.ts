@@ -68,11 +68,15 @@ export default async function getRelatedProducts({
   excludedId: string;
 }) {
   try {
-    console.log(`brand: ${brand}, excludedId: ${excludedId}`);
+    if (!brand) {
+      throw "Brand is required";
+    }
+
+    if (!excludedId) {
+      throw "Excluded ID is required";
+    }
     
     let products = await client.fetch(productsQuery, { brand, excludedId });
-    console.log(products);
-    
     products =
       products.length === 0
         ? await client.fetch(allDataQuery, { excludedId })
@@ -84,7 +88,7 @@ export default async function getRelatedProducts({
     }));
     return products as Product[];
   } catch (error: any) {
-    console.error("Error fetching related products: ", error.message);
+    console.error("Error fetching related products: ", error);
     return [];
   }
 }

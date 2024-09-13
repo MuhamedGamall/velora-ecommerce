@@ -5,7 +5,6 @@ import Footer from "@/components/footer";
 import ProductsSlider from "@/components/SliderProducts";
 import type { Metadata } from "next";
 import ProductView from "./_components/ProductView";
-import getShoppingBag from "@/actions/get-shopping-bag";
 
 type Props = {
   params: {
@@ -30,13 +29,9 @@ export default async function ProductPage({ params }: Props) {
     brand: product?.brand || "",
     excludedId: productId,
   });
-  const { shoppingBag } = await getShoppingBag({
-    userId: session?.user?._id || "",
-  });
-
   return (
     <div className="w-full">
-      <ProductView product={product} shoppingBag={shoppingBag} />
+      <ProductView product={product}  />
       <div className="border-t w-full">
         <ProductsSlider type="related" products={relatedProducts} />
       </div>

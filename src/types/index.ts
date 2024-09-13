@@ -49,10 +49,11 @@ export interface Product {
   title: string;
   material: string;
   sizes: string[];
+  
 }
 export interface ShoppingBag {
-  _key: string;
-  _type: string;
+  _key?: string;
+  _type?: string;
   product: Product;
   size: string;
   quantity: number;
