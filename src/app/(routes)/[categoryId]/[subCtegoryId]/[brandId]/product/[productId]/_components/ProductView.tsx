@@ -2,21 +2,22 @@
 
 import { useEffect, useState } from "react";
 
+import { cn, formatPrice } from "@/lib/utils";
+import { Product } from "@/types";
+import useShoppingBagStore from "@/zustand/store/cartStore";
+import useWishlistStore from "@/zustand/store/wishlistStore";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import AddToCart from "./AddToBag";
 import AddToWishlist from "./AddToWishlist";
 import Details from "./Details";
-import Sizes from "./Sizes";
 import Images from "./Images";
-import { CurrentClientSession, Product, ShoppingBag } from "@/types";
-import { notFound } from "next/navigation";
-import { cn, formatPrice } from "@/lib/utils";
 import Quantity from "./Quantity";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { useClient } from "sanity";
-import useShoppingBagStore from "@/zustand/store/cartStore";
+import Sizes from "./Sizes";
 const ProductView = ({ product }: { product: Product | null }) => {
   const { shoppingBag, fetchShoppingBag } = useShoppingBagStore();
+  const { wishlist, fetchWishlist } = useWishlistStore();
 
   const [quantity, setQuantity] = useState<number>(1);
   const [size, setSize] = useState<string>("");
@@ -25,14 +26,15 @@ const ProductView = ({ product }: { product: Product | null }) => {
 
   useEffect(() => {
     fetchShoppingBag();
+    fetchWishlist();
   }, []);
-  const isExist = shoppingBag.find(
+  const isExistInBag = shoppingBag.find(
     (item) => item?.product?._id === product?._id
   );
   useEffect(() => {
-    setQuantity(isExist?.quantity || 1);
-    setSize(isExist?.size || "");
-  }, [isExist]);
+    setQuantity(isExistInBag?.quantity || 1);
+    setSize(isExistInBag?.size || "");
+  }, [isExistInBag]);
 
   return (
     <div className="flex items justify-between max-md:flex-col gap-[100px] containerWrapper mx-auto my-5  px-5  ">
@@ -96,7 +98,11 @@ const ProductView = ({ product }: { product: Product | null }) => {
             session={session}
             product={product}
           />
-          <AddToWishlist userId={"userId"} productId={product?._id} />
+          <AddToWishlist
+            wishlist={wishlist}
+            session={session}
+            product={product}
+          />
         </div>
         <Details
           moreInformation={product?.moreInformation}

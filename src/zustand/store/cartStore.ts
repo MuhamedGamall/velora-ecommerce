@@ -1,8 +1,8 @@
-import addProductToBag from "@/actions/add-to-bag";
 import getCurrentSession from "@/actions/get-current-session";
-import getShoppingBag from "@/actions/get-shopping-bag";
-import removeProductFromBag from "@/actions/remove-from-bag";
-import resetShoppingBag from "@/actions/reset-shopping-bag";
+import addProductToBag from "@/actions/shopping-bag/add-to-bag";
+import getShoppingBag from "@/actions/shopping-bag/get-shopping-bag";
+import removeProductFromBag from "@/actions/shopping-bag/remove-from-bag";
+import resetShoppingBag from "@/actions/shopping-bag/reset-shopping-bag";
 import { Product, ShoppingBag } from "@/types";
 import { create } from "zustand";
 
@@ -10,7 +10,7 @@ interface ShoppingBagState {
   shoppingBag: ShoppingBag[];
   isOpen: boolean;
   onOpen: () => void;
-  onClose: () => void;  
+  onClose: () => void;
   fetchShoppingBag: () => Promise<void>;
   setShoppingBag: (items: ShoppingBag[]) => void;
   addToBag: (params: {
@@ -38,15 +38,14 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
       const session = await getCurrentSession();
 
       if (!session?.user?._id) {
-        console.log(session?.user?._id);
-        throw new Error("User ID not found");
+        throw "User ID not found";
       }
       const { shoppingBag } = await getShoppingBag({
         userId: session.user._id,
       });
       set({ shoppingBag: shoppingBag || [] });
     } catch (error) {
-      console.error("[fetchShoppingBag] Failed to fetch shopping bag:", error);
+      console.error("Failed to fetch shopping bag:", error);
     }
   },
 
@@ -56,7 +55,7 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
     try {
       const session = await getCurrentSession();
       if (!session?.user?._id) {
-        throw new Error("User ID not found");
+        throw "User ID not found";
       }
       set((state) => ({
         shoppingBag: [
@@ -77,7 +76,7 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
             (item) => item.product._id !== product._id
           ),
         }));
-        throw new Error("Failed to add to shopping bag");
+        throw "Failed to add to shopping bag";
       }
     } catch (error: any) {
       set((state) => ({
@@ -85,7 +84,7 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
           (item) => item.product._id !== product._id
         ),
       }));
-      console.error(error);
+      console.error("Error adding product to the shopping bag:", error);
     }
   },
 
@@ -103,17 +102,17 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
     try {
       const session = await getCurrentSession();
       if (!session?.user?._id) {
-        throw new Error("User ID not found");
+        throw "User ID not found";
       }
       const response = await removeProductFromBag(params);
 
       if (!response) {
         set({ shoppingBag: backupState });
-        throw new Error("Failed to remove from shopping bag, please try again");
+        throw "Failed to remove from shopping bag, please try again";
       }
     } catch (error: any) {
       set({ shoppingBag: backupState });
-      console.error(error);
+      console.error("Error removing product from the shopping bag:", error);
     }
   },
 
@@ -128,7 +127,7 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
     try {
       const session = await getCurrentSession();
       if (!session?.user?._id) {
-        throw new Error("User ID not found");
+        throw "User ID not found";
       }
       const response = await resetShoppingBag({
         userId: session.user._id,
@@ -137,11 +136,11 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
 
       if (!response) {
         set({ shoppingBag: backupState });
-        throw new Error("Failed to reseting shopping bag, please try again");
+        throw "Failed to reseting shopping bag, please try again";
       }
     } catch (error: any) {
       set({ shoppingBag: backupState });
-      console.error(error);
+      console.error("Error resetting shopping bag:", error);
     }
   },
 }));

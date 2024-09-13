@@ -1,39 +1,83 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
-import { StarIcon } from "lucide-react";
+import { CurrentClientSession, Product, Wishlist } from "@/types";
+import useWishlistStore from "@/zustand/store/wishlistStore";
+import { Loader2 } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
-
+import { toast } from "sonner";
 const AddToWishlist = ({
-  productId,
-  userId,
+  session,
+  wishlist,
+  product,
 }: {
-  productId: string;
-  userId: string;
+  session: CurrentClientSession;
+  wishlist: Wishlist[];
+  product: Product;
 }) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const userId = session?.data?.user?._id;
+  const pathname = usePathname();
 
-  const handleClick = () => {
-    // addToCart({ ...product, quantity });
-    setOpen(true);
-  };
+  const { addToWishlist, removeFromWishlist } = useWishlistStore();
 
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
+  const addProductToWishlist = async () => {
+    try {
+      await addToWishlist({
+        product,
+        userId,
+        pathname,
+      });
+      toast.success("Product added to wishlist");
+    } catch (error) {
+      toast.error("Something went wrong", {
+        description: "Error adding product to the wishlist, please try again",
+      });
     }
-
-    setOpen(false);
   };
+  const removeProductFromWishlist = async () => {
+    try {
+      await removeFromWishlist({
+        productId: product?._id,
+        userId,
+        pathname,
+      });
+    } catch (error) {
+      toast.error("Something went wrong", {
+        description:
+          "Failed to removing product from the wishlist, please try again",
+      });
+    }
+  };
+
+  const isExist = wishlist.find((item) => item?.product?._id === product?._id);
+  const handleClick = async () => {
+    try {
+      if (loading) return;
+      setLoading(true);
+      if (!session) return toast.error("Please login first");
+      if (isExist) {
+        removeProductFromWishlist();
+      } else {
+        addProductToWishlist();
+      }
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Button
-      className="flex items-center border-black justify-start gap-2  w-full rounded-none"
+      disabled={loading}
       variant={"outline"}
+      className="border-black w-full rounded-none "
+      onClick={handleClick}
     >
-      <StarIcon size={15} strokeWidth={1.3} />
-      <span className="text-center w-full">ADD TO WISH LIST</span>
+      {loading && <Loader2 size={15} className="animate-spin mr-3" />}
+      {isExist ? "Remove from wishlist" : "Add to wishlist"}
     </Button>
   );
 };

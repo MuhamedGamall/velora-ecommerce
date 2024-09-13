@@ -23,7 +23,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { productId } = params;
-  const session = await getCurrentSession();
   const product = await getProduct({ _id: productId });
   const relatedProducts = await getRelatedProducts({
     brand: product?.brand || "",

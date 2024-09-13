@@ -1,8 +1,9 @@
+"use client";
 import useShoppingBagStore from "@/zustand/store/cartStore";
 import { useEffect } from "react";
 import PreviewMyProducts from "../PreviewMyProducts";
 
-export default function CartMenu({}: {}) {
+export default function CartMenu() {
   const {
     shoppingBag,
     fetchShoppingBag,

@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 export const user = defineType({
   name: "user",
   title: "Users",
-  
+
   type: "document",
   fields: [
     defineField({
@@ -47,7 +47,6 @@ export const user = defineType({
       },
     }),
     defineField({
-      
       readOnly: true,
       name: "shoppingBag",
       title: "Shopping Bag Item",
@@ -55,7 +54,7 @@ export const user = defineType({
       of: [
         {
           type: "object",
-          name: "shoppingBagItem", 
+          name: "shoppingBagItem",
           fields: [
             {
               name: "product",
@@ -79,6 +78,33 @@ export const user = defineType({
               name: "quantity",
               type: "number",
               title: "Quantity",
+            },
+          ],
+        },
+      ],
+    }),
+    defineField({
+      readOnly: true,
+      name: "wishlist",
+      title: "Wishlist Item",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "wishlistItem",
+          fields: [
+            {
+              name: "product",
+              type: "reference",
+              to: [{ type: "product" }],
+              title: "Product",
+            },
+            {
+              name: "productTitle",
+              type: "string",
+              title: "Product Title",
+              readOnly: true,
+              description: "Title of the product",
             },
           ],
         },

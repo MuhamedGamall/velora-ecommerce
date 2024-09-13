@@ -8,8 +8,8 @@ export interface UserProfile {
   _createdAt: Date;
   _rev: string;
   shoppingBag: ShoppingBag[];
+  wishlist: Wishlist[];
 }
-
 
 export interface CurrentServerSession {
   user: UserProfile;
@@ -49,14 +49,18 @@ export interface Product {
   title: string;
   material: string;
   sizes: string[];
-  
 }
 export interface ShoppingBag {
   _key?: string;
   _type?: string;
   product: Product;
-  size: string;
-  quantity: number;
+  size?: string;
+  quantity?: number;
+}
+export interface Wishlist {
+  _key?: string;
+  _type?: string;
+  product: Product;
 }
 export interface ImageObject {
   _type: "image";

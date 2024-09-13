@@ -5,7 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ShoppingBag } from "@/types";
+import { ShoppingBag, Wishlist } from "@/types";
 import { Dot, ShoppingBagIcon, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +13,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { formatNumber, formatPrice } from "../lib/utils";
 import { Button } from "./ui/button";
+
 export default function PreviewMyProducts({
   type,
   data,
@@ -22,7 +23,7 @@ export default function PreviewMyProducts({
   resetBag,
 }: {
   type: "cart" | "wishlist";
-  data: ShoppingBag[];
+  data: ShoppingBag[] | Wishlist[];
   onClose: () => void;
   isOpen: boolean;
   onOpen: () => void;
@@ -55,9 +56,9 @@ export default function PreviewMyProducts({
     };
   }, [isOpen]);
 
-  const totalPrice = data.reduce((total, item) => {
+  const totalPrice = data.reduce((total, item: any) => {
     const price = item?.product?.price;
-    const quantity = item?.quantity;
+    const quantity = item?.quantity || 0;
     return total + price * quantity;
   }, 0);
 
@@ -82,7 +83,7 @@ export default function PreviewMyProducts({
         {data?.length === 0 ? (
           <>
             <div className="text-[20px]  font-bold">
-              {type === "cart" ? "Sopping Bag" : "Wishlist"} 
+              {type === "cart" ? "Sopping Bag" : "Wishlist"}
             </div>
             <div className="flex items-center justify-center w-full h-[200px]">
               {type === "cart" ? "Shopping Bag is empty" : "Wishlist is empty"}
@@ -101,7 +102,7 @@ export default function PreviewMyProducts({
             )}
             <DropdownMenuSeparator className="my-5" />
             <div className="w-full  p-5 max-h-[400px] overflow-y-auto pb-[150px] ">
-              {data?.map((item) => (
+              {data?.map((item: any) => (
                 <Link
                   key={item?.product?._id}
                   href={`/${item?.product?.category?.title}/${item?.product?.subCategory?.title}/${item?.product?.brand}/product/${item?.product?._id}`}

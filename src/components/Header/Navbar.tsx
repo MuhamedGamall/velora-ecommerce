@@ -6,11 +6,11 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import CartMenu from "./CartMenu";
+import CartMenu from "../modals/CartMenu";
 import Navigation from "./Navigation";
 import ProfileMenu from "./ProfileMenu";
 import Search from "./SearchBar";
-import WishlistMenu from "./WishlistMenu";
+import WishlistMenu from "../modals/WishlistMenu";
 
 export default function Navber() {
   const pathname = usePathname();
