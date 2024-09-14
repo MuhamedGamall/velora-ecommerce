@@ -1,16 +1,13 @@
 "use server";
 import { client } from "@/sanity/lib/client";
 import { UserProfile } from "@/types";
-import { revalidatePath } from "next/cache";
 
 const removeProductFromBag = async ({
   userId,
   productId,
-  pathname,
 }: {
   userId: string;
   productId: string;
-  pathname: string;
 }) => {
   try {
     if (!userId) {
@@ -32,7 +29,6 @@ const removeProductFromBag = async ({
       .patch(userId)
       .set({ shoppingBag: updatedShoppingBag })
       .commit();
-    revalidatePath(pathname);
     return true;
   } catch (error) {
     console.error("Error removing product from the shopping bag:", error);

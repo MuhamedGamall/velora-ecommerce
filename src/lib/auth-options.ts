@@ -34,7 +34,6 @@ export const authOptions: AuthOptions = {
     },
     async signIn({ user }) {
       try {
-        console.log(process.env.CEO_EMAIL, user?.email);
         if (!user || !user?.email) return false;
         if (process.env.CEO_EMAIL === user?.email) {
           const updateUser = await updateUserRole({

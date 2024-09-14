@@ -1,7 +1,6 @@
 "use server";
 import { client } from "@/sanity/lib/client";
-import { Product, ShoppingBag, UserProfile } from "@/types";
-import { revalidatePath } from "next/cache";
+import { UserProfile } from "@/types";
 
 const addProductToBag = async ({
   userId,
@@ -9,14 +8,12 @@ const addProductToBag = async ({
   size,
   quantity,
   productTitle,
-  pathname,
 }: {
   userId: string;
   productId: string;
   size: string;
   quantity: number;
   productTitle: string;
-  pathname: string;
 }) => {
   try {
     if (!userId) {
@@ -25,17 +22,20 @@ const addProductToBag = async ({
     if (!productId) {
       throw "Product ID is required";
     }
-    if (!size) {
-      throw "Product Size is required";
-    }
+
     if (quantity <= 0) {
       throw "Product Quantity should be greater than 0";
     }
-    const user = await client.getDocument(userId);
+    const user = (await client.getDocument(userId)) as UserProfile;
 
     if (!user) {
       throw "User not found";
     }
+    const isExist = user?.shoppingBag?.find(
+      (item) => item?.product?._ref === productId
+    );
+
+    if (isExist) return true;
     const generateKey = () =>
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
@@ -53,7 +53,6 @@ const addProductToBag = async ({
         },
       ])
       .commit();
-    revalidatePath(pathname);
     return true;
   } catch (error: any) {
     console.error("Error adding product to the shopping bag:", error);

@@ -54,8 +54,8 @@ export interface ShoppingBag {
   _key?: string;
   _type?: string;
   product: Product;
-  size?: string;
-  quantity?: number;
+  size: string;
+  quantity: number;
 }
 export interface Wishlist {
   _key?: string;

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 const Footer = () => {
   const pathname = usePathname();
   const year = new Date().getFullYear();
-  if (["/auth/signIn", "/auth/register"].includes(pathname)) return;
+  if (["/auth/signIn", "/auth/register",'/studio'].includes(pathname)) return;
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {

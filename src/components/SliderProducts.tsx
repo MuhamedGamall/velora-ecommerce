@@ -21,7 +21,7 @@ const ProductsSlider = ({
       >
         <h3
           className={cn(
-            "font-bold font-serif capitalize text-start  text-[30px] sm:text-[50px]",
+            "font-bold  capitalize text-start  text-[30px] sm:text-[50px]",
             {
               "text-[30px] sm:text-[40px]  ": type === "related",
             }
@@ -42,7 +42,7 @@ const ProductsSlider = ({
             : type === "related" && null}
         </p>
       </div>
-      <div className="ml-7">
+      <div className="lg:ml-10 ml-7">
         <SliderView products={products} />
       </div>
     </div>

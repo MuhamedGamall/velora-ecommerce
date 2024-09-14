@@ -22,7 +22,7 @@ export default async function HeroSection() {
   const heroImage = data?.image || "/hero-image.jpg";
 
   return (
-    <section className="relative  max-h-[250px]   sm:max-h-[500px] overflow-hidden w-full">
+    <section className="relative  max-h-[300px]   sm:max-h-[550px] overflow-hidden w-full">
       <Image
         width={1920}
         height={600}
@@ -48,7 +48,7 @@ export default async function HeroSection() {
       </div>
       <div className=" absolute bottom-2 md:top-20  left-0 md:px-5 w-full ">
         <div className="  w-full containerWrapper mx-auto flex flex-col   overflow-hidden justify-start ">
-          <h1 className="capitalize text-[20px] sm:text-[28px] md:text-[70px] font-serif leading-[1] text-white font-bold">
+          <h1 className="capitalize text-[20px] sm:text-[28px] md:text-[70px] leading-[1] text-white font-bold">
             {data?.title || "The Fall Collection"}
           </h1>
           <p className="text-white text-[10px] md:text-[15px] font-bold uppercase">

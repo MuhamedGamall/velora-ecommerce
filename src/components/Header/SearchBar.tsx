@@ -22,11 +22,14 @@ export default function Search() {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
+      document.body.style.pointerEvents = "none";
     } else {
       document.body.style.overflow = "auto";
+      document.body.style.pointerEvents = "all";
     }
     return () => {
       document.body.style.overflow = "auto";
+      document.body.style.pointerEvents = "all";
     };
   }, [open]);
 

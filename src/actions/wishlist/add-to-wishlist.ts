@@ -1,17 +1,14 @@
 "use server";
 import { client } from "@/sanity/lib/client";
-import { revalidatePath } from "next/cache";
 
 const addProductToWishlist = async ({
   userId,
   productId,
   productTitle,
-  pathname,
 }: {
   userId: string;
   productId: string;
   productTitle: string;
-  pathname: string;
 }) => {
   try {
     if (!userId) {
@@ -41,7 +38,6 @@ const addProductToWishlist = async ({
         },
       ])
       .commit();
-    revalidatePath(pathname);
     return true;
   } catch (error: any) {
     console.error("Error adding product to the wishlist:", error);

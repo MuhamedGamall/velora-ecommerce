@@ -13,17 +13,9 @@ interface WishlistState {
   onClose: () => void;
   fetchWishlist: () => Promise<void>;
   setWishlist: (items: ShoppingBag[]) => void;
-  addToWishlist: (params: {
-    userId: string;
-    product: Product;
-    pathname: string;
-  }) => Promise<void>;
-  removeFromWishlist: (params: {
-    userId: string;
-    productId: string;
-    pathname: string;
-  }) => Promise<void>;
-  resetWishlist: (pathname: string) => Promise<void>;
+  addToWishlist: (product: Product) => Promise<void>;
+  removeFromWishlist: (productId: string) => Promise<void>;
+  resetWishlist: () => Promise<void>;
 }
 
 const useWishlistStore = create<WishlistState>((set) => ({
@@ -42,7 +34,7 @@ const useWishlistStore = create<WishlistState>((set) => ({
         userId: session.user._id,
       });
       set({ wishlist: wishlist || [] });
-    } catch (error:any) {
+    } catch (error: any) {
       set({ wishlist: [] });
       throw new Error("fetching wishlist:", error);
     }
@@ -50,7 +42,7 @@ const useWishlistStore = create<WishlistState>((set) => ({
 
   setWishlist: (items) => set({ wishlist: items }),
 
-  addToWishlist: async ({ product, ...params }) => {
+  addToWishlist: async (product) => {
     try {
       const session = await getCurrentSession();
       if (!session?.user?._id) {
@@ -61,7 +53,7 @@ const useWishlistStore = create<WishlistState>((set) => ({
       }));
 
       const response = await addProductToWishlist({
-        ...params,
+        userId: session.user._id,
         productId: product._id,
         productTitle: product.title,
       });
@@ -84,14 +76,14 @@ const useWishlistStore = create<WishlistState>((set) => ({
     }
   },
 
-  removeFromWishlist: async (params) => {
+  removeFromWishlist: async (productId) => {
     let backupState;
 
     set((state) => {
       backupState = state.wishlist;
       return {
         wishlist: state.wishlist?.filter(
-          (item) => item.product._id !== params?.productId
+          (item) => item.product._id !== productId
         ),
       };
     });
@@ -101,7 +93,10 @@ const useWishlistStore = create<WishlistState>((set) => ({
       if (!session?.user?._id) {
         throw "User ID not found";
       }
-      const response = await removeFromWishlist(params);
+      const response = await removeFromWishlist({
+        productId,
+        userId: session.user._id,
+      });
 
       if (!response) {
         set({ wishlist: backupState });
@@ -113,7 +108,7 @@ const useWishlistStore = create<WishlistState>((set) => ({
     }
   },
 
-  resetWishlist: async (pathname) => {
+  resetWishlist: async () => {
     let backupState;
     set((state) => {
       backupState = state.wishlist;
@@ -128,12 +123,11 @@ const useWishlistStore = create<WishlistState>((set) => ({
       }
       const response = await resetWishlist({
         userId: session.user._id,
-        pathname,
       });
 
       if (!response) {
         set({ wishlist: backupState });
-        throw "Failed to reseting shopping bag, please try again";
+        throw "Failed to resetting shopping bag, please try again";
       }
     } catch (error: any) {
       set({ wishlist: backupState });

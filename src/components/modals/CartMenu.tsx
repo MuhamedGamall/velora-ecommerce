@@ -1,7 +1,7 @@
 "use client";
 import useShoppingBagStore from "@/zustand/store/cartStore";
 import { useEffect } from "react";
-import PreviewMyProducts from "../PreviewMyProducts";
+import ProductsMenu from "../ProductsMenu";
 
 export default function CartMenu() {
   const {
@@ -17,7 +17,7 @@ export default function CartMenu() {
   }, []);
 
   return (
-    <PreviewMyProducts
+    <ProductsMenu
       type="cart"
       data={shoppingBag}
       onClose={onClose}

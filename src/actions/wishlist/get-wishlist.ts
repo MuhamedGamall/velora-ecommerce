@@ -14,6 +14,7 @@ const userQuery = `
         colour,
         oldPrice,
         price,
+        sizes,
         brand,
         category->{
           _id,

@@ -4,6 +4,7 @@ import getShoppingBag from "@/actions/shopping-bag/get-shopping-bag";
 import removeProductFromBag from "@/actions/shopping-bag/remove-from-bag";
 import resetShoppingBag from "@/actions/shopping-bag/reset-shopping-bag";
 import { Product, ShoppingBag } from "@/types";
+import { toast } from "sonner";
 import { create } from "zustand";
 
 interface ShoppingBagState {
@@ -14,18 +15,12 @@ interface ShoppingBagState {
   fetchShoppingBag: () => Promise<void>;
   setShoppingBag: (items: ShoppingBag[]) => void;
   addToBag: (params: {
-    userId: string;
     product: Product;
     size: string;
     quantity: number;
-    pathname: string;
   }) => Promise<void>;
-  removeFromBag: (params: {
-    userId: string;
-    productId: string;
-    pathname: string;
-  }) => Promise<void>;
-  resetShoppingBag: (pathname: string) => Promise<void>;
+  removeFromBag: (productId: string) => Promise<void>;
+  resetShoppingBag: () => Promise<void>;
 }
 
 const useShoppingBagStore = create<ShoppingBagState>((set) => ({
@@ -43,6 +38,7 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
       const { shoppingBag } = await getShoppingBag({
         userId: session.user._id,
       });
+
       set({ shoppingBag: shoppingBag || [] });
     } catch (error: any) {
       set({ shoppingBag: [] });
@@ -58,15 +54,24 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
       if (!session?.user?._id) {
         throw "User ID not found";
       }
-      set((state) => ({
-        shoppingBag: [
-          ...state.shoppingBag,
-          { product, size: params.size, quantity: params.quantity },
-        ],
-      }));
+
+      set((state) => {
+        const isExist = state.shoppingBag.find(
+          (item) => item?.product?._id === product?._id
+        );
+        
+        if (isExist) return { shoppingBag: state.shoppingBag };
+        return {
+          shoppingBag: [
+            ...state.shoppingBag,
+            { product, size: params.size, quantity: params.quantity },
+          ],
+        };
+      });
 
       const response = await addProductToBag({
         ...params,
+        userId: session?.user?._id,
         productId: product._id,
         productTitle: product.title,
       });
@@ -89,13 +94,13 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
     }
   },
 
-  removeFromBag: async (params) => {
+  removeFromBag: async (productId) => {
     let backupState;
     set((state) => {
       backupState = state.shoppingBag;
       return {
         shoppingBag: state.shoppingBag.filter(
-          (item) => item.product._id !== params?.productId
+          (item) => item.product._id !== productId
         ),
       };
     });
@@ -105,7 +110,10 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
       if (!session?.user?._id) {
         throw "User ID not found";
       }
-      const response = await removeProductFromBag(params);
+      const response = await removeProductFromBag({
+        productId,
+        userId: session?.user?._id,
+      });
 
       if (!response) {
         set({ shoppingBag: backupState });
@@ -117,7 +125,7 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
     }
   },
 
-  resetShoppingBag: async (pathname) => {
+  resetShoppingBag: async () => {
     let backupState;
     set((state) => {
       backupState = state.shoppingBag;
@@ -132,16 +140,16 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
       }
       const response = await resetShoppingBag({
         userId: session.user._id,
-        pathname,
       });
 
       if (!response) {
         set({ shoppingBag: backupState });
-        throw "Failed to reseting shopping bag, please try again";
+        throw "Failed to resetting shopping bag, please try again";
       }
     } catch (error: any) {
       set({ shoppingBag: backupState });
-      throw new Error("reseting shopping bag:", error);
+      toast.error("Failed to resetting shopping bag, please try again");
+      throw new Error("resetting shopping bag:", error);
     }
   },
 }));

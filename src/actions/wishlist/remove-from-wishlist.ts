@@ -1,16 +1,13 @@
 "use server";
 import { client } from "@/sanity/lib/client";
 import { UserProfile } from "@/types";
-import { revalidatePath } from "next/cache";
 
 const removeFromWishlist = async ({
   userId,
   productId,
-  pathname,
 }: {
   userId: string;
   productId: string;
-  pathname: string;
 }) => {
   try {
     if (!userId) {
@@ -29,7 +26,6 @@ const removeFromWishlist = async ({
     );
 
     await client.patch(userId).set({ wishlist: updatedWishlist }).commit();
-    revalidatePath(pathname);
     return true;
   } catch (error) {
     console.error("Error removing product from the wishlist:", error);

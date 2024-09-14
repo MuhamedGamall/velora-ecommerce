@@ -16,7 +16,6 @@ export default async function Home() {
       <ProductsSlider type="featured" products={featuredProducts} />
       <Categories />
       <ProductsSlider type="trending" products={trendingProducts} />
-      <Footer />
     </div>
   );
 }

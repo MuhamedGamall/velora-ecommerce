@@ -78,6 +78,7 @@ export const user = defineType({
               name: "quantity",
               type: "number",
               title: "Quantity",
+              validation: (Rule) => Rule.required(),
             },
           ],
         },

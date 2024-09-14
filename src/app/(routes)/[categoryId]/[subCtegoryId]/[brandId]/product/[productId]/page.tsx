@@ -30,11 +30,10 @@ export default async function ProductPage({ params }: Props) {
   });
   return (
     <div className="w-full">
-      <ProductView product={product}  />
+      <ProductView product={product} />
       <div className="border-t w-full">
         <ProductsSlider type="related" products={relatedProducts} />
       </div>
-      <Footer />
     </div>
   );
 }

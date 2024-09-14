@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import PreviewMyProducts from "../PreviewMyProducts";
+import ProductsMenu from "../ProductsMenu";
 import useWishlistStore from "@/zustand/store/wishlistStore";
 
 export default function WishlistMenu() {
@@ -10,7 +10,7 @@ export default function WishlistMenu() {
     fetchWishlist();
   }, []);
   return (
-    <PreviewMyProducts
+    <ProductsMenu
       type="wishlist"
       data={wishlist}
       onClose={onClose}

@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { CurrentClientSession, Product, ShoppingBag } from "@/types";
 import useShoppingBagStore from "@/zustand/store/cartStore";
 import { Loader2 } from "lucide-react";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 const AddToBag = ({
@@ -21,23 +20,21 @@ const AddToBag = ({
   product: Product;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const userId = session?.data?.user?._id;
-  const pathname = usePathname();
+  const [sizeError, setSizeError] = useState<boolean>(false);
 
   const { addToBag, removeFromBag } = useShoppingBagStore();
 
   const addproductToBag = async () => {
     try {
-      if (!size) return toast.error("Please select a size");
+      if (!size && product?.sizes) return setSizeError(true);
       if (quantity <= 0)
         return toast.error("Quantity should be greater than 0");
       await addToBag({
         product,
         quantity,
-        size,
-        userId,
-        pathname,
+        size: size || '',
       });
+      setSizeError(false);
       toast.success("Product added to bag");
     } catch (error) {
       toast.error("Something went wrong", {
@@ -48,11 +45,7 @@ const AddToBag = ({
   };
   const removeProductFromBag = async () => {
     try {
-      await removeFromBag({
-        productId: product?._id,
-        userId,
-        pathname,
-      });
+      await removeFromBag(product?._id);
     } catch (error) {
       toast.error("Something went wrong", {
         description:
@@ -84,14 +77,19 @@ const AddToBag = ({
   };
 
   return (
-    <Button
-      disabled={loading}
-      className=" bg-mainBlack border-black w-full rounded-none "
-      onClick={handleClick}
-    >
-      {loading && <Loader2 size={15} className="animate-spin mr-3" />}
-      {isExist ? "Remove from bag" : "Add to bag"}
-    </Button>
+    <>
+      {sizeError && !size && (
+        <span className="text-red-700 text-sm">{"Please select a size"}</span>
+      )}
+      <Button
+        disabled={loading}
+        className=" bg-mainBlack border-black w-full rounded-none "
+        onClick={handleClick}
+      >
+        {loading && <Loader2 size={15} className="animate-spin mr-3" />}
+        {isExist ? "Remove from bag" : "Add to bag"}
+      </Button>
+    </>
   );
 };
 

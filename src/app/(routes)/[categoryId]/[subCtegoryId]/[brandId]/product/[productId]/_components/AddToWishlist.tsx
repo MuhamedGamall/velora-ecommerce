@@ -17,18 +17,12 @@ const AddToWishlist = ({
   product: Product;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const userId = session?.data?.user?._id;
-  const pathname = usePathname();
 
   const { addToWishlist, removeFromWishlist } = useWishlistStore();
 
   const addProductToWishlist = async () => {
     try {
-      await addToWishlist({
-        product,
-        userId,
-        pathname,
-      });
+      await addToWishlist(product);
       toast.success("Product added to wishlist");
     } catch (error) {
       toast.error("Something went wrong", {
@@ -39,11 +33,7 @@ const AddToWishlist = ({
   };
   const removeProductFromWishlist = async () => {
     try {
-      await removeFromWishlist({
-        productId: product?._id,
-        userId,
-        pathname,
-      });
+      await removeFromWishlist(product?._id);
     } catch (error) {
       toast.error("Something went wrong", {
         description:
