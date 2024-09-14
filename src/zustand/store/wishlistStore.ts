@@ -42,8 +42,9 @@ const useWishlistStore = create<WishlistState>((set) => ({
         userId: session.user._id,
       });
       set({ wishlist: wishlist || [] });
-    } catch (error) {
-      console.error("[fetchWishlist] Failed to fetch wishlist:", error);
+    } catch (error:any) {
+      set({ wishlist: [] });
+      throw new Error("fetching wishlist:", error);
     }
   },
 
@@ -79,7 +80,7 @@ const useWishlistStore = create<WishlistState>((set) => ({
           (item) => item.product._id !== product._id
         ),
       }));
-      console.error("Error adding product to the wishlist:", error);
+      throw new Error("Error adding product to the wishlist:", error);
     }
   },
 
@@ -108,7 +109,7 @@ const useWishlistStore = create<WishlistState>((set) => ({
       }
     } catch (error: any) {
       set({ wishlist: backupState });
-      console.error("Error removing product from the wishlist:", error);
+      throw new Error("Error removing product from the wishlist:", error);
     }
   },
 
@@ -136,7 +137,7 @@ const useWishlistStore = create<WishlistState>((set) => ({
       }
     } catch (error: any) {
       set({ wishlist: backupState });
-      console.error("Error removing product from the wishlist:", error);
+      throw new Error("Error removing product from the wishlist:", error);
     }
   },
 }));

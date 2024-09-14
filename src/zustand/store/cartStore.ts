@@ -44,8 +44,9 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
         userId: session.user._id,
       });
       set({ shoppingBag: shoppingBag || [] });
-    } catch (error) {
-      console.error("Failed to fetch shopping bag:", error);
+    } catch (error: any) {
+      set({ shoppingBag: [] });
+      throw new Error("fetching shopping bag:", error);
     }
   },
 
@@ -84,7 +85,7 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
           (item) => item.product._id !== product._id
         ),
       }));
-      console.error("Error adding product to the shopping bag:", error);
+      throw new Error(" adding product to the shopping bag:", error);
     }
   },
 
@@ -112,7 +113,7 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
       }
     } catch (error: any) {
       set({ shoppingBag: backupState });
-      console.error("Error removing product from the shopping bag:", error);
+      throw new Error("removing product from the shopping bag:", error);
     }
   },
 
@@ -140,7 +141,7 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
       }
     } catch (error: any) {
       set({ shoppingBag: backupState });
-      console.error("Error resetting shopping bag:", error);
+      throw new Error("reseting shopping bag:", error);
     }
   },
 }));

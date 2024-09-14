@@ -32,7 +32,8 @@ const AddToWishlist = ({
       toast.success("Product added to wishlist");
     } catch (error) {
       toast.error("Something went wrong", {
-        description: "Error adding product to the wishlist, please try again",
+        description:
+          "Failed to adding product to the wishlist, please try again",
       });
     }
   };
@@ -65,7 +66,9 @@ const AddToWishlist = ({
     } catch (error) {
       throw error;
     } finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
   };
 

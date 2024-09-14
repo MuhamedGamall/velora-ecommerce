@@ -24,7 +24,7 @@ const AddToBag = ({
   const userId = session?.data?.user?._id;
   const pathname = usePathname();
 
-  const { addToBag, removeFromBag, onOpen } = useShoppingBagStore();
+  const { addToBag, removeFromBag } = useShoppingBagStore();
 
   const addproductToBag = async () => {
     try {
@@ -39,11 +39,10 @@ const AddToBag = ({
         pathname,
       });
       toast.success("Product added to bag");
-      onOpen();
     } catch (error) {
       toast.error("Something went wrong", {
         description:
-          "Error adding product to the shopping bag, please try again",
+          "Failed to adding product to the shopping bag, please try again",
       });
     }
   };
@@ -78,9 +77,9 @@ const AddToBag = ({
     } catch (error) {
       throw error;
     } finally {
-      // setTimeout(() => {
-      setLoading(false);
-      // }, 900);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
   };
 
