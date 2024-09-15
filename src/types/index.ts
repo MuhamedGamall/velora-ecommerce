@@ -93,6 +93,25 @@ interface SubCategoryObject {
   _id?: string;
   title?: string;
 }
+export interface CategoryTree {
+  _id: string;
+  _type: string;
+  title: string;
+  subCategories: Array<{
+    _type: string;
+    _ref: string;
+    title: string;
+  }>;
+  categoryImage: {
+    _type: string;
+    asset: {
+      _ref: string;
+      _type: string;
+      _id: string;
+      url: string;
+    };
+  };
+}
 
 export interface MoreInformationObject {
   infoText: string;

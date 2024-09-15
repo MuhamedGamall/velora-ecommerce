@@ -5,7 +5,7 @@ import getCategories from "@/actions/get-categories";
 export default async function Categories() {
   const categories = await getCategories();
   const categoriesWithOutBaby = categories
-    .filter((category: any) => category.title !== "baby")
+    .filter((category) => category.title !== "baby")
     ?.reverse();
   return (
     <div className="containerWrapper mx-auto">

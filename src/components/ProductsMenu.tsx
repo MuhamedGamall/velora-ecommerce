@@ -128,7 +128,7 @@ export default function ProductsMenu({
                       <div className="">
                         {type === "cart" ? (
                           <div className="flex items-center text-slate-600">
-                            <span>{item?.product?.colour}</span>
+                            <span >{item?.product?.colour?.replaceAll("_", " ")}</span>
                             <Dot size={20} className="text-slate-300" />
                             {item?.size && (
                               <>
@@ -140,7 +140,7 @@ export default function ProductsMenu({
                           </div>
                         ) : (
                           <div className="flex items-center text-slate-600">
-                            <span>{item?.product?.colour}</span>
+                            <span>{item?.product?.colour?.replaceAll("_", " ")}</span>
                             <Dot size={20} className="text-slate-300" />
                             <span>Qty:{item?.quantity || 1}</span>
                           </div>

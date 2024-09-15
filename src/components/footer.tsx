@@ -1,5 +1,6 @@
 "use client";
 import getCategories from "@/actions/get-categories";
+import { CategoryTree } from "@/types";
 import { Github, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -8,9 +9,12 @@ import { useEffect, useState } from "react";
 const Footer = () => {
   const pathname = usePathname();
   const year = new Date().getFullYear();
-  if (["/auth/signIn", "/auth/register",'/studio'].includes(pathname)) return;
-  const [categories, setCategories] = useState<any[]>([]);
-
+  if (["/auth/signIn", "/auth/register", "/studio"].includes(pathname)) return;
+  const [categories, setCategories] = useState<CategoryTree[]>([]);
+  const isStudioPage = pathname.includes("/studio");
+  if (isStudioPage) {
+    return;
+  }
   useEffect(() => {
     getCategories()
       .then((data) => {
@@ -40,17 +44,15 @@ const Footer = () => {
                     {category.title}
                   </Link>
                   <div className="flex flex-col  gap-1 w-full text-[13px]">
-                    {category?.subCategories?.map(
-                      (subCategory: any) => (
-                        <Link 
-                          key={subCategory.title}
-                          href="#"
-                          className=" capitalize  hover:underline "
-                        >
-                          {subCategory.title}
-                        </Link>
-                      )
-                    )}
+                    {category?.subCategories?.map((subCategory: any) => (
+                      <Link
+                        key={subCategory.title}
+                        href="#"
+                        className=" capitalize  hover:underline "
+                      >
+                        {subCategory.title}
+                      </Link>
+                    ))}
                   </div>
                 </li>
               ))}
@@ -62,10 +64,16 @@ const Footer = () => {
               <div>
                 <h4 className="font-bold text-lg mb-4">Follow us</h4>
                 <div className="flex gap-4 mb-6  ml-5">
-                  <Link href="https://linkedin.com/in/muhamed-gamal-468339241" className=" hover:bg-white p-2 border hover:text-mainBlack rounded-full">
+                  <Link
+                    href="https://linkedin.com/in/muhamed-gamal-468339241"
+                    className=" hover:bg-white p-2 border hover:text-mainBlack rounded-full"
+                  >
                     <Linkedin size={24} />
                   </Link>
-                  <Link href="https://github.com/MuhamedGamall" className=" hover:bg-white p-2 border hover:text-mainBlack rounded-full">
+                  <Link
+                    href="https://github.com/MuhamedGamall"
+                    className=" hover:bg-white p-2 border hover:text-mainBlack rounded-full"
+                  >
                     <Github size={24} />
                   </Link>
                 </div>

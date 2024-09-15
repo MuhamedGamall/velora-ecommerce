@@ -81,7 +81,7 @@ const ProductView = ({ product }: { product: Product | null }) => {
         <div className="text-[13px]">
           <span className=" text-gray-700">
             Colour:
-            <span className="text-black capitalize"> {product?.colour}</span>
+            <span className="text-black capitalize"> {product?.colour?.replaceAll("_", " ")}</span>
           </span>
         </div>
         <Quantity

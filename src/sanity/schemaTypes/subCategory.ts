@@ -27,5 +27,27 @@ export default defineType({
       ],
       validation: (Rule) => Rule.unique().required(),
     }),
+    defineField({
+      name: "moreInformation",
+      title: "More Information",
+      type: "array",
+      initialValue: [],
+      of: [
+        {
+          type: "object",
+          title: "Information",
+          fields: [
+            {
+              name: "infoText",
+              title: "Info Text",
+              type: "string",
+              validation: (Rule) => Rule.required().min(3).max(500),
+            },
+          ],
+        },
+      ],
+      validation: (Rule) => Rule.min(1).max(20),
+    }),
+
   ],
 });

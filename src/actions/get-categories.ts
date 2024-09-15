@@ -1,5 +1,6 @@
 "use server";
 import { client } from "@/sanity/lib/client";
+import { CategoryTree } from "@/types";
 const categoriesQuery = `*[_type == "category"]{
   _id,
   title,
@@ -19,7 +20,7 @@ const categoriesQuery = `*[_type == "category"]{
 export default async function getCategories() {
   try {
     let categories = await client.fetch(categoriesQuery);
-    return categories as any;
+    return categories as CategoryTree[];
   } catch (error: any) {
     console.error("Error fetching categories: ", error);
     return [];
