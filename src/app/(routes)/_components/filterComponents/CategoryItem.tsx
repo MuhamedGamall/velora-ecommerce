@@ -39,13 +39,13 @@ const CategoryItem = ({ cateItem }: { cateItem: CategoryTree }) => {
       {cateItem && (
         <div
           className={cn(
-            "flex items-center justify-between w-full gap-2 pt-2 mt-2 border-t "
+            "flex items-center justify-between w-full gap-2 pt-4 mt-4 border-t "
           )}
         >
           <Link
             href={`/${cateItem?.title?.toLocaleLowerCase()?.trim()}`}
             className={cn(
-              "flex items-center cursor-pointer w-fit underline capitalize",
+              "flex items-center cursor-pointer text-lg w-fit underline capitalize",
               {
                 "font-bold": isMainCategory,
               }
@@ -55,7 +55,7 @@ const CategoryItem = ({ cateItem }: { cateItem: CategoryTree }) => {
           </Link>
 
           {cateItem?.subCategories && cateItem?.subCategories.length > 0 && (
-            <div className="ml-auto" onClick={() => onExpand(cateItem?.title)}>
+            <div className="ml-auto " onClick={() => onExpand(cateItem?.title)}>
               <ChevronIcon size={17} />
             </div>
           )}
