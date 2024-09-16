@@ -39,8 +39,9 @@ const CategoryItem = ({ cateItem }: { cateItem: CategoryTree }) => {
       {cateItem && (
         <div
           className={cn(
-            "flex items-center justify-between w-full gap-2 pt-4 mt-4 border-t "
+            "max-lg:px-5 flex items-center justify-between w-full gap-2 h-[64px] cursor-pointer border-t "
           )}
+          onClick={() => onExpand(cateItem?.title)}
         >
           <Link
             href={`/${cateItem?.title?.toLocaleLowerCase()?.trim()}`}
@@ -55,7 +56,7 @@ const CategoryItem = ({ cateItem }: { cateItem: CategoryTree }) => {
           </Link>
 
           {cateItem?.subCategories && cateItem?.subCategories.length > 0 && (
-            <div className="ml-auto " onClick={() => onExpand(cateItem?.title)}>
+            <div className="ml-auto ">
               <ChevronIcon size={17} />
             </div>
           )}
@@ -65,13 +66,13 @@ const CategoryItem = ({ cateItem }: { cateItem: CategoryTree }) => {
       {expanded[cateItem?.title] &&
         cateItem?.subCategories &&
         cateItem?.subCategories.length > 0 && (
-          <div className="pl-5 ">
+          <div className="max-lg:pl-10 pl-5 ">
             {cateItem?.subCategories.map((subCate, index) => (
               <Link
                 href={`/${cateItem?.title?.toLocaleLowerCase()?.trim()}/${subCate?.title?.toLocaleLowerCase()?.trim()}`}
                 key={subCate?.title}
                 className={cn(
-                  "flex items-center cursor-pointer hover:underline capitalize mt-2 text-slate-600",
+                  "flex items-center cursor-pointer hover:underline capitalize mb-2 text-slate-600",
                   {
                     "font-semibold underline ": isSubCategory(subCate?.title),
                   }

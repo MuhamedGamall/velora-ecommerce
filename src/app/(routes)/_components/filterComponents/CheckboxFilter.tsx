@@ -4,6 +4,14 @@ import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import qs from "query-string";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Circle } from "lucide-react";
+
+const CHECKBOX_FILTERS = [
+  { id: "sale", label: "Sale" },
+  { id: "newCollection", label: "New collection" },
+  { id: "bestseller", label: "Bestseller" },
+];
 
 export default function CheckboxFilter({
   saleValue,
@@ -19,6 +27,7 @@ export default function CheckboxFilter({
     newCollection: false,
     bestseller: false,
   });
+
   const router = useRouter();
 
   useEffect(() => {
@@ -47,40 +56,52 @@ export default function CheckboxFilter({
   };
 
   return (
-    <div className="flex items-center gap-3 my-5">
-      <div className="flex items-center gap-1">
-        <Checkbox
-          id="sale"
-          className="rounded-none "
-          checked={selectedData.sale}
-          onCheckedChange={() => handleToggle("sale")}
-        />
-        <Label htmlFor="sale" className="cursor-pointer hover:text-mainBlack text-slate-600">
-          Sale
-        </Label>
+    <>
+      <div className="flex items-center gap-3 my-5 max-lg:hidden">
+        {CHECKBOX_FILTERS.map(({ id, label }) => (
+          <div key={id} className="flex items-center gap-1">
+            <Checkbox
+              id={id}
+              className="rounded-none"
+              checked={selectedData[id]}
+              onCheckedChange={() => handleToggle(id)}
+            />
+            <Label
+              htmlFor={id}
+              className="cursor-pointer hover:text-mainBlack text-slate-600"
+            >
+              {label}
+            </Label>
+          </div>
+        ))}
       </div>
-      <div className="flex items-center gap-1">
-        <Checkbox
-          id="newCollection"
-          className="rounded-none "
-          checked={selectedData.newCollection}
-          onCheckedChange={() => handleToggle("newCollection")}
-        />
-        <Label htmlFor="newCollection" className="cursor-pointer hover:text-mainBlack text-slate-600">
-          New collection
-        </Label>
+
+      <div className="lg:hidden">
+        {CHECKBOX_FILTERS.map(({ id, label }) => (
+          <div key={id} className="flex items-center gap-1 border-b group">
+            <Checkbox
+              id={id}
+              className="hidden"
+              checked={selectedData[id]}
+              onCheckedChange={() => handleToggle(id)}
+            />
+            <Label
+              htmlFor={id}
+              className={cn(
+                "cursor-pointer group-hover:underline text-mainBlack flex justify-between items-center text-[16px] py-5 pl-7 pr-5 w-full",
+                {
+                  "font-bold ": selectedData[id],
+                }
+              )}
+            >
+              {label}
+              {selectedData[id] && (
+                <Circle className="h-4 w-4 opacity-50" color="green" strokeWidth={3} />
+              )}
+            </Label>
+          </div>
+        ))}
       </div>
-      <div className="flex items-center gap-1">
-        <Checkbox
-          id="bestseller" 
-          className="rounded-none "
-          checked={selectedData.bestseller}
-          onCheckedChange={() => handleToggle("bestseller")}
-        />
-        <Label htmlFor="bestseller" className="cursor-pointer hover:text-mainBlack text-slate-600">
-          Bestseller
-        </Label>
-      </div>
-    </div>
+    </>
   );
 }

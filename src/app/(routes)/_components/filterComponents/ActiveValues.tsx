@@ -22,7 +22,6 @@ export default function ActiveValues({
   };
 }) {
   const router = useRouter();
-
   const actives = [
     { q: searchParams?.q },
     { minPrice: searchParams?.minPrice },
@@ -58,7 +57,7 @@ export default function ActiveValues({
   };
 
   return (
-    <div className="w-full my-3 max-w-[900px] overflow-x-auto py-1">
+    <div className="w-full my-3 px-2max-w-[900px] overflow-x-auto py-1">
       <ul className="flex items-center gap-3">
         {actives.map((active) =>
           Object.entries(active).map(([key, value]) => {

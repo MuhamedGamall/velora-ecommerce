@@ -1,6 +1,12 @@
 "use client";
 import { ChevronDown, ChevronRight, Circle } from "lucide-react";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -11,25 +17,14 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
 
-export function CustomSelectMenu({
+export function AccordionFilterItem({
   type,
   data,
   initialValue,
@@ -38,7 +33,6 @@ export function CustomSelectMenu({
   data: { value: string; title: string }[];
   initialValue: string;
 }) {
-  const [open, setOpen] = useState(false);
   const [selectedData, setSelectedData] = useState<string[]>([]);
   const router = useRouter();
   const parseURL = (url: string) =>
@@ -67,7 +61,6 @@ export function CustomSelectMenu({
         skipEmptyString: true,
       }
     );
-    setOpen(false);
     router.push(`${url}`);
     router.refresh();
   };
@@ -93,32 +86,30 @@ export function CustomSelectMenu({
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-full  px-2 justify-between rounded-none border-black h-11 "
+    <AccordionItem value={"accordion-" + type}>
+      <AccordionTrigger className="w-full  h-16 p-5">
+        <div
+          className={cn(
+            "flex items-center capitalize px-2 justify-between w-full",
+            { "font-bold": initialValue }
+          )}
         >
           {type}
-          {initialValue ? (
+          {initialValue && (
             <Circle
               className="ml-2 h-4 w-4 opacity-50"
               color="green"
               strokeWidth={3}
             />
-          ) : (
-            <ChevronDown className="ml-2 lg:h-4 lg:w-4 h-6 w-6 opacity-50" />
           )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent align="start" className=" p-0 rounded-none border-black">
+        </div>
+      </AccordionTrigger>
+      <AccordionContent className={cn("z-[3000] w-full px-3")}>
         <Command>
           <CommandInput placeholder={`Search ${type}...`} />
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup>
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandGroup heading="Suggestions">
               {data?.map((item) => (
                 <CommandItem
                   key={item.value}
@@ -137,24 +128,24 @@ export function CustomSelectMenu({
             </CommandGroup>
           </CommandList>
         </Command>
-        <div className="flex w-full items-center  mt-2">
+        <div className="flex w-full items-center mt-2">
           <Button
             onClick={handleDelete}
             disabled={!initialValue}
             variant={"outline"}
-            className="w-full rounded-none"
+            className="w-full rounded-none max-lg:h-12"
           >
             Delete All
           </Button>
           <Button
             onClick={handleApply}
             disabled={selectedData.length === 0}
-            className="w-full rounded-none bg-black border-black"
+            className="w-full rounded-none bg-black max-lg:h-12 border-mainBlack"
           >
             Show results
           </Button>
         </div>
-      </PopoverContent>
-    </Popover>
+      </AccordionContent>
+    </AccordionItem>
   );
 }

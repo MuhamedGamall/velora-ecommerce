@@ -1,8 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { ShoppingBag } from "@/types";
 import { Menu } from "lucide-react";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,15 +9,19 @@ import Navigation from "./Navigation";
 import ProfileMenu from "./ProfileMenu";
 import Search from "./SearchBar";
 import WishlistMenu from "../modals/WishlistMenu";
+import { useScrollTop } from "@/hooks/use-scroll-top";
 
 export default function Navber() {
   const pathname = usePathname();
+  const scrolled = useScrollTop();
   if (["/auth/signIn", "/auth/register"].includes(pathname)) return;
   const isPrivacyPolicy = pathname.includes("/privacy-policy");
 
   const isStudioPage = pathname.includes("/studio");
   return (
-    <header>
+    <header className={cn(" fixed top-0 w-full z-[1000]",{
+        "border-b shadow-md":scrolled 
+    })}>
       <div
         className={cn("bg-mainBlack overflow-hidden", {
           "bg-[#13141b]": isStudioPage,
@@ -47,7 +49,7 @@ export default function Navber() {
 
           {!isStudioPage && !isPrivacyPolicy && (
             <div className="flex items-center gap-2">
-              <Search />
+              <Search   />
               <ProfileMenu />
               <WishlistMenu />
               <CartMenu />

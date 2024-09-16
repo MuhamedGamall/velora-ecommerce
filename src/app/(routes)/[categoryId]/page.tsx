@@ -6,6 +6,7 @@ import FilterOptionsbar from "../_components/filterComponents/FilterOptionsbar";
 import CheckboxFilter from "../_components/filterComponents/CheckboxFilter";
 import ActiveValues from "../_components/filterComponents/ActiveValues";
 import SortBy from "../_components/filterComponents/SortBy";
+import MobileFilter from "../_components/filterComponents/mobile/MobileFilter";
 
 export default function CategoryPage({
   searchParams,
@@ -31,19 +32,24 @@ export default function CategoryPage({
   };
 }) {
   return (
-    <div className="w-full flex mb-10 ">
+    <div className="w-full flex mb-10  ">
       <SidebarFilter />
-      <div className="w-full m-5">
+      <div className="w-full m-5 h-screen mt-[120px] ">
         <ProductsTitle searchParams={searchParams} params={params} />
-        <FilterOptionsbar searchParams={searchParams} />
-        <CheckboxFilter
-          saleValue={searchParams?.sale}
-          newCollectionValue={searchParams?.newCollection}
-          bestsellerValue={searchParams?.bestseller}
-        />
-        <div className="flex items-center justify-between gap-2 w-full">
-          <ActiveValues searchParams={searchParams} />
-          <SortBy initialValue={searchParams?.sortBy} />
+        <div className="max-lg:hidden">
+          <FilterOptionsbar searchParams={searchParams} />
+          <CheckboxFilter
+            saleValue={searchParams?.sale}
+            newCollectionValue={searchParams?.newCollection}
+            bestsellerValue={searchParams?.bestseller}
+          />
+          <div className="flex items-center justify-between gap-2 w-full">
+            <ActiveValues searchParams={searchParams} />
+            <SortBy initialValue={searchParams?.sortBy} />
+          </div>
+        </div>
+        <div className="lg:hidden">
+          <MobileFilter searchParams={searchParams} />
         </div>
         <ProductsContent />
       </div>

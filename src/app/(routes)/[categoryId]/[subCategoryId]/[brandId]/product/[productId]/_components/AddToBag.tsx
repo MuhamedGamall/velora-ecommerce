@@ -32,7 +32,7 @@ const AddToBag = ({
       await addToBag({
         product,
         quantity,
-        size: size || '',
+        size: size || "",
       });
       setSizeError(false);
       toast.success("Product added to bag");
@@ -83,7 +83,7 @@ const AddToBag = ({
       )}
       <Button
         disabled={loading}
-        className=" bg-mainBlack border-black w-full rounded-none "
+        className=" bg-mainBlack border-mainBlack  w-full rounded-none "
         onClick={handleClick}
       >
         {loading && <Loader2 size={15} className="animate-spin mr-3" />}

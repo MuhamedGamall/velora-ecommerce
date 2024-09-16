@@ -65,10 +65,10 @@ body,
 
 @layer base {
   * {
-    @apply border-border font-normal 
+    @apply border-border font-normal;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground !bg-white;
   }
   .containerWrapper {
     @apply max-w-screen-2xl   px-4;
@@ -82,4 +82,10 @@ body,
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 12px;
+}
+/* shadcn drawer fix  */
+[data-vaul-drawer][data-vaul-drawer-direction="bottom"]::after {
+  content: '';
+  top: 0 !important;
+  height: 0px !important;
 }

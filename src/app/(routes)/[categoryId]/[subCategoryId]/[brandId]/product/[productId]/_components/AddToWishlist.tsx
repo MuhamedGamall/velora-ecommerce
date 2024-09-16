@@ -66,7 +66,7 @@ const AddToWishlist = ({
     <Button
       disabled={loading}
       variant={"outline"}
-      className="border-black w-full rounded-none "
+      className="border-mainBlack  w-full rounded-none "
       onClick={handleClick}
     >
       {loading && <Loader2 size={15} className="animate-spin mr-3" />}

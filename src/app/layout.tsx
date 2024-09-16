@@ -19,13 +19,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
       <body className={`font-[georgia] antialiased `}>
         <AuthSessionProvider>
           <Toaster duration={3000} />
           <Navber />
-          <main>{children}</main>
+          <main className="">{children}</main>
           <Footer />
         </AuthSessionProvider>
       </body>

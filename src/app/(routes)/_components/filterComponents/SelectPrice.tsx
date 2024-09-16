@@ -20,6 +20,7 @@ export default function SelectPrice({
   maxPrice: string;
 }) {
   const [priceValue, setPriceValue] = useState({ min: 0, max: 10000 });
+  const [open,setOpen] =useState(false)
   const router = useRouter();
   useEffect(() => {
     if (minPrice || maxPrice) {
@@ -63,26 +64,91 @@ export default function SelectPrice({
         skipNull: true,
       }
     );
+    setOpen(false);
     router.push(`${url}`);
     router.refresh();
   };
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className="w-full min-w-[166px] text-[13px] px-2 justify-between rounded-none border-black h-11 overflow-x-auto "
-        >
-          <span>EGP {priceValue.min}</span>-<span>EGP {priceValue.max}</span>
-          <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="start"
-        className="w-[300px] rounded-none mt-[1px] border-black"
-      >
-        <div className="flex items-center gap-2 mb-5">
-          <Label className="">
+    <>
+      <div className="max-lg:hidden">
+        <DropdownMenu open={open} onOpenChange={setOpen}>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-full min-w-[166px] text-[13px] px-2 justify-between rounded-none border-black h-11 overflow-x-auto "
+            >
+              <span>EGP {priceValue.min}</span>-
+              <span>EGP {priceValue.max}</span>
+              <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="start"
+            className="w-[300px] rounded-none mt-[1px] border-black"
+          >
+            <div className="flex items-center gap-2 mb-5">
+              <Label className="">
+                Min Price
+                <Input
+                  value={priceValue.min}
+                  onChange={(e) => {
+                    setPriceValue({
+                      ...priceValue,
+                      min:
+                        Number(e.target.value) < 0 ? 0 : Number(e.target.value),
+                    });
+                  }}
+                  type="number"
+                  placeholder="EGP 0"
+                  className="rounded-none border-black mt-2"
+                />
+              </Label>
+              <Label>
+                Max Price
+                <Input
+                  value={priceValue.max}
+                  onChange={(e) => {
+                    setPriceValue({
+                      ...priceValue,
+                      max:
+                        Number(e.target.value) < 0 ? 0 : Number(e.target.value),
+                    });
+                  }}
+                  type="number"
+                  placeholder="EGP 15434"
+                  className="rounded-none border-black mt-2"
+                />
+              </Label>
+            </div>
+            <div className="flex w-full items-center  mt-2">
+              <Button
+                onClick={handleReset}
+                disabled={!minPrice || !maxPrice}
+                variant={"outline"}
+                className="w-full rounded-none"
+              >
+                Reset
+              </Button>
+              <Button
+                onClick={handleApply}
+                disabled={
+                  priceValue.max < 0 ||
+                  priceValue.min < 0 ||
+                  priceValue.min > priceValue.max ||
+                  (priceValue.min === 0 && priceValue.max === 0)
+                }
+                className="w-full rounded-none bg-black border-black"
+              >
+                Show results
+              </Button>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      <div className="lg:hidden w-full p-5 border-b mb-5">
+        <div className="flex items-center gap-2 mb-5 ">
+          <Label className="w-full">
             Min Price
             <Input
               value={priceValue.min}
@@ -94,10 +160,10 @@ export default function SelectPrice({
               }}
               type="number"
               placeholder="EGP 0"
-              className="rounded-none border-black mt-2"
+              className="rounded-none border-mainBlack  mt-2 max-lg:h-14 max-lgtext-lg "
             />
           </Label>
-          <Label>
+          <Label className="w-full ">
             Max Price
             <Input
               value={priceValue.max}
@@ -109,7 +175,7 @@ export default function SelectPrice({
               }}
               type="number"
               placeholder="EGP 15434"
-              className="rounded-none border-black mt-2"
+              className="rounded-none border-mainBlack  mt-2 max-lg:h-14 max-lg:text-lg"
             />
           </Label>
         </div>
@@ -118,7 +184,7 @@ export default function SelectPrice({
             onClick={handleReset}
             disabled={!minPrice || !maxPrice}
             variant={"outline"}
-            className="w-full rounded-none"
+            className="w-full rounded-none max-lg:h-12"
           >
             Reset
           </Button>
@@ -130,12 +196,12 @@ export default function SelectPrice({
               priceValue.min > priceValue.max ||
               (priceValue.min === 0 && priceValue.max === 0)
             }
-            className="w-full rounded-none bg-black border-black"
+            className="w-full rounded-none bg-black max-lg:h-12 border-mainBlack "
           >
             Show results
           </Button>
         </div>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </div>
+    </>
   );
 }

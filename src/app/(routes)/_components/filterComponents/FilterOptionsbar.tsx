@@ -1,6 +1,7 @@
 import React from "react";
 import { CustomSelectMenu } from "./CustomSelectMenu";
 import SelectPrice from "./SelectPrice";
+
 import {
   BRANDS_OPTIONS,
   COLOURS_OPTIONS,
@@ -8,6 +9,7 @@ import {
   PATTERNS_OPTIONS,
   SIZES_OPTIONS,
 } from "@/constants";
+import { Accordion } from "@/components/ui/accordion";
 
 export default function FilterOptionsbar({
   searchParams: {
@@ -33,7 +35,7 @@ export default function FilterOptionsbar({
   };
 }) {
   return (
-    <div className="flex items-center gap-3 w-full">
+    <div className="flex items-center max-lg:flex-col lg:gap-3 w-full">
       <SelectPrice minPrice={minPrice} maxPrice={maxPrice} />
       <CustomSelectMenu
         type={"brand"}
