@@ -7,13 +7,15 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import OrderSummary from "./OrderSummary";
 import EmptyState from "@/components/EmptyState";
+import { useSession } from "next-auth/react";
 
 export default function CheckoutContent() {
   const { shoppingBag, fetchShoppingBag, removeFromBag, resetShoppingBag } =
     useShoppingBagStore();
   const { addToWishlist } = useWishlistStore();
+  const session = useSession();
   useEffect(() => {
-    fetchShoppingBag();
+    if (session?.status === "authenticated") fetchShoppingBag();
   }, []);
   const handleRemove = async (productId: string) => {
     try {

@@ -25,8 +25,10 @@ const ProductView = ({ product }: { product: Product | null }) => {
   if (!product) notFound();
 
   useEffect(() => {
-    fetchShoppingBag();
-    fetchWishlist();
+    if (session?.status === "authenticated") {
+      fetchShoppingBag();
+      fetchWishlist();
+    }
   }, []);
   const isExistInBag = shoppingBag.find(
     (item) => item?.product?._id === product?._id
@@ -81,7 +83,10 @@ const ProductView = ({ product }: { product: Product | null }) => {
         <div className="text-[13px]">
           <span className=" text-gray-700">
             Colour:
-            <span className="text-black capitalize"> {product?.colour?.replaceAll("_", " ")}</span>
+            <span className="text-black capitalize">
+              {" "}
+              {product?.colour?.replaceAll("_", " ")}
+            </span>
           </span>
         </div>
         <Quantity

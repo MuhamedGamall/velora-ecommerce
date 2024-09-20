@@ -6,13 +6,17 @@ import useWishlistStore from "@/zustand/store/wishlistStore";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import EmptyState from "@/components/EmptyState";
+import { useSession } from "next-auth/react";
 
 export default function WishlistContent() {
   const { wishlist, fetchWishlist, removeFromWishlist, resetWishlist } =
     useWishlistStore();
   const { addToBag } = useShoppingBagStore();
+  const session = useSession();
   useEffect(() => {
-    fetchWishlist();
+    if (session?.status === "authenticated") {
+      fetchWishlist();
+    }
   }, []);
   const handleRemove = async (productId: string) => {
     try {
