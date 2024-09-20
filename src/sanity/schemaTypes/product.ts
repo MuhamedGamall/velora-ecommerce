@@ -43,7 +43,6 @@ export const product = defineType({
           ],
         },
       ],
-      validation: (Rule) => Rule.min(1).max(20),
     }),
 
     defineField({
@@ -89,7 +88,7 @@ export const product = defineType({
       title: "Sales Count",
       type: "number",
       readOnly: true,
-      initialValue: 0,
+      initialValue:0,
     }),
     defineField({
       name: "brand",

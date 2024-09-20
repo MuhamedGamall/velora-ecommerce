@@ -11,7 +11,7 @@ export default async function Home() {
   const trendingProducts = await getTrendingProducts();
 
   return (
-    <div className="mt-[110px]">
+    <div className=" mt-[70px] md:mt-[110px]">
       <HeroSection />
       <ProductsSlider type="featured" products={featuredProducts} />
       <Categories />

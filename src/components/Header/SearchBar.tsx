@@ -65,10 +65,10 @@ export default function Search() {
         <DropdownMenuContent
           align="start"
           className={cn(
-            " rounded-none border-mainBlack  mt-[20px]   shadow-searchBar w-screen"
+            " rounded-none border-mainBlack     shadow-searchBar w-screen"
           )}
         >
-          <form onSubmit={handleSearch} className="relative w-full  h-[70px]">
+          <form onSubmit={handleSearch} className="relative w-full  h-[60px]">
             <Input
               type="text"
               name="search"

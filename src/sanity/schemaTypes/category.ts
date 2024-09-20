@@ -37,18 +37,5 @@ export default defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
-
-    defineField({
-      name: "products",
-      type: "array",
-      title: "Products",
-      of: [
-        {
-          type: "reference",
-          to: [{ type: "product" }],
-        },
-      ],
-      validation: (Rule) => Rule.unique().required(),
-    }),
   ],
 });

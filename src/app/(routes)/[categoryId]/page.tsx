@@ -7,8 +7,11 @@ import CheckboxFilter from "../_components/filterComponents/CheckboxFilter";
 import ActiveValues from "../_components/filterComponents/ActiveValues";
 import SortBy from "../_components/filterComponents/SortBy";
 import MobileFilter from "../_components/filterComponents/mobile/MobileFilter";
+import { SearchParams } from "@/types";
+import getProduct from "@/actions/get-product";
+import getProducts from "@/actions/get-products";
 
-export default function CategoryPage({
+export default async function CategoryPage({
   searchParams,
   params,
 }: {
@@ -16,25 +19,17 @@ export default function CategoryPage({
     categoryId: string;
     subCategoryId: string;
   };
-  searchParams: {
-    q: string;
-    minPrice: string;
-    maxPrice: string;
-    colour: string;
-    material: string;
-    pattern: string;
-    size: string;
-    brand: string;
-    sale: string;
-    newCollection: string;
-    bestseller: string;
-    sortBy: string;
-  };
+  searchParams: SearchParams;
 }) {
+  const products = await getProducts({
+    category: params.categoryId,
+    subCategory: params.subCategoryId,
+    searchParams,
+  });
   return (
     <div className="w-full flex mb-10  ">
       <SidebarFilter />
-      <div className="w-full m-5 h-screen mt-[120px] ">
+      <div className="w-full m-5 h-screen mt-[80px] md:mt-[120px] ">
         <ProductsTitle searchParams={searchParams} params={params} />
         <div className="max-lg:hidden">
           <FilterOptionsbar searchParams={searchParams} />
@@ -51,7 +46,7 @@ export default function CategoryPage({
         <div className="lg:hidden">
           <MobileFilter searchParams={searchParams} />
         </div>
-        <ProductsContent />
+        <ProductsContent products={products} />
       </div>
     </div>
   );

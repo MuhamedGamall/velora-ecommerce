@@ -117,3 +117,18 @@ export interface MoreInformationObject {
   infoText: string;
   _key: string;
 }
+
+export interface SearchParams {
+  q: string;
+  minPrice: string;
+  maxPrice: string;
+  colour: string;
+  material: string;
+  pattern: string;
+  size: string;
+  brand: string;
+  sale: string;
+  newCollection: string;
+  bestseller: string;
+  sortBy: string;
+}

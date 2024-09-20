@@ -29,7 +29,7 @@ export default async function ProductPage({ params }: Props) {
     excludedId: productId,
   });
   return (
-    <div className="w-full mt-[130px]">
+    <div className="w-full mt-[90px] md:mt-[130px]">
       <ProductView product={product} />
       <div className="border-t w-full">
         <ProductsSlider type="related" products={relatedProducts} />

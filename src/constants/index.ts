@@ -148,6 +148,7 @@ export const SIZES_OPTIONS = [
 ];
 export const SORT_BY_OPTIONS = [
   { title: "Popular", value: "popular" },
-  { title: "Price: Low to High", value: "price_low_to_high" },
-  { title: "Price: High to Low", value: "price_high_to_low" },
+  { title: "Price: Low to High", value: "price-asc" },
+  { title: "Price: High to Low", value: "price-desc" },
 ];
+

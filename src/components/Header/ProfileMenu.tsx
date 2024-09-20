@@ -38,7 +38,7 @@ export default function ProfileMenu() {
 
       <DropdownMenuContent
         align="end"
-        className="bg-white border rounded-none mt-5 p-2"
+        className="bg-white border rounded-none mt-16 p-2"
       >
         <div className="flex items-center gap-2 p-2">
           {session?.data?.user?.image ? (
@@ -65,14 +65,14 @@ export default function ProfileMenu() {
         <>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setOpen(false)} asChild>
-            <Link href={`/orders`} className="flex items-center gap-2">
+            <Link href={`/orders`} className="flex items-center gap-2 cursor-pointer">
               <div className="h-4 w-4" />
               <span>Orders</span>
             </Link>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
-          <DropdownMenuItem
+          <DropdownMenuItem 
             onClick={() => {
               setOpen(false);
 
@@ -81,7 +81,7 @@ export default function ProfileMenu() {
               });
             }}
             asChild
-            className="p-3"
+            className="p-3 cursor-pointer text-slate-600"
           >
             <span>Sign Out</span>
           </DropdownMenuItem>
