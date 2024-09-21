@@ -14,6 +14,7 @@ export default async function updateUserRole({
       throw "Email is required";
     }
     const user = await getUser({ email });
+    
     if (!user) {
       throw "User not found";
     }
