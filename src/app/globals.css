@@ -74,6 +74,9 @@ body,
     @apply max-w-screen-2xl   px-4;
   }
 }
+@layer utilities {
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -83,9 +86,19 @@ body,
   background: #888;
   border-radius: 12px;
 }
+
 /* shadcn drawer fix  */
 [data-vaul-drawer][data-vaul-drawer-direction="bottom"]::after {
-  content: '';
+  content: "";
   top: 0 !important;
   height: 0px !important;
+}
+
+/* products container */
+.productsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 5px;
+
+
 }

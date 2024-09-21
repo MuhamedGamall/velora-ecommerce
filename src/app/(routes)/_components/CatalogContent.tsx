@@ -7,35 +7,45 @@ import CheckboxFilter from "../_components/filterComponents/CheckboxFilter";
 import ActiveValues from "../_components/filterComponents/ActiveValues";
 import SortBy from "../_components/filterComponents/SortBy";
 import MobileFilter from "../_components/filterComponents/mobile/MobileFilter";
-import { SearchParams } from "@/types";
-import getProduct from "@/actions/get-product";
-import getProducts from "@/actions/get-products";
+import { Product, SearchParams } from "@/types";
+import Breadcrumb from "@/components/BreadCrumbs";
+import { ChevronRight, HomeIcon } from "lucide-react";
+import EmptyState from "../../../components/EmptyState";
 
-export default async function CategoryPage({
+export default async function CatalogContent({
   searchParams,
   params,
+  products,
 }: {
-  params: {
+  params?: {
     categoryId: string;
     subCategoryId: string;
   };
   searchParams: SearchParams;
+  products: Product[];
 }) {
-  const products = await getProducts({
-    category: params.categoryId,
-    subCategory: params.subCategoryId,
-    searchParams,
-  });
   return (
     <div className="w-full flex mb-10  ">
       <SidebarFilter />
-      <div className="w-full m-5 h-screen mt-[80px] md:mt-[120px] ">
-        <ProductsTitle searchParams={searchParams} params={params} />
+      <div className="w-full m-5 min-h-screen  mt-[80px] md:mt-[130px] ">
+        <Breadcrumb
+          homeElement={<HomeIcon className="text-slate-600 " size={15} />}
+          separator={<ChevronRight className="text-slate-600 " size={15} />}
+          activeClasses="text-slate-600 font-semibold "
+          containerClasses="flex py-3 items-center gap-1 "
+          listClasses="hover:underline  hover:font-semibold text-[12px] sm:text-sm text-slate-600 "
+          capitalizeLinks
+        />
+        <ProductsTitle
+          searchParams={searchParams}
+          params={params}
+          productsLength={products.length}
+        />
         <div className="max-lg:hidden">
           <FilterOptionsbar searchParams={searchParams} />
           <CheckboxFilter
             saleValue={searchParams?.sale}
-            newCollectionValue={searchParams?.newCollection}
+            newSeasonValue={searchParams?.newSeason}
             bestsellerValue={searchParams?.bestseller}
           />
           <div className="flex items-center justify-between gap-2 w-full">
@@ -46,7 +56,11 @@ export default async function CategoryPage({
         <div className="lg:hidden">
           <MobileFilter searchParams={searchParams} />
         </div>
-        <ProductsContent products={products} />
+        {products.length === 0 ? (
+          <EmptyState q={searchParams.q} showButton={false} />
+        ) : (
+          <ProductsContent products={products} />
+        )}
       </div>
     </div>
   );

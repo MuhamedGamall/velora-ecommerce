@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { SearchIcon } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import {
@@ -13,20 +13,21 @@ import { Input } from "../ui/input";
 
 export default function Search() {
   const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const q = useSearchParams().get("q");
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState("");
+  const pathname = usePathname();
   useEffect(() => {
-    if (q) {
-      setSearchQuery(q);
-    } else setSearchQuery("");
+    if (q) setSearchQuery(q);
+    else setSearchQuery("");
   }, [q]);
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const checkBath = pathname == "/";
     const url = qs.stringifyUrl(
       {
-        query: { q: searchQuery },
-        url: location?.href,
+        query: { q: searchQuery.trim() },
+        url: checkBath ? "/explore" : location?.href,
       },
       {
         skipNull: true,
@@ -34,7 +35,7 @@ export default function Search() {
       }
     );
     setOpen(false);
-    router.push(`${url}`);
+    router.push(url);
     router.refresh();
   };
   return (
@@ -65,10 +66,10 @@ export default function Search() {
         <DropdownMenuContent
           align="start"
           className={cn(
-            " rounded-none border-mainBlack     shadow-searchBar w-screen"
+            " rounded-none border-mainBlack  mt-5 border-none   shadow-searchBar w-screen"
           )}
         >
-          <form onSubmit={handleSearch} className="relative w-full  h-[60px]">
+          <form onSubmit={handleSearch} className="relative w-full  h-[50px]">
             <Input
               type="text"
               name="search"

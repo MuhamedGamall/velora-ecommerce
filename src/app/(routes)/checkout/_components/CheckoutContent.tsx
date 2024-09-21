@@ -6,8 +6,8 @@ import useWishlistStore from "@/zustand/store/wishlistStore";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import OrderSummary from "./OrderSummary";
-import EmptyState from "@/components/EmptyState";
 import { useSession } from "next-auth/react";
+import EmptyState from "../../../../components/EmptyState";
 
 export default function CheckoutContent() {
   const { shoppingBag, fetchShoppingBag, removeFromBag, resetShoppingBag } =
@@ -16,7 +16,7 @@ export default function CheckoutContent() {
   const session = useSession();
   useEffect(() => {
     if (session?.status === "authenticated") fetchShoppingBag();
-  }, []);
+  }, [session?.status]);
   const handleRemove = async (productId: string) => {
     try {
       return await removeFromBag(productId);
@@ -48,7 +48,11 @@ export default function CheckoutContent() {
     }
   };
   if (shoppingBag?.length === 0) {
-    return <EmptyState type="checkout" />;
+    return (
+      <div className="mt-[120px]  mb-10">
+        <EmptyState />
+      </div>
+    );
   }
   return (
     <div className="w-full containerWrapper mx-auto">

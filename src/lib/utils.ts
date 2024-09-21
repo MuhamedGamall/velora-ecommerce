@@ -44,15 +44,13 @@ export const truncateText = (text: string, limit: number) => {
   return text?.length > limit ? text?.substring(0, limit) + "..." : text;
 };
 
-export function isNew(createdAt: string) {
-  const now = new Date();
-  const createdDate = new Date(createdAt);
-
-  // Define the time range in milliseconds (e.g., 15 days)
-  const timeRange = 7 * 24 * 60 * 60 * 1000; // 15 days in milliseconds
-
-  // Check if the product was created within the time range
-  // Return true if the difference is less than or equal to timeRange
-  return now.getTime() - createdDate.getTime() <= timeRange;
+export function isNewSeason(createdAt: string) {
+  //  last 7 days products
+  // const now = new Date();
+  // const createdDate = new Date(createdAt);
+  // const timeRange = 7 * 24 * 60 * 60 * 1000; // 15 days in milliseconds
+  // return now.getTime() - createdDate.getTime() <= timeRange;
+const currentYear = new Date().getFullYear();
+return createdAt.includes(currentYear+'')
 }
 export const toUrl = (image: any) => urlFor(image).toString();

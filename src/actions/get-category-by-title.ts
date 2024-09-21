@@ -16,6 +16,10 @@ export default async function getCategoryByTitle(title: string) {
       title
     },
   }[0]`;
+  if (!title) return null;
+  if (["sale", "newSeason", "accessories"].includes(title)) {
+    return {};
+  }
   const result = await client.fetch(query);
   return result || (null as CategoryTree | null);
 }

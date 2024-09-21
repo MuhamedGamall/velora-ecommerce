@@ -1,7 +1,6 @@
 import getFeaturedProducts from "@/actions/get-featured-products";
 import getTrendingProducts from "@/actions/get-trending-products";
 import Categories from "@/components/Categories";
-import Footer from "@/components/footer";
 import HeroSection from "@/components/HeroSection";
 import ProductsSlider from "@/components/SliderProducts";
 

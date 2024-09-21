@@ -31,7 +31,6 @@ export interface Product {
   secondaryImage: ImageObject;
   moreInformation: MoreInformationObject[];
   oldPrice: number;
-  isNew: boolean;
   price: number;
   desc: string;
   _rev: string;
@@ -128,7 +127,7 @@ export interface SearchParams {
   size: string;
   brand: string;
   sale: string;
-  newCollection: string;
+  newSeason: string;
   bestseller: string;
   sortBy: string;
 }

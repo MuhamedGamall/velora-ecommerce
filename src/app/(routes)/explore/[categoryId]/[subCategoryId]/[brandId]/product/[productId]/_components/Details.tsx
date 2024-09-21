@@ -44,11 +44,30 @@ export default function Details({
         <AccordionTrigger>Details</AccordionTrigger>
         <AccordionContent>
           <ul className="list-disc pl-5 space-y-1 capitalize">
-            {pattern && <li>Pattern: {pattern?.replaceAll("_", " ")}</li>}
-            <li>Material: {material?.replaceAll("_", " ")}</li>
-            <li>Colour: {colour?.replaceAll("_", " ")}</li>
-            {sizes?.length > 0 && <li>Sizes: {sizes.join(", ")}</li>}
-            <li>Brand: {brand?.replaceAll("_", " ")}</li>
+            {pattern && (
+              <li>
+                <span className="text-slate-600">Pattern:</span>{" "}
+                {pattern.replaceAll("_", " ")}
+              </li>
+            )}
+            <li>
+              <span className="text-slate-600">Material:</span>{" "}
+              {material?.replaceAll("_", " ")}
+            </li>
+            <li>
+              <span className="text-slate-600">Colour:</span>{" "}
+              {colour?.replaceAll("_", " ")}
+            </li>
+            {sizes?.length > 0 && (
+              <li>
+                <span className="text-slate-600">Sizes:</span>{" "}
+                {sizes.join(", ")}
+              </li>
+            )}
+            <li>
+              <span className="text-slate-600">Brand:</span>{" "}
+              {brand?.replaceAll("_", " ")}
+            </li>
           </ul>
         </AccordionContent>
       </AccordionItem>

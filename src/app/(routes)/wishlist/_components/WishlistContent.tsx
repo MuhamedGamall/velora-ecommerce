@@ -5,8 +5,8 @@ import useShoppingBagStore from "@/zustand/store/cartStore";
 import useWishlistStore from "@/zustand/store/wishlistStore";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import EmptyState from "@/components/EmptyState";
 import { useSession } from "next-auth/react";
+import EmptyState from "../../../../components/EmptyState";
 
 export default function WishlistContent() {
   const { wishlist, fetchWishlist, removeFromWishlist, resetWishlist } =
@@ -17,7 +17,7 @@ export default function WishlistContent() {
     if (session?.status === "authenticated") {
       fetchWishlist();
     }
-  }, []);
+  }, [session?.status]);
   const handleRemove = async (productId: string) => {
     try {
       return await removeFromWishlist(productId);
@@ -49,10 +49,14 @@ export default function WishlistContent() {
     }
   };
   if (wishlist?.length === 0) {
-    return <EmptyState type="wishlist" />;
+    return (
+      <div className="mt-[120px] mb-10">
+        <EmptyState />
+      </div>
+    );
   }
   return (
-    <div className="w-full containerWrapper mx-auto">
+    <div className="w-full containerWrapper mx-auto mt-[120px]">
       {wishlist?.length > 0 && (
         <h1 className="text-[22px] md:text-[32px]  font-bold pt-5">Wishlist</h1>
       )}

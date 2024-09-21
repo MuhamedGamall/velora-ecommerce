@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import getCategories from "@/actions/get-categories";
+import { CategoryTree } from "@/types";
 
 export default async function Categories() {
   const categories = await getCategories();
@@ -10,10 +11,10 @@ export default async function Categories() {
   return (
     <div className="containerWrapper mx-auto">
       <div className="flex flex-col text-center gap-2 items-center mb-10 text-slate-700  ">
-        <h3 className="font-bold font-serif  text-[30px] sm:text-[50px]">
+        <h3 className="font-bold font-serif max-xs:text-start w-full  text-[30px] sm:text-[50px]">
           Shop the smart way.
         </h3>
-        <p className="text-[16px] sm:text-[25px] font-semibold text-slate-800 max-w-[800px]">
+        <p className="text-[16px] max-xs:text-start w-full sm:text-[25px] font-semibold text-slate-800 max-w-[800px]">
           Find the latest fashion and trends in womenswear, menswear and kids in
           one place.
         </p>
@@ -22,7 +23,7 @@ export default async function Categories() {
         <div className="flex-[2] max-sm:flex-col flex gap-2 ">
           <div className="flex-1 flex-col flex gap-2 ">
             <Link
-              href="/category/new"
+              href="/sale"
               className="relative flex flex-1 gap-2 overflow-hidden w-full"
             >
               <Image
@@ -38,7 +39,7 @@ export default async function Categories() {
             </Link>
 
             <Link
-              href="/category/new"
+              href="/accessories"
               className="relative flex flex-1 gap-2 overflow-hidden w-full"
             >
               <Image
@@ -55,7 +56,7 @@ export default async function Categories() {
           </div>
           <div className="flex-1 flex gap-2 ">
             <Link
-              href="/category/new"
+              href="/newSeason"
               className="relative flex flex-1 gap-2 overflow-hidden w-full"
             >
               <Image
@@ -72,10 +73,10 @@ export default async function Categories() {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 flex-[2] gap-2 ">
-          {categoriesWithOutBaby?.map((category: any, i: number) => (
+          {categoriesWithOutBaby?.map((category: CategoryTree, i: number) => (
             <Link
               key={category?.title}
-              href="/category/new"
+              href={"/"+category?.title}
               className="relative flex flex-1 gap-2 overflow-hidden w-full"
             >
               <Image

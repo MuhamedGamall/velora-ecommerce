@@ -32,13 +32,13 @@ const Footer = () => {
           <div className=" ">
             <h4 className="font-bold text-lg mb-4">Ctegories</h4>
             <ul className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-              {categories?.map((category: any) => (
+              {categories?.map((category: CategoryTree) => (
                 <li
                   key={category._id}
                   className="flex flex-col  gap-2 ml-5 capitalize"
                 >
                   <Link
-                    href="#"
+                    href={category.title}
                     className=" hover:underline font-bold text-[16px]"
                   >
                     {category.title}
@@ -46,8 +46,8 @@ const Footer = () => {
                   <div className="flex flex-col  gap-1 w-full text-[13px]">
                     {category?.subCategories?.map((subCategory: any) => (
                       <Link
-                        key={subCategory.title}
-                        href="#"
+                        key={'/'+category.title+'/' + subCategory.title}
+                        href={'/'+category.title + "/" + subCategory.title}
                         className=" capitalize  hover:underline "
                       >
                         {subCategory.title}

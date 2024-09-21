@@ -1,5 +1,5 @@
 "use server";
-import { isNew } from "@/lib/utils";
+import { isNewSeason } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/types";
 const productsQuery = `*[_type == "product" && "featured" in type]{
@@ -67,10 +67,6 @@ export default async function getFeaturedProducts() {
     products =
       products.length === 0 ? await client.fetch(allDataQuery) : products;
 
-    products = products.map((product: Product) => ({
-      ...product,
-      isNew: isNew(product?._createdAt),
-    }));
     return products as Product[];
   } catch (error: any) {
     console.error("Error fetching featured products: ", error);

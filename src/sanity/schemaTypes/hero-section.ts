@@ -3,6 +3,7 @@ import { defineField, defineType } from "sanity";
 const heroSection = defineType({
   name: "heroSection",
   title: "Hero Section",
+  liveEdit: false,
   type: "document",
   fields: [
     defineField({

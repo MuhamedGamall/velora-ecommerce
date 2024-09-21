@@ -3,40 +3,41 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import qs from "query-string";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Circle } from "lucide-react";
 
-const CHECKBOX_FILTERS = [
-  { id: "sale", label: "Sale" },
-  { id: "newCollection", label: "New collection" },
-  { id: "bestseller", label: "Bestseller" },
-];
-
 export default function CheckboxFilter({
   saleValue,
-  newCollectionValue,
+  newSeasonValue,
   bestsellerValue,
 }: {
   saleValue: string;
-  newCollectionValue: string;
+  newSeasonValue: string;
   bestsellerValue: string;
 }) {
   const [selectedData, setSelectedData] = useState<{ [key: string]: boolean }>({
     sale: false,
-    newCollection: false,
+    newSeason: false,
     bestseller: false,
   });
-
+  const pathname = usePathname();
   const router = useRouter();
+  const CHECKBOX_FILTERS = [
+    ...(pathname.includes("/sale") ? [] : [{ id: "sale", label: "Sale" }]),
+    ...(pathname.includes("/newSeason")
+      ? []
+      : [{ id: "newSeason", label: "New Season" }]),
+    { id: "bestseller", label: "Bestseller" },
+  ];
 
   useEffect(() => {
     setSelectedData({
       sale: !!saleValue,
-      newCollection: !!newCollectionValue,
+      newSeason: !!newSeasonValue,
       bestseller: !!bestsellerValue,
     });
-  }, [saleValue, newCollectionValue, bestsellerValue]);
+  }, [saleValue, newSeasonValue, bestsellerValue]);
 
   const handleToggle = (key: string) => {
     const updatedValue = !selectedData[key];
@@ -96,7 +97,11 @@ export default function CheckboxFilter({
             >
               {label}
               {selectedData[id] && (
-                <Circle className="h-4 w-4 opacity-50" color="green" strokeWidth={3} />
+                <Circle
+                  className="h-4 w-4 opacity-50"
+                  color="green"
+                  strokeWidth={3}
+                />
               )}
             </Label>
           </div>

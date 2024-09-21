@@ -38,6 +38,7 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
       const { shoppingBag } = await getShoppingBag({
         userId: session.user._id,
       });
+console.log({shoppingBag});
 
       set({ shoppingBag: shoppingBag || [] });
     } catch (error: any) {

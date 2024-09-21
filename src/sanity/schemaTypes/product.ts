@@ -11,6 +11,7 @@ export const product = defineType({
   name: "product",
   title: "Product",
   type: "document",
+  liveEdit: false,
   fields: [
     defineField({
       name: "title",

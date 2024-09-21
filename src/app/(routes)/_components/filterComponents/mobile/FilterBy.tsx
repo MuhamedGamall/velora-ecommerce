@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -15,7 +16,7 @@ import CheckboxFilter from "../CheckboxFilter";
 export default function FilterBy({ searchParams }: any) {
   const sortBy = searchParams?.sortBy;
   return (
-    <Drawer>
+    <Drawer >
       <DrawerTrigger asChild>
         <Button
           variant={"outline"}

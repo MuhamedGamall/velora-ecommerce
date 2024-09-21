@@ -13,12 +13,17 @@ import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
 
-export default function SortBy({ initialValue }: { initialValue: string }) {
+export default function SortBy({
+  initialValue,
+}: {
+  initialValue: string;
+}) {
   const [selectedValue, setSelectedValue] = useState<{
     value: string;
     title: string;
   }>(SORT_BY_OPTIONS[0]);
   const router = useRouter();
+
   const findCurrentValue = () => {
     if (initialValue) {
       return SORT_BY_OPTIONS.find((option) => option.value === initialValue);
@@ -29,11 +34,6 @@ export default function SortBy({ initialValue }: { initialValue: string }) {
       setSelectedValue(findCurrentValue() || SORT_BY_OPTIONS[0]);
     }
   }, [initialValue]);
-  useEffect(() => {
-    if (!initialValue) {
-      handleSelect(SORT_BY_OPTIONS[0]);
-    }
-  }, []);
   const handleSelect = (value: { value: string; title: string }) => {
     setSelectedValue(value);
     const url = qs.stringifyUrl(
@@ -104,7 +104,8 @@ export default function SortBy({ initialValue }: { initialValue: string }) {
               key={option.value}
               value={option.value}
               className={`px-4 py-3 border rounded-none h-12  ${
-                selectedValue.value === option.value && " border-mainBlack font-semibold"
+                selectedValue.value === option.value &&
+                " border-mainBlack font-semibold"
               }`}
             >
               {option.title}

@@ -21,7 +21,7 @@ const ProductsSlider = ({
       >
         <h3
           className={cn(
-            "font-bold  capitalize text-start  text-[30px] sm:text-[50px]",
+            "font-bold w-full capitalize  max-xs:text-start   text-[30px] sm:text-[50px]",
             {
               "text-[30px] sm:text-[40px]  ": type === "related",
             }
@@ -31,7 +31,7 @@ const ProductsSlider = ({
         </h3>
         <p
           className={cn(
-            "text-[16px] sm:text-[25px] max-sm:text-start font-semibold text-slate-800 max-w-[800px]",
+            "text-[15px] sm:text-[22px] w-full max-xs:text-start  font-semibold text-slate-600 max-w-[800px]",
             {
               "text-[13px] sm:text-[20px] ": type === "related",
             }
@@ -40,6 +40,8 @@ const ProductsSlider = ({
           {type === "featured"
             ? "Featured products are a selection of top-quality items that stand outdue to unique characteristics."
             : type === "related" && null}
+          {type === "trending" &&
+            "Shop our curated selection of trending items and elevate your wardrobe with the hottest pieces everyone is raving about. "}
         </p>
       </div>
       <div className="lg:ml-10 ml-7">

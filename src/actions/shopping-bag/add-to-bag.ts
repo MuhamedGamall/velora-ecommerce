@@ -34,7 +34,6 @@ const addProductToBag = async ({
     const isExist = user?.shoppingBag?.find(
       (item) => item?.product?._ref === productId
     );
-
     if (isExist) return true;
     const generateKey = () =>
       Math.random().toString(36).substring(2, 15) +

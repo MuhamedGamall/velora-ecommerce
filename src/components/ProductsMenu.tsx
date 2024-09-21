@@ -106,7 +106,7 @@ export default function ProductsMenu({
                 <li>
                   <Link
                     key={item?.product?._id}
-                    href={`/${item?.product?.category?.title}/${item?.product?.subCategory?.title}/${item?.product?.brand}/product/${item?.product?._id}`}
+                    href={`/explore/${item?.product?.category?.title}/${item?.product?.subCategory?.title}/${item?.product?.brand}/product/${item?.product?._id}`}
                     className="flex items-start gap-5  w-full border-b mb-2 pb-2"
                   >
                     <Image

@@ -2,6 +2,9 @@
 
 import { client } from "@/sanity/lib/client";
 import getCategoryByTitle from "./get-category-by-title";
+import { SearchParams } from "@/types";
+import { revalidatePath } from "next/cache";
+import { cache } from "react";
 
 // Fetch the current year dynamically
 const currentYear = new Date().getFullYear();
@@ -16,20 +19,6 @@ const baseProductsQuery = `{
   salesCount
 }`;
 
-export interface SearchParams {
-  q?: string;
-  minPrice?: string;
-  maxPrice?: string;
-  colour?: string;
-  material?: string;
-  pattern?: string;
-  size?: string;
-  brand?: string;
-  sale?: string;
-  newCollection?: string;
-  bestseller?: string;
-  sortBy?: string;
-}
 const splitAndFormat = (query?: string) =>
   query
     ? query
@@ -48,51 +37,59 @@ const getProducts = async ({
   searchParams?: SearchParams;
 }) => {
   try {
-    let conditions = [
+    const conditions = [
       `price >= ${searchParams?.minPrice || 0} && price <= ${searchParams?.maxPrice || 10e10}`,
     ];
 
-    if (category) {
-      const cate = await getCategoryByTitle(category);
-      if (!cate) throw "Category not found";
-      conditions.push(`category._ref == "${cate._id}"`);
+    // Handle category-specific conditions:
+    // - "sale": filters products with a discount (oldPrice > 0)
+    // - "newSeason": filters products marked as new season (newSeason == true)
+    // - "accessories": filters products with the subcategory "accessories"
+    // - For other categories, filter by category title and optionally subcategory title
+    if (category?.trim()) {
+      switch (category.trim()) {
+        case "sale":
+          conditions.push("oldPrice > 0");
+          break;
+        case "newSeason":
+          conditions.push(`_createdAt match "${currentYear}*"`);
+          break;
+        case "accessories":
+          conditions.push("subCategory->title == 'accessories'");
+          break;
+        default:
+          conditions.push(`category->title == "${category}"`);
+          if (subCategory?.trim()) {
+            conditions.push(`subCategory->title == "${subCategory}"`);
+          }
+          break;
+      }
     }
-
-    if (category && subCategory) {
-      const cate = await getCategoryByTitle(category);
-      if (!cate) throw "Category not found";
-      const subCategory = cate?.subCategories.find(
-        (subCategory: any) => subCategory.title === "clothing"
-      );
-      conditions.push(`subCategory._ref == "${subCategory._id}"`);
-    }
-
     if (splitAndFormat(searchParams?.colour))
       conditions.push(`colour in [${splitAndFormat(searchParams?.colour)}]`);
+
     if (splitAndFormat(searchParams?.material))
       conditions.push(
         `material in [${splitAndFormat(searchParams?.material)}]`
       );
+
     if (splitAndFormat(searchParams?.pattern))
       conditions.push(`pattern in [${splitAndFormat(searchParams?.pattern)}]`);
+
     if (searchParams?.size) {
-      const sizes = searchParams.size
-        .split("|")
-        .map((size) => `"${size}"`)
-        .join(", ");
-      conditions.push(`count((sizes[])[@ in [${sizes}]]) > 0`);
+      const sizes = splitAndFormat(searchParams.size);
+      if (sizes) conditions.push(`count((sizes[])[@ in [${sizes}]]) > 0`);
     }
-    if (searchParams?.brand) {
-      const formattedBrands = splitAndFormat(searchParams.brand);
-      if (formattedBrands) conditions.push(`brand in [${formattedBrands}]`);
-    }
+
+    if (splitAndFormat(searchParams?.brand))
+      conditions.push(`brand in [${splitAndFormat(searchParams?.brand)}]`);
+
     if (searchParams?.q) conditions.push(`title match "${searchParams.q}*"`);
     if (searchParams?.sale === "true") conditions.push(`oldPrice > 0`);
     if (searchParams?.bestseller === "true")
       conditions.push(`salesCount >= 100`);
-    if (searchParams?.newCollection === "true")
+    if (searchParams?.newSeason === "true")
       conditions.push(`_createdAt match "${currentYear}*"`);
-console.log(currentYear);
 
     let query = `*[_type == "product" && ${conditions.join(" && ")}]${baseProductsQuery}`;
 
@@ -107,11 +104,9 @@ console.log(currentYear);
     }
 
     const products = await client.fetch(query);
-    console.log(products);
-
     return products;
   } catch (error) {
-    console.error("Error fetching products: ", error);
+    console.error("Error fetching products:", error);
     return [];
   }
 };

@@ -3,27 +3,34 @@ import React from "react";
 export default function ProductsTitle({
   searchParams,
   params,
+  productsLength,
 }: {
-  searchParams: any;
-  params: {
+  searchParams?: any;
+  params?: {
     categoryId: string;
     subCategoryId: string;
   };
+  productsLength: number;
 }) {
   const title = () => {
-    if (searchParams?.q && !params?.categoryId && !params?.subCategoryId)
-      return searchParams.q;
-    if (searchParams?.q && params?.categoryId && !params?.subCategoryId)
-      return `${searchParams.q} in ${params.categoryId}`;
+    const { q } = searchParams || {};
+    const { categoryId, subCategoryId } = params || {};
 
-    if (params?.categoryId && !params?.subCategoryId && !searchParams?.q)
-      return params.categoryId;
+    if (q && !categoryId && !subCategoryId) {
+      return `"${q}" in All Products`;
+    }
 
-    if (params?.subCategoryId && params?.categoryId && !searchParams?.q)
-      return `${params.subCategoryId} & ${params.categoryId}`;
+    if (q && categoryId) {
+      return subCategoryId
+        ? `"${q}" in ${subCategoryId} & ${categoryId}`
+        : `"${q}" in ${categoryId}`;
+    }
 
-    if (params?.subCategoryId && searchParams?.q && params?.categoryId)
-      return `${searchParams.q} in ${params.subCategoryId} & ${params.categoryId}`;
+    if (categoryId) {
+      return subCategoryId ? `${subCategoryId} & ${categoryId}` : categoryId;
+    }
+
+    return "All Products";
   };
   return (
     <div className="w-full mb-6">
@@ -34,7 +41,8 @@ export default function ProductsTitle({
         {title()}
       </h1>
       <h2 className="text-[13px] text-slate-600 font-normal flex items-center gap-1">
-        <span className="font-bold text-sm text-black">{5} </span> Products
+        <span className="font-bold text-sm text-black">{productsLength} </span>
+        Products
       </h2>
     </div>
   );

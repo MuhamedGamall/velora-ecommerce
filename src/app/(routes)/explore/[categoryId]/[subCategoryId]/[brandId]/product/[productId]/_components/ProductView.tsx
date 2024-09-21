@@ -29,7 +29,7 @@ const ProductView = ({ product }: { product: Product | null }) => {
       fetchShoppingBag();
       fetchWishlist();
     }
-  }, []);
+  }, [session?.status]);
   const isExistInBag = shoppingBag.find(
     (item) => item?.product?._id === product?._id
   );

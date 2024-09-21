@@ -18,7 +18,7 @@ export default function CartMenu() {
     if (session?.status === "authenticated") {
       fetchShoppingBag();
     }
-  }, []);
+  }, [session?.status]);
 
   return (
     <ProductsMenu

@@ -44,7 +44,7 @@ const CategoryItem = ({ cateItem }: { cateItem: CategoryTree }) => {
           onClick={() => onExpand(cateItem?.title)}
         >
           <Link
-            href={`/${cateItem?.title?.toLocaleLowerCase()?.trim()}`}
+            href={`/explore/${cateItem?.title?.toLocaleLowerCase()?.trim()}`}
             className={cn(
               "flex items-center cursor-pointer text-lg w-fit underline capitalize",
               {
@@ -69,7 +69,7 @@ const CategoryItem = ({ cateItem }: { cateItem: CategoryTree }) => {
           <div className="max-lg:pl-10 pl-5 ">
             {cateItem?.subCategories.map((subCate, index) => (
               <Link
-                href={`/${cateItem?.title?.toLocaleLowerCase()?.trim()}/${subCate?.title?.toLocaleLowerCase()?.trim()}`}
+                href={`/explore/${cateItem?.title?.toLocaleLowerCase()?.trim()}/${subCate?.title?.toLocaleLowerCase()?.trim()}`}
                 key={subCate?.title}
                 className={cn(
                   "flex items-center cursor-pointer hover:underline capitalize mb-2 text-slate-600",

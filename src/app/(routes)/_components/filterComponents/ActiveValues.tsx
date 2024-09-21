@@ -3,23 +3,12 @@ import { X } from "lucide-react";
 import React from "react";
 import qs from "query-string";
 import { useRouter } from "next/navigation";
+import { SearchParams } from "@/types";
 
 export default function ActiveValues({
   searchParams,
 }: {
-  searchParams: {
-    q: string;
-    minPrice: string;
-    maxPrice: string;
-    colour: string;
-    material: string;
-    pattern: string;
-    size: string;
-    brand: string;
-    sale: string;
-    newCollection: string;
-    bestseller: string;
-  };
+  searchParams: SearchParams
 }) {
   const router = useRouter();
   const actives = [
@@ -32,7 +21,7 @@ export default function ActiveValues({
     { size: searchParams?.size },
     { brand: searchParams?.brand },
     { sale: searchParams?.sale },
-    { newCollection: searchParams?.newCollection },
+    { newSeason: searchParams?.newSeason },
     { bestseller: searchParams?.bestseller },
   ];
   const parseURL = (url: string) =>

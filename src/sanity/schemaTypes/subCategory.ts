@@ -3,6 +3,7 @@ import { defineType, defineField } from "sanity";
 export default defineType({
   name: "subCategory",
   type: "document",
+  liveEdit: false,
   title: "Sub Category",
   fields: [
     defineField({

@@ -4,7 +4,7 @@ import React from "react";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="containerWrapper mx-auto py-12 px-5">
+    <div className="containerWrapper mx-auto py-12 mt-[60px] px-5">
       <Link href="/" className="flex items-center  my-3">
         <ChevronLeft className="" size={18} />
         <span className="ml-2">Back to home page</span>

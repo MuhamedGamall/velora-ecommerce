@@ -1,5 +1,5 @@
 "use server";
-import { isNew } from "@/lib/utils";
+import { isNewSeason } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/types";
 const productsQuery = `*[_type == "product" && brand == $brand && _id != $excludedId]{
@@ -79,13 +79,9 @@ export default async function getRelatedProducts({
     let products = await client.fetch(productsQuery, { brand, excludedId });
     products =
       products.length === 0
-        ? await client.fetch(allDataQuery, { excludedId })
+        ? await client.fetch(allDataQuery, { excludedId },)
         : products;
 
-    products = products.map((product: Product) => ({
-      ...product,
-      isNew: isNew(product?._createdAt),
-    }));
     return products as Product[];
   } catch (error: any) {
     console.error("Error fetching related products: ", error);

@@ -33,7 +33,7 @@ export default function ProductsSelected({
           <li>
             <Link
               key={item?.product?._id}
-              href={`/${item?.product?.category?.title}/${item?.product?.subCategory?.title}/${item?.product?.brand}/product/${item?.product?._id}`}
+              href={`/explore/${item?.product?.category?.title}/${item?.product?.subCategory?.title}/${item?.product?.brand}/product/${item?.product?._id}`}
               className="flex items-start gap-5  w-full border-t mt-5 py-5"
             >
               <Image

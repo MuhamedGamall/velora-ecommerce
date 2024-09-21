@@ -46,7 +46,6 @@ const getShoppingBag = async ({ userId }: { userId: string }) => {
     const user = (await client.fetch(userQuery, {
       userId: userId,
     })) as UserProfile;
-
     if (!user) {
       throw "User not found";
     }

@@ -56,7 +56,7 @@ export default async function HeroSection() {
           </p>
           <div className="flex items-center max-md:justify-between gap-3 mt-5 w-full">
             <Link
-              href={""}
+              href={"/explore?q=mui_mui"}
               className=" px-2 md:px-3 py-1 md:py-2 text-white max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
               Mui Mui
@@ -66,7 +66,7 @@ export default async function HeroSection() {
               />
             </Link>
             <Link
-              href={""}
+              href={"/explore?q=gucci"}
               className=" px-2 md:px-3 py-1 md:py-2 text-white  max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
               Gucci
@@ -76,10 +76,10 @@ export default async function HeroSection() {
               />
             </Link>
             <Link
-              href={""}
+              href={"/explore?q=louis_vuitton"}
               className=" px-2 md:px-3 py-1 md:py-2 text-white  max-md:justify-center  max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
-              Nodaleto
+              Louis Vuitton
               <ChevronRightIcon
                 className="text-white  max-md:hidden"
                 size={30}

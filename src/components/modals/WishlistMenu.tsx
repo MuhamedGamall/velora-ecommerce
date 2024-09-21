@@ -10,7 +10,8 @@ export default function WishlistMenu() {
   const session = useSession();
   useEffect(() => {
     if (session?.status === "authenticated") fetchWishlist();
-  }, []);
+  }, [session?.status]);
+
   return (
     <ProductsMenu
       type="wishlist"
