@@ -19,14 +19,14 @@ export default function SelectPrice({
   minPrice: string;
   maxPrice: string;
 }) {
-  const [priceValue, setPriceValue] = useState({ min: 0, max: 10000 });
-  const [open,setOpen] =useState(false)
+  const [priceValue, setPriceValue] = useState({ min: 0, max: 100000000 });
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   useEffect(() => {
     if (minPrice || maxPrice) {
       setPriceValue({
         min: Number(minPrice) || 0,
-        max: Number(maxPrice) || 10000,
+        max: Number(maxPrice) || 100000000,
       });
     }
   }, []);
@@ -49,7 +49,7 @@ export default function SelectPrice({
       skipEmptyString: true,
     });
 
-    setPriceValue({ min: 0, max: 10000 });
+    setPriceValue({ min: 0, max: 100000000 });
     router.push(`?${url}`);
     router.refresh();
   };
@@ -115,7 +115,7 @@ export default function SelectPrice({
                     });
                   }}
                   type="number"
-                  placeholder="EGP 15434"
+                  placeholder="EGP 100000000"
                   className="rounded-none border-black mt-2"
                 />
               </Label>
@@ -174,7 +174,7 @@ export default function SelectPrice({
                 });
               }}
               type="number"
-              placeholder="EGP 15434"
+              placeholder="EGP 100000000"
               className="rounded-none border-mainBlack  mt-2 max-lg:h-14 max-lg:text-lg"
             />
           </Label>

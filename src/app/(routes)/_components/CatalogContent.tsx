@@ -57,7 +57,7 @@ export default async function CatalogContent({
           <MobileFilter searchParams={searchParams} />
         </div>
         {products.length === 0 ? (
-          <EmptyState q={searchParams.q} showButton={false} />
+          <EmptyState q={searchParams.q} showButton={false} showImages={false} />
         ) : (
           <ProductsContent products={products} />
         )}

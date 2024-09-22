@@ -35,7 +35,7 @@ export default function FilterBy({ searchParams }: any) {
           </DrawerClose>
         </DrawerHeader>
         <div className="">
-          <CategoryTreeView/>
+          <CategoryTreeView />
         </div>
       </DrawerContent>
     </Drawer>

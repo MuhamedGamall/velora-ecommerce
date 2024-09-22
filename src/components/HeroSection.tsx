@@ -42,6 +42,7 @@ export default async function HeroSection() {
               height={120}
               alt="brand"
               className=""
+              priority
             />
           ))}
         </div>
@@ -56,7 +57,7 @@ export default async function HeroSection() {
           </p>
           <div className="flex items-center max-md:justify-between gap-3 mt-5 w-full">
             <Link
-              href={"/explore?q=mui_mui"}
+              href={"/explore?brand=mui_mui"}
               className=" px-2 md:px-3 py-1 md:py-2 text-white max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
               Mui Mui
@@ -66,7 +67,7 @@ export default async function HeroSection() {
               />
             </Link>
             <Link
-              href={"/explore?q=gucci"}
+              href={"/explore?brand=gucci"}
               className=" px-2 md:px-3 py-1 md:py-2 text-white  max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
               Gucci
@@ -76,7 +77,7 @@ export default async function HeroSection() {
               />
             </Link>
             <Link
-              href={"/explore?q=louis_vuitton"}
+              href={"/explore?brand=louis_vuitton"}
               className=" px-2 md:px-3 py-1 md:py-2 text-white  max-md:justify-center  max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
               Louis Vuitton

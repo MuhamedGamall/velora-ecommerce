@@ -30,6 +30,7 @@ export default async function Categories() {
                 src={"/sale.webp"}
                 width={1000}
                 height={1000}
+                loading="lazy"
                 alt="Cat Image #1"
                 className="h-full w-full object-cover  brightness-[.8] "
               />
@@ -46,6 +47,7 @@ export default async function Categories() {
                 src={"/accessories.jpg"}
                 width={1000}
                 height={1000}
+                loading="lazy"
                 alt="Cat Image #2"
                 className="h-full w-full object-cover  brightness-[.8] "
               />
@@ -63,6 +65,7 @@ export default async function Categories() {
                 src={"/newSeason.webp"}
                 width={1000}
                 height={1000}
+                loading="lazy"
                 alt="Cat Image #3"
                 className="h-full w-full object-cover  object-right brightness-[.8]"
               />
@@ -76,13 +79,14 @@ export default async function Categories() {
           {categoriesWithOutBaby?.map((category: CategoryTree, i: number) => (
             <Link
               key={category?.title}
-              href={"/"+category?.title}
+              href={"/" + category?.title}
               className="relative flex flex-1 gap-2 overflow-hidden w-full"
             >
               <Image
-                src={(category?.categoryImage?.asset?.url)}
+                src={category?.categoryImage?.asset?.url}
                 width={1000}
                 height={1000}
+                loading="lazy"
                 alt={"Cat Image #" + category?.title}
                 className="h-full w-full object-cover  brightness-[.8] "
               />

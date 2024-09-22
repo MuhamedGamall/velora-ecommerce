@@ -10,6 +10,7 @@ import ProfileMenu from "./ProfileMenu";
 import Search from "./SearchBar";
 import WishlistMenu from "../modals/WishlistMenu";
 import { useScrollTop } from "@/hooks/use-scroll-top";
+import CategoriesSheet from "./CategoriesSheet";
 
 export default function Navber() {
   const pathname = usePathname();
@@ -37,7 +38,7 @@ export default function Navber() {
         >
           {!isStudioPage && (
             <div className="md:hidden ">
-              <Menu strokeWidth={1.7} scale={25} className="text-white" />
+              <CategoriesSheet/>
             </div>
           )}
           <Link href={"/"} className="md:hidden block ">

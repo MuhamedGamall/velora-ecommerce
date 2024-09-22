@@ -24,7 +24,12 @@ export default async function CategoryPage({
   const products = await getProducts({
     category: params.categoryId,
     subCategory: params.subCategoryId,
-    searchParams,
+    searchParams: {
+      ...searchParams,
+      minPrice: searchParams?.minPrice || "0",
+      maxPrice: searchParams?.maxPrice || "100000000",
+      sortBy: searchParams?.sortBy || "popular",
+    },
   });
 
   return (

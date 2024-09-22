@@ -37,9 +37,7 @@ const getProducts = async ({
   searchParams?: SearchParams;
 }) => {
   try {
-    const conditions = [
-      `price >= ${searchParams?.minPrice || 0} && price <= ${searchParams?.maxPrice || 10e10}`,
-    ];
+    const conditions = [];
 
     // Handle category-specific conditions:
     // - "sale": filters products with a discount (oldPrice > 0)
@@ -84,6 +82,10 @@ const getProducts = async ({
     if (splitAndFormat(searchParams?.brand))
       conditions.push(`brand in [${splitAndFormat(searchParams?.brand)}]`);
 
+    if (searchParams?.minPrice || searchParams?.maxPrice)
+      conditions.push(
+        `price >= ${searchParams?.minPrice || 0} && price <= ${searchParams?.maxPrice || 10e10}`
+      );
     if (searchParams?.q) conditions.push(`title match "${searchParams.q}*"`);
     if (searchParams?.sale === "true") conditions.push(`oldPrice > 0`);
     if (searchParams?.bestseller === "true")
