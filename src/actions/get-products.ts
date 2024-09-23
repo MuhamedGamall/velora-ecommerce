@@ -2,7 +2,7 @@
 
 import { client } from "@/sanity/lib/client";
 import getCategoryByTitle from "./get-category-by-title";
-import { SearchParams } from "@/types";
+import { Product, SearchParams } from "@/types";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
 
@@ -38,7 +38,7 @@ const getProducts = async ({
 }) => {
   try {
     const conditions = [];
-
+    let loading = true;
     // Handle category-specific conditions:
     // - "sale": filters products with a discount (oldPrice > 0)
     // - "newSeason": filters products marked as new season (newSeason == true)
@@ -106,10 +106,20 @@ const getProducts = async ({
     }
 
     const products = await client.fetch(query);
-    return products;
+    loading = false;
+    return {
+      products,
+      loading,
+    } as {
+      products: Product[];
+      loading: boolean;
+    };
   } catch (error) {
     console.error("Error fetching products:", error);
-    return [];
+    return {
+      products: [],
+      loading: false,
+    };
   }
 };
 

@@ -21,7 +21,7 @@ export default async function CategoryPage({
     return notFound();
   }
 
-  const products = await getProducts({
+  const { products, loading } = await getProducts({
     category: params.categoryId,
     subCategory: params.subCategoryId,
     searchParams: {
@@ -34,8 +34,9 @@ export default async function CategoryPage({
 
   return (
     <CatalogContent
-      products={products}
+      productsLoading={loading}
       searchParams={searchParams}
+      products={products}
       params={params}
     />
   );

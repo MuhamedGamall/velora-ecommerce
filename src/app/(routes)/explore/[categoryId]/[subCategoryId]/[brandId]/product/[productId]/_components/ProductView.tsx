@@ -15,6 +15,8 @@ import Details from "./Details";
 import Images from "./Images";
 import Quantity from "./Quantity";
 import Sizes from "./Sizes";
+import Image from "next/image";
+import { Skeleton } from "@/components/ui/skeleton";
 const ProductView = ({ product }: { product: Product | null }) => {
   const { shoppingBag, fetchShoppingBag } = useShoppingBagStore();
   const { wishlist, fetchWishlist } = useWishlistStore();
@@ -36,6 +38,9 @@ const ProductView = ({ product }: { product: Product | null }) => {
   useEffect(() => {
     setQuantity(isExistInBag?.quantity || 1);
     setSize(isExistInBag?.size || "");
+  }, [isExistInBag]);
+  useEffect(() => {
+  document.title = `Velora | Explore | ${product?.title}`;
   }, [isExistInBag]);
 
   return (
@@ -135,3 +140,99 @@ const ProductView = ({ product }: { product: Product | null }) => {
 };
 
 export default ProductView;
+
+export const ProductViewSkeleton = () => {
+  return (
+    <div className="flex items justify-between max-md:flex-col gap-[100px] containerWrapper mx-auto my-5  px-5  ">
+      <div className="flex-1">
+        <div className="flex flex-col-reverse xs:flex-row md:flex-col-reverse lg:flex-row gap-5 sm:gap-12 items-center">
+          <div className="flex  max-sm:hidden  sm:flex-col md:flex-row lg:flex-col  gap-2 ">
+            {Array.from({ length: 4 })?.map((_, index) => (
+              <div
+                key={index}
+                className={`w-[48px]  sm:w-[70px] md:w-[48px] p-1 cursor-pointer`}
+              >
+                <Image
+                  src={"/cardSkeleton.png"}
+                  alt={`Thumbnail ${index + 1}`}
+                  className="object-contain animate-pulse rounded-sm"
+                  placeholder="blur"
+                  blurDataURL="/cardSkiliton.png"
+                  width={100}
+                  height={100}
+                />
+              </div>
+            ))}
+          </div>
+          <div className=" w-full ">
+            <Image
+              src={"/cardSkeleton.png"}
+              alt={`Image skeleton`}
+              width={400}
+              height={200}
+              className="object-cover aspect-[3/4]  w-full animate-pulse h-full rounded-sm"
+              placeholder="blur"
+              blurDataURL="/cardSkiliton.png"
+            />
+          </div>
+        </div>
+        <div className="text-sm mt-12 p-5 max-md:hidden border-t">
+          <Skeleton className="h-6 w-[150px] mb-3" />
+          <div className="flex items-center text-[14px] gap-2  capitalize">
+            <Skeleton className="h-3 w-[100px]" />
+            <Skeleton className="h-3 w-[100px]" />
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col gap-4 flex-1">
+        <div className="flex flex-col ">
+          <Skeleton className="h-7 w-[150px] mb-2" />
+
+          <Skeleton className="h-5  w-full max-w-[200px]" />
+
+          <div className="flex gap-2 items-end mt-3">
+            <Skeleton className="h-6 w-[80px]" />
+            <Skeleton className="h-6 w-[80px]" />
+          </div>
+        </div>
+        <Skeleton className="h-7 w-[150px]" />
+        <Skeleton className="h-5 w-[100px]" />
+
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-10 w-[50px]" />
+          <Skeleton className="h-10 w-[50px]" />
+        </div>
+        <div className="flex items-center gap-2 flex-wrap max-w-[500px]">
+          {Array.from({ length: 12 })?.map((_, i) => (
+            <Skeleton className="h-8 w-14" />
+          ))}
+        </div>
+        <div className="flex flex-col gap-3">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        <div className="flex flex-col pt-3  ">
+          {Array.from({ length: 4 })?.map((_, i) => (
+            <>
+              <div className="flex justify-between items-center gap-3 p-4  border-t">
+                <Skeleton className="h-5 w-20" />
+                <Skeleton className="h-5 w-5" />
+              </div>
+
+            </>
+          ))}
+        </div>
+        <div className="text-sm  md:hidden ">
+          <div className="text-sm mt-12 p-5 max-md:hidden border-t">
+            <Skeleton className="h-6 w-[150px] mb-3" />
+            <div className="flex items-center text-[14px] gap-2  capitalize">
+              {Array.from({ length: 2 })?.map((_, i) => (
+                <Skeleton className="h-3 w-[100px]" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

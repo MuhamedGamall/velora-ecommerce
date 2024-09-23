@@ -5,6 +5,7 @@ import { urlFor } from "@/sanity/lib/image";
 import { Box } from "lucide-react";
 import { cn, formatPrice, isNewSeason, truncateText } from "@/lib/utils";
 import { Suspense } from "react";
+import { Skeleton } from "./ui/skeleton";
 
 export default function Card({
   _id,
@@ -57,26 +58,25 @@ export default function Card({
               Sale
             </span>
           )}
-          <Suspense
-            fallback={
-              <div className="h-[500px] w-[250px] bg-red-600">loading..</div>
-            }
-          >
-            <Image
-              width={600}
-              height={600}
-              src={images?.[0]?.asset?.url}
-              alt={secondaryImage?.asset?.url}
-              className="absolute z-10 h-full w-full object-cover"
-              loading="lazy"
-            />
-          </Suspense>
+
+          <Image
+            width={600}
+            height={600}
+            src={images?.[0]?.asset?.url}
+            alt={secondaryImage?.asset?.url}
+            blurDataURL="/cardSkeleton.png"
+            placeholder="blur"
+            className="absolute z-10 h-full w-full object-cover"
+            loading="lazy"
+          />
           {secondaryImage?.asset?.url && (
             <Image
               width={600}
+              placeholder="blur"
               height={600}
-              src={secondaryImage?.asset?.url}
+              src={secondaryImage?.asset?.url || "/cardSkeleton.png"}
               alt={secondaryImage?.asset?.url + "-alt image"}
+              blurDataURL="/cardSkeleton.png"
               className="absolute h-full w-full object-cover group-hover:z-20"
               loading="lazy"
             />
@@ -108,3 +108,30 @@ export default function Card({
     </div>
   );
 }
+Card.Skeleton = function () {
+  return (
+    <div className={cn("  max-w-[215px]  flex justify-center mx-auto")}>
+      <div className="mb-12 flex flex-col gap-2 xxs:w-[38vw] xxs:min-w-[7rem] sm:w-[23vw] sm:max-w-none md:w-[23vw] lg:w-[18vw] 2xl:max-w-[20rem]">
+        <div className="  h-[95vw] min-h-[12rem] w-full overflow-hidden xxs:h-[65vw] xxs:max-h-[400px] sm:max-h-[240px] md:max-h-[280px] lg:max-h-[300px] 2xl:max-h-[350px] xxxl:max-h-[45vh] xxxl:min-h-[450px]">
+          <Image
+            width={600}
+            height={600}
+            src={"/cardSkeleton.png"}
+            alt={"cardSkeleton"}
+            className=" z-10 h-full w-full rounded-sm animate-pulse object-cover"
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL="/cardSkeleton.png"
+          />
+        </div>
+        <Skeleton className="h-5 w-[90%] " />
+        <Skeleton className="h-5 w-[80%] " />
+        <div className="flex gap-2 items-center w-[70%] ">
+          <Skeleton className="h-5 flex-1 " />
+          <Skeleton className="h-5 flex-1 " />
+        </div>
+        <Skeleton className="h-5 w-full " />
+      </div>
+    </div>
+  );
+};

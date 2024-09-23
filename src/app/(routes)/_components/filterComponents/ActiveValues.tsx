@@ -4,11 +4,12 @@ import React from "react";
 import qs from "query-string";
 import { useRouter } from "next/navigation";
 import { SearchParams } from "@/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ActiveValues({
   searchParams,
 }: {
-  searchParams: SearchParams
+  searchParams: SearchParams;
 }) {
   const router = useRouter();
   const actives = [
@@ -70,3 +71,17 @@ export default function ActiveValues({
     </div>
   );
 }
+export const ActiveValuesSkeleton = () => {
+  return (
+    <div className="w-full my-3 px-2 max-w-[900px] overflow-x-auto py-1">
+      <div className="flex items-center gap-3">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <Skeleton
+            key={index}
+            className=" h-5 w-20 flex items-center gap-3  "
+          />
+        ))}
+      </div>
+    </div>
+  );
+};

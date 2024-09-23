@@ -12,6 +12,7 @@ export default function CartMenu() {
     onOpen,
     onClose,
     isOpen,
+    loading
   } = useShoppingBagStore();
   const session = useSession();
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function CartMenu() {
       isOpen={isOpen}
       onOpen={onOpen}
       resetBag={resetShoppingBag}
+      loading={loading}
     />
   );
 }

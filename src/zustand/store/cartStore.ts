@@ -9,6 +9,8 @@ import { create } from "zustand";
 
 interface ShoppingBagState {
   shoppingBag: ShoppingBag[];
+  loading: boolean;
+  setLoading: (value: boolean) => void;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -25,25 +27,32 @@ interface ShoppingBagState {
 
 const useShoppingBagStore = create<ShoppingBagState>((set) => ({
   shoppingBag: [],
+  loading: false,
+  setLoading: (value: boolean) => set({ loading: value }),
+
   isOpen: false,
+
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
   fetchShoppingBag: async () => {
+    set({ loading: true });
     try {
       const session = await getCurrentSession();
 
       if (!session?.user?._id) {
-        throw "User ID not found";
+        throw new Error("User ID not found");
       }
+
       const { shoppingBag } = await getShoppingBag({
         userId: session.user._id,
       });
-console.log({shoppingBag});
 
       set({ shoppingBag: shoppingBag || [] });
     } catch (error: any) {
+      console.error("Error fetching shopping bag:", error);
       set({ shoppingBag: [] });
-      throw new Error("fetching shopping bag:", error);
+    } finally {
+      set({ loading: false });
     }
   },
 
@@ -60,7 +69,7 @@ console.log({shoppingBag});
         const isExist = state.shoppingBag.find(
           (item) => item?.product?._id === product?._id
         );
-        
+
         if (isExist) return { shoppingBag: state.shoppingBag };
         return {
           shoppingBag: [

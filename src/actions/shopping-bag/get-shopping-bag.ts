@@ -53,7 +53,7 @@ const getShoppingBag = async ({ userId }: { userId: string }) => {
     return user;
   } catch (error) {
     console.error("Error fetching user shopping bag: ", error);
-    return { shoppingBag: [], _id: "" };
+    return { shoppingBag: [] };
   }
 };
 

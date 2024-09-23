@@ -13,6 +13,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { formatNumber, formatPrice } from "../lib/utils";
 import { Button } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
 
 export default function ProductsMenu({
   type,
@@ -21,6 +22,7 @@ export default function ProductsMenu({
   isOpen,
   onOpen,
   resetBag,
+  loading,
 }: {
   type: "cart" | "wishlist";
   data: ShoppingBag[] | Wishlist[];
@@ -28,6 +30,7 @@ export default function ProductsMenu({
   isOpen: boolean;
   onOpen: () => void;
   resetBag: (pathname: string) => Promise<void>;
+  loading: boolean;
 }) {
   const ref = useRef(null) as any;
   const pathname = usePathname();
@@ -78,9 +81,11 @@ export default function ProductsMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         ref={ref}
-        className="w-screen md:w-[400px] max-h-[500px]   border !p-5  !mt-16 mr-5 rounded-none"
+        className="w-screen md:w-[400px] max-h-[500px]   border !p-5  !mt-5 !z-[1600] mr-5 rounded-none"
       >
-        {data?.length === 0 ? (
+        {loading ? (
+          <ProductsMenu.Skeleton />
+        ) : data?.length === 0 ? (
           <>
             <div className="text-[20px]  font-bold">
               {type === "cart" ? "Sopping Bag" : "Wishlist"}
@@ -103,9 +108,8 @@ export default function ProductsMenu({
             <DropdownMenuSeparator className="my-5" />
             <ul className="w-full  p-2 max-h-[400px] overflow-y-auto pb-[150px] ">
               {data?.map((item: any) => (
-                <li>
+                <li key={item?.product?._id} onClick={onClose}>
                   <Link
-                    key={item?.product?._id}
                     href={`/explore/${item?.product?.category?.title}/${item?.product?.subCategory?.title}/${item?.product?.brand}/product/${item?.product?._id}`}
                     className="flex items-start gap-5  w-full border-b mb-2 pb-2"
                   >
@@ -115,6 +119,8 @@ export default function ProductsMenu({
                       height={50}
                       className="object-contain"
                       alt="image"
+                      placeholder="blur"
+                      blurDataURL="/cardSkeleton.png"
                     />
                     <div className="w-full flex flex-col gap-2 items-start">
                       <div className="">
@@ -127,8 +133,10 @@ export default function ProductsMenu({
                       </div>
                       <div className="">
                         {type === "cart" ? (
-                          <div className="flex items-center text-slate-600">
-                            <span >{item?.product?.colour?.replaceAll("_", " ")}</span>
+                          <div className="flex items-center  flex-wrap text-slate-600">
+                            <span>
+                              {item?.product?.colour?.replaceAll("_", " ")}
+                            </span>
                             <Dot size={20} className="text-slate-300" />
                             {item?.size && (
                               <>
@@ -139,8 +147,10 @@ export default function ProductsMenu({
                             <span>Qty:{item?.quantity || 1}</span>
                           </div>
                         ) : (
-                          <div className="flex items-center text-slate-600">
-                            <span>{item?.product?.colour?.replaceAll("_", " ")}</span>
+                          <div className="flex items-center  flex-wrap text-slate-600">
+                            <span>
+                              {item?.product?.colour?.replaceAll("_", " ")}
+                            </span>
                             <Dot size={20} className="text-slate-300" />
                             <span>Qty:{item?.quantity || 1}</span>
                           </div>
@@ -213,3 +223,62 @@ export default function ProductsMenu({
     </DropdownMenu>
   );
 }
+ProductsMenu.Skeleton = () => {
+  return (
+    <div className="w-full ">
+      <Skeleton className="h-7 w-[150px]" />
+      <div className="flex items-center justify-between my-2 pr-8">
+        <Skeleton className="h-5 w-20" />
+        <Skeleton className="h-5 w-20" />
+      </div>
+      <hr className="my-5" />
+      <ul className="w-full  p-2 max-h-[400px] overflow-y-auto pb-[150px] ">
+        {Array.from({ length: 2 })?.map((item: any) => (
+          <li key={item?.product?._id}>
+            <div
+              key={item?.product?._id}
+              className="flex items-start gap-5  w-full border-b mb-2 pb-2"
+            >
+              <Image
+                src={"/cardSkeleton.png"}
+                width={70}
+                height={50}
+                className="object-contain animate-pulse rounded-sm"
+                alt="image"
+                placeholder="blur"
+                blurDataURL="/cardSkeleton.png"
+              />
+              <div className="w-full flex flex-col gap-4 items-start">
+                <div className="">
+                  <Skeleton className="h-7 w-20 mb-3" />
+                  <Skeleton className="h-5 w-[150px]" />
+                </div>
+                <div className="">
+                  <div className="flex items-center flex-wrap mb-1">
+                    <Skeleton className="h-4 w-12 " />
+
+                    <Dot size={20} className="text-slate-300" />
+                    <Skeleton className="h-4 w-12 " />
+
+                    <Dot size={20} className="text-slate-300" />
+                    <Skeleton className="h-4 w-12 " />
+                  </div>
+
+                  <div className="flex items-center gap-2 text-[13px]">
+                    <Skeleton className="h-4 w-10" />
+                    <Skeleton className="h-4 w-10" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div className="sticky -bottom-5 py-5 bg-white">
+        <hr className=" mb-2" />
+        <Skeleton className="h-5 w-[150px] mb-3 ml-auto" />
+        <Skeleton className="h-10 w-full" />
+      </div>
+    </div>
+  );
+};

@@ -1,12 +1,10 @@
 "use server";
+import { set } from "sanity";
 import { client } from "../sanity/lib/client";
 
-export const getHeroSection = async (): Promise<{
-  image: string;
-  title: string;
-  description: string;
-} | null> => {
+export const getHeroSection = async () => {
   try {
+    let loading = true;
     const query = `*[_type == "heroSection"][0]{
       title,
       description,
@@ -19,14 +17,20 @@ export const getHeroSection = async (): Promise<{
     }`;
 
     const { image, title, description } = await client.fetch(query);
-
+    loading = false;
     return {
       image: image?.asset?.url,
       title,
       description,
+      loading,
     };
   } catch (error) {
     console.error("Error fetching hero image: ", error);
-    return null;
+    return {
+      image: null,
+      title: null,
+      description: null,
+      loading: false,
+    };
   }
 };

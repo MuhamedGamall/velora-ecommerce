@@ -5,12 +5,15 @@ import { Github, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Skeleton } from "./ui/skeleton";
 
 const Footer = () => {
   const pathname = usePathname();
   const year = new Date().getFullYear();
   if (["/auth/signIn", "/auth/register", "/studio"].includes(pathname)) return;
   const [categories, setCategories] = useState<CategoryTree[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
   const isStudioPage = pathname.includes("/studio");
   if (isStudioPage) {
     return;
@@ -18,7 +21,8 @@ const Footer = () => {
   useEffect(() => {
     getCategories()
       .then((data) => {
-        setCategories(data);
+        setCategories(data.categories);
+        setLoading(data.loading);
       })
       .catch((error) => {
         setCategories([]);
@@ -31,32 +35,36 @@ const Footer = () => {
         <div className=" flex justify-between max-sm:flex-wrap gap-8 px-4">
           <div className=" ">
             <h4 className="font-bold text-lg mb-4">Ctegories</h4>
-            <ul className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-              {categories?.map((category: CategoryTree) => (
-                <li
-                  key={category._id}
-                  className="flex flex-col  gap-2 ml-5 capitalize"
-                >
-                  <Link
-                    href={category.title}
-                    className=" hover:underline font-bold text-[16px]"
+            {loading ? (
+              <Footer.LinksSkeleton />
+            ) : (
+              <ul className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                {categories?.map((category: CategoryTree) => (
+                  <li
+                    key={category._id}
+                    className="flex flex-col  gap-2 ml-5 capitalize"
                   >
-                    {category.title}
-                  </Link>
-                  <div className="flex flex-col  gap-1 w-full text-[13px]">
-                    {category?.subCategories?.map((subCategory: any) => (
-                      <Link
-                        key={'/'+category.title+'/' + subCategory.title}
-                        href={'/'+category.title + "/" + subCategory.title}
-                        className=" capitalize  hover:underline "
-                      >
-                        {subCategory.title}
-                      </Link>
-                    ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
+                    <Link
+                      href={category.title}
+                      className=" hover:underline font-bold text-[16px]"
+                    >
+                      {category.title}
+                    </Link>
+                    <div className="flex flex-col  gap-1 w-full text-[13px]">
+                      {category?.subCategories?.map((subCategory: any) => (
+                        <Link
+                          key={"/" + category.title + "/" + subCategory.title}
+                          href={"/" + category.title + "/" + subCategory.title}
+                          className=" capitalize  hover:underline "
+                        >
+                          {subCategory.title}
+                        </Link>
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div>
@@ -125,3 +133,20 @@ const Footer = () => {
 };
 
 export default Footer;
+
+Footer.LinksSkeleton = () => {
+  return (
+    <ul className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      {Array.from({ length: 5 })?.map((_, i) => (
+        <li key={i} className="flex flex-col  gap-2 ml-5 capitalize">
+          <Skeleton className="h-5 w-16" />
+          <div className="flex flex-col  gap-1 w-full">
+            {Array.from({ length: 5 })?.map((_, i) => (
+              <Skeleton className="h-3 w-14" />
+            ))}
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+};

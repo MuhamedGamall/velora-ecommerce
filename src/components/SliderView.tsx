@@ -2,6 +2,7 @@
 import { Product } from "@/types";
 import Slider from "react-slick";
 import Card from "./Card";
+import { Suspense } from "react";
 
 // Dynamic slider settings based on the number of products
 const sliderSettings = (productsLength: number) => ({
@@ -44,12 +45,18 @@ const sliderSettings = (productsLength: number) => ({
   ],
 });
 
-const SliderView = ({ products }: { products: Product[] }) => {
+const SliderView = ({
+  products,
+  loading,
+}: {
+  products: Product[];
+  loading: boolean;
+}) => {
   return (
     <Slider {...sliderSettings(products?.length)} className="w-full">
-      {products.map((item) => (
-        <Card {...item} key={item._id} />
-      ))}
+      {loading
+        ? Array.from({ length: 4 }).map((_, index) => <Card.Skeleton key={index} />)
+        : products.map((item) => <Card {...item} key={item._id} />)}
     </Slider>
   );
 };

@@ -19,10 +19,21 @@ const categoriesQuery = `*[_type == "category"]{
 
 export default async function getCategories() {
   try {
+    let loading = true;
     let categories = await client.fetch(categoriesQuery);
-    return categories as CategoryTree[];
+    loading = false;
+    return {
+      categories,
+      loading,
+    } as {
+      categories: CategoryTree[];
+      loading: boolean;
+    };
   } catch (error: any) {
     console.error("Error fetching categories: ", error);
-    return [];
+    return {
+      categories: [],
+      loading: false,
+    };
   }
 }

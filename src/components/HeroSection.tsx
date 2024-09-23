@@ -3,7 +3,8 @@ import { urlFor } from "@/sanity/lib/image";
 import { ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
+import { Skeleton } from "./ui/skeleton";
 
 const brands = [
   "/brands/new-balance_3.webp",
@@ -18,9 +19,9 @@ const brands = [
 ];
 
 export default async function HeroSection() {
-  const data = await getHeroSection();
+  const { image, title, description, loading } = await getHeroSection();
 
-  const heroImage = data?.image || "/hero-image.jpg";
+  const heroImage = image || "/hero-image.jpg";
 
   return (
     <section className="relative  max-h-[300px]   sm:max-h-[580px] overflow-hidden w-full">
@@ -31,6 +32,8 @@ export default async function HeroSection() {
         className="object-cover  object-bottom h-full w-full brightness-[.9]"
         src={heroImage}
         alt="hero image"
+        blurDataURL="/hero_SectinSkeleton.png"
+        placeholder="blur"
       />
 
       <div className="max-md:hidden absolute bottom-0 left-0 p-5 bg-black/50 w-full ">
@@ -50,12 +53,21 @@ export default async function HeroSection() {
       </div>
       <div className=" absolute bottom-2 md:top-20  left-0 md:px-5 w-full ">
         <div className="  w-full containerWrapper mx-auto flex flex-col   overflow-hidden justify-start ">
-          <h1 className="capitalize text-[20px] sm:text-[28px] md:text-[70px] leading-[1] text-white font-bold">
-            {data?.title || "The Fall Collection"}
-          </h1>
-          <p className="text-white text-[10px] md:text-[15px] font-bold uppercase">
-            {data?.description || "NEW READY-TO-WEAR FROM OUR FAVORITE BRANDS"}
-          </p>
+          {loading ? (
+            <Skeleton className="bg-slate-300  h-8 md:h-16 w-[220px]" />
+          ) : (
+            <h1 className="capitalize text-[20px] sm:text-[28px] md:text-[70px] leading-[1] text-white font-bold">
+              {title || "The Fall Collection"}
+            </h1>
+          )}
+
+          {loading ? (
+            <Skeleton className="bg-slate-300  h-4 md:h-8 w-[320px]" />
+          ) : (
+            <p className="text-white text-[10px] md:text-[15px] font-bold uppercase">
+              {description || "NEW READY-TO-WEAR FROM OUR FAVORITE BRANDS"}
+            </p>
+          )}
           <div className="flex items-center max-md:justify-between gap-3 mt-5 w-full">
             <Link
               href={"/explore?brand=mui_mui"}

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { CurrentClientSession, Product, Wishlist } from "@/types";
 import useWishlistStore from "@/zustand/store/wishlistStore";
 import { Loader2 } from "lucide-react";
@@ -18,7 +19,11 @@ const AddToWishlist = ({
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { addToWishlist, removeFromWishlist } = useWishlistStore();
+  const {
+    addToWishlist,
+    removeFromWishlist,
+    loading: wishlistLoading,
+  } = useWishlistStore();
 
   const addProductToWishlist = async () => {
     try {
@@ -61,7 +66,9 @@ const AddToWishlist = ({
       }, 500);
     }
   };
-
+  if (wishlistLoading) {
+    return <Skeleton className="h-10 w-full" />;
+  }
   return (
     <Button
       disabled={loading}

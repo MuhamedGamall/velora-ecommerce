@@ -7,10 +7,16 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import EmptyState from "../../../../components/EmptyState";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function WishlistContent() {
-  const { wishlist, fetchWishlist, removeFromWishlist, resetWishlist } =
-    useWishlistStore();
+  const {
+    wishlist,
+    fetchWishlist,
+    removeFromWishlist,
+    resetWishlist,
+    loading,
+  } = useWishlistStore();
   const { addToBag } = useShoppingBagStore();
   const session = useSession();
   useEffect(() => {
@@ -48,6 +54,15 @@ export default function WishlistContent() {
       });
     }
   };
+  if (loading) {
+    return (
+      <div className="w-full containerWrapper mx-auto mt-[130px] px-10">
+        <Skeleton className="h-8 w-[150px] mb-3" />
+        <Skeleton className="h-5 w-[100px]" />
+        <ProductsSelected.Skeleton />
+      </div>
+    );
+  }
   if (wishlist?.length === 0) {
     return (
       <div className="mt-[120px] mb-10">
@@ -56,11 +71,15 @@ export default function WishlistContent() {
     );
   }
   return (
-    <div className="w-full containerWrapper mx-auto mt-[120px]">
+    <div className="w-full containerWrapper mx-auto mt-[130px] px-10">
       {wishlist?.length > 0 && (
-        <h1 className="text-[22px] md:text-[32px]  font-bold pt-5">Wishlist</h1>
+        <>
+          <h1 className="text-[22px] md:text-[32px]  font-bold pt-5">
+            Wishlist
+          </h1>
+          <span>{wishlist?.length} items</span>
+        </>
       )}
-      {wishlist?.length > 0 && <span>{wishlist?.length} items</span>}
       <ProductsSelected
         type="wishlist"
         reset={handleReset}

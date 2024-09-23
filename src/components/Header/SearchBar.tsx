@@ -23,11 +23,11 @@ export default function Search() {
   }, [q]);
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const checkBath = pathname == "/";
+    const checkBath = pathname.includes("/explore");
     const url = qs.stringifyUrl(
       {
         query: { q: searchQuery.trim() },
-        url: checkBath ? "/explore" : location?.href,
+        url: !checkBath ? "/explore" : location?.href,
       },
       {
         skipNull: true,

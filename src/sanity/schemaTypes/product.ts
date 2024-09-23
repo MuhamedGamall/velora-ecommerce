@@ -69,7 +69,6 @@ export const product = defineType({
       options: {
         hotspot: true,
       },
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "price",
@@ -89,7 +88,7 @@ export const product = defineType({
       title: "Sales Count",
       type: "number",
       readOnly: true,
-      initialValue:0,
+      initialValue: 0,
     }),
     defineField({
       name: "brand",

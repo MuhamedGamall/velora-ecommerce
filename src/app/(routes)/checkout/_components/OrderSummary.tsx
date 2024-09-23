@@ -4,6 +4,7 @@ import { formatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ShoppingBagIcon } from "lucide-react";
 import Image from "next/image";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function OrderSummary({
   shoppingBag,
@@ -37,8 +38,28 @@ export default function OrderSummary({
         src={"/payment.png"}
         width={500}
         height={420}
-        alt="payment image" className="my-3"
+        alt="payment image"
+        className="my-3"
       />
     </div>
   );
 }
+OrderSummary.Skeleton = () => {
+  return (
+    <div className="w-full py-5">
+      <Skeleton className="h-7 w-[150px] mb-3" />
+      <div>
+        <div className="text-[17px]  gap-3  flex items-center justify-between border-b pb-3 mb-3">
+          <Skeleton className="h-5 w-[120px]" />
+          <Skeleton className="h-5 w-[80px]" />
+        </div>
+        <div className=" text-[20px] gap-3 flex items-center justify-between border-b pb-3 mb-3">
+          <Skeleton className="h-6 w-[120px]" />
+          <Skeleton className="h-6 w-[80px]" />
+        </div>
+      </div>
+      <Skeleton className="h-10 w-full mb-3" />
+      <Skeleton className="h-16 w-full" />
+    </div>
+  );
+};

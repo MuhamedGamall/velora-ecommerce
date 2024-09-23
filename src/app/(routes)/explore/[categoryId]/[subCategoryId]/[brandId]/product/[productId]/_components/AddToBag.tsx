@@ -1,10 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { CurrentClientSession, Product, ShoppingBag } from "@/types";
 import useShoppingBagStore from "@/zustand/store/cartStore";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 const AddToBag = ({
   quantity,
@@ -22,7 +23,11 @@ const AddToBag = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [sizeError, setSizeError] = useState<boolean>(false);
 
-  const { addToBag, removeFromBag } = useShoppingBagStore();
+  const {
+    addToBag,
+    removeFromBag,
+    loading: bagLoading,
+  } = useShoppingBagStore();
 
   const addproductToBag = async () => {
     try {
@@ -75,7 +80,9 @@ const AddToBag = ({
       }, 500);
     }
   };
-
+  if (bagLoading) {
+    return <Skeleton className="h-10 w-full" />;
+  }
   return (
     <>
       {sizeError && !size && (

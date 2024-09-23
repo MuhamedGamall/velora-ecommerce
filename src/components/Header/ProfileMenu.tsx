@@ -38,7 +38,7 @@ export default function ProfileMenu() {
 
       <DropdownMenuContent
         align="end"
-        className="bg-white border rounded-none mt-16 p-2"
+        className="bg-white border rounded-none mt-5 !z-[1600] p-2"
       >
         <div className="flex items-center gap-2 p-2">
           {session?.data?.user?.image ? (

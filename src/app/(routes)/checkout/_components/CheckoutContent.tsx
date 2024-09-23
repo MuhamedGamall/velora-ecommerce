@@ -8,10 +8,16 @@ import { toast } from "sonner";
 import OrderSummary from "./OrderSummary";
 import { useSession } from "next-auth/react";
 import EmptyState from "../../../../components/EmptyState";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CheckoutContent() {
-  const { shoppingBag, fetchShoppingBag, removeFromBag, resetShoppingBag } =
-    useShoppingBagStore();
+  const {
+    shoppingBag,
+    fetchShoppingBag,
+    removeFromBag,
+    resetShoppingBag,
+    loading,
+  } = useShoppingBagStore();
   const { addToWishlist } = useWishlistStore();
   const session = useSession();
   useEffect(() => {
@@ -47,15 +53,31 @@ export default function CheckoutContent() {
       });
     }
   };
+  if (loading) {
+    return (
+      <div className="w-full containerWrapper mx-auto mt-[130px] px-10">
+        <Skeleton className="h-8 w-[150px] mb-3" />
+        <Skeleton className="h-5 w-[100px]" />
+        <div className="w-full flex max-md:flex-col items-start gap-10">
+          <div className="md:flex-[2] w-full">
+            <ProductsSelected.Skeleton />
+          </div>
+          <div className="md:flex-1 w-full">
+            <OrderSummary.Skeleton />
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (shoppingBag?.length === 0) {
     return (
-      <div className="mt-[120px]  mb-10">
+      <div className="mt-[120px] mb-10">
         <EmptyState />
       </div>
     );
   }
   return (
-    <div className="w-full containerWrapper mx-auto mt-[120px]">
+    <div className="w-full containerWrapper mx-auto mt-[130px] px-10">
       {shoppingBag?.length > 0 && (
         <h1 className="text-[22px] md:text-[32px]  font-semibold pt-5">
           Shopping Bag

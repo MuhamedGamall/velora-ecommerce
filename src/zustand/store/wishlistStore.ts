@@ -8,6 +8,8 @@ import { create } from "zustand";
 
 interface WishlistState {
   wishlist: Wishlist[];
+  loading: boolean;
+  setLoading: (value: boolean) => void;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -21,9 +23,13 @@ interface WishlistState {
 const useWishlistStore = create<WishlistState>((set) => ({
   wishlist: [],
   isOpen: false,
+  loading: false,
+  setLoading: (value) => set({ loading: value }),
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
   fetchWishlist: async () => {
+    set({ loading: true });
+
     try {
       const session = await getCurrentSession();
 
@@ -37,6 +43,8 @@ const useWishlistStore = create<WishlistState>((set) => ({
     } catch (error: any) {
       set({ wishlist: [] });
       throw new Error("fetching wishlist:", error);
+    } finally {
+      set({ loading: false });
     }
   },
 

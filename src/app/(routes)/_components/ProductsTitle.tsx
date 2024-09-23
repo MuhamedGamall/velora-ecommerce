@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 
 export default function ProductsTitle({
@@ -47,3 +48,18 @@ export default function ProductsTitle({
     </div>
   );
 }
+ProductsTitle.Skeleton = () => {
+  return (
+    <div className="w-full mb-6">
+      <Skeleton
+        className=" h-7 w-[150px]
+      mb-2"
+      />
+
+      <div className="flex items-center gap-2">
+        <Skeleton className="w-4 h-4" />
+        <Skeleton className=" w-[100px] h-5" />
+      </div>
+    </div>
+  );
+};

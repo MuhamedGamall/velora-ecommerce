@@ -7,14 +7,19 @@ export default async function ExplorePage({
 }: {
   searchParams: SearchParams;
 }) {
-  const products = await getProducts({
+  const { products, loading } = await getProducts({
     searchParams: {
       ...searchParams,
-      minPrice:searchParams?.minPrice || '0',
-      maxPrice: searchParams?.maxPrice || '100000000',
-      sortBy: searchParams?.sortBy || 'popular',
+      minPrice: searchParams?.minPrice || "0",
+      maxPrice: searchParams?.maxPrice || "100000000",
+      sortBy: searchParams?.sortBy || "popular",
     },
   });
-
-  return <CatalogContent products={products} searchParams={searchParams} />;
+  return (
+    <CatalogContent
+      productsLoading={loading}
+      products={products}
+      searchParams={searchParams}
+    />
+  );
 }

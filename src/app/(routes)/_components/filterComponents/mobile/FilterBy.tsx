@@ -12,8 +12,9 @@ import { ChevronDown, X } from "lucide-react";
 import SortBy from "../SortBy";
 import FilterOptions from "./FilterOptions";
 import CheckboxFilter from "../CheckboxFilter";
+import { SearchParams } from "@/types";
 
-export default function FilterBy({ searchParams }: any) {
+export default function FilterBy({ searchParams }: { searchParams: SearchParams}) {
   const sortBy = searchParams?.sortBy;
   return (
     <Drawer >
@@ -41,7 +42,7 @@ export default function FilterBy({ searchParams }: any) {
           <CheckboxFilter
             saleValue={searchParams.sale}
             bestsellerValue={searchParams.bestseller}
-            newCollectionValue={searchParams.newCollection}
+            newSeasonValue={searchParams.newSeason}
           />
         </div>
       </DrawerContent>

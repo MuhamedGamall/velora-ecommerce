@@ -6,6 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { SORT_BY_OPTIONS } from "@/constants";
 import { ChevronDown, Circle } from "lucide-react";
@@ -13,11 +14,7 @@ import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
 
-export default function SortBy({
-  initialValue,
-}: {
-  initialValue: string;
-}) {
+export default function SortBy({ initialValue }: { initialValue: string }) {
   const [selectedValue, setSelectedValue] = useState<{
     value: string;
     title: string;
@@ -116,3 +113,11 @@ export default function SortBy({
     </>
   );
 }
+export const SortBySkeleton = () => {
+  return (
+    <div className="flex items-center justify-between  gap-2   mt-5">
+      <Skeleton className="h-5 w-28" />
+      <Skeleton className="h-5 w-5" />
+    </div>
+  );
+};

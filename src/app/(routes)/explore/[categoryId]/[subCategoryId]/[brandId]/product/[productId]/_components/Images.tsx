@@ -31,6 +31,8 @@ const Images = ({ images }: { images: ImageObject[] }) => {
               alt={`Thumbnail ${index + 1}`}
               width={100}
               height={100}
+              placeholder="blur"
+              blurDataURL="/cardSkiliton.png"
               className="object-contain"
             />
           </div>
@@ -42,6 +44,8 @@ const Images = ({ images }: { images: ImageObject[] }) => {
           alt={`Image ${selectedImg + 1}`}
           width={1000}
           height={1000}
+          placeholder="blur"
+          blurDataURL="/cardSkiliton.png"
           className="object-contain"
         />
         <button

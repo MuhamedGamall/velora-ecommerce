@@ -8,12 +8,13 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { ChevronDown, X } from "lucide-react";
-import SortBy from "../SortBy";
-import FilterOptions from "./FilterOptions";
-import CheckboxFilter from "../CheckboxFilter";
 import CategoryTreeView from "../CategoryTreeView";
+import getCategories from "@/actions/get-categories";
+import { SearchParams } from "@/types";
 
-export default function FilterBy({ searchParams }: any) {
+export default async function FilterBy() {
+  const { categories, loading } = await getCategories();
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -35,7 +36,11 @@ export default function FilterBy({ searchParams }: any) {
           </DrawerClose>
         </DrawerHeader>
         <div className="">
-          <CategoryTreeView />
+          {loading ? (
+            <CategoryTreeView.Skeleton />
+          ) : (
+            <CategoryTreeView categories={categories} />
+          )}
         </div>
       </DrawerContent>
     </Drawer>
