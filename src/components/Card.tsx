@@ -4,6 +4,7 @@ import { Product } from "@/types";
 import { urlFor } from "@/sanity/lib/image";
 import { Box } from "lucide-react";
 import { cn, formatPrice, isNewSeason, truncateText } from "@/lib/utils";
+import { Suspense } from "react";
 
 export default function Card({
   _id,
@@ -18,10 +19,13 @@ export default function Card({
   brand,
   _createdAt,
   oldPrice,
-
 }: Product) {
   return (
-    <div className={cn(" text-mainBlack  max-w-[215px]  flex justify-center mx-auto")}>
+    <div
+      className={cn(
+        " text-mainBlack  max-w-[215px]  flex justify-center mx-auto"
+      )}
+    >
       <Link
         href={`/explore/${category?.title}/${subCategory?.title}/${brand}/product/${_id}`}
         className="mb-12 flex flex-col gap-2 xxs:w-[38vw] xxs:min-w-[7rem] sm:w-[23vw] sm:max-w-none md:w-[23vw] lg:w-[18vw] 2xl:max-w-[20rem]"
@@ -53,14 +57,20 @@ export default function Card({
               Sale
             </span>
           )}
-          <Image
-            width={600}
-            height={600}
-            src={images?.[0]?.asset?.url}
-            alt={secondaryImage?.asset?.url}
-            className="absolute z-10 h-full w-full object-cover"
-            loading="lazy"
-          />
+          <Suspense
+            fallback={
+              <div className="h-[500px] w-[250px] bg-red-600">loading..</div>
+            }
+          >
+            <Image
+              width={600}
+              height={600}
+              src={images?.[0]?.asset?.url}
+              alt={secondaryImage?.asset?.url}
+              className="absolute z-10 h-full w-full object-cover"
+              loading="lazy"
+            />
+          </Suspense>
           {secondaryImage?.asset?.url && (
             <Image
               width={600}

@@ -16,13 +16,14 @@ const brands = [
   "/brands/cos.webp",
   "/brands/slam-jam.webp",
 ];
+
 export default async function HeroSection() {
   const data = await getHeroSection();
 
   const heroImage = data?.image || "/hero-image.jpg";
 
   return (
-    <section className="relative  max-h-[300px]   sm:max-h-[550px] overflow-hidden w-full">
+    <section className="relative  max-h-[300px]   sm:max-h-[580px] overflow-hidden w-full">
       <Image
         width={1920}
         height={600}
@@ -33,7 +34,7 @@ export default async function HeroSection() {
       />
 
       <div className="max-md:hidden absolute bottom-0 left-0 p-5 bg-black/50 w-full ">
-        <div className=" flex containerWrapper mx-auto  gap-10 overflow-hidden justify-start ">
+        <div className=" flex containerWrapper h-[50px] mx-auto  gap-10 overflow-hidden justify-start ">
           {brands.map((brand, i) => (
             <Image
               key={brand + i}
@@ -58,7 +59,7 @@ export default async function HeroSection() {
           <div className="flex items-center max-md:justify-between gap-3 mt-5 w-full">
             <Link
               href={"/explore?brand=mui_mui"}
-              className=" px-2 md:px-3 py-1 md:py-2 text-white max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
+              className=" px-2 md:px-3 whitespace-nowrap py-1 md:py-2 text-white max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
               Mui Mui
               <ChevronRightIcon
@@ -68,7 +69,7 @@ export default async function HeroSection() {
             </Link>
             <Link
               href={"/explore?brand=gucci"}
-              className=" px-2 md:px-3 py-1 md:py-2 text-white  max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
+              className=" px-2 md:px-3 whitespace-nowrap py-1 md:py-2 text-white  max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
               Gucci
               <ChevronRightIcon
@@ -78,7 +79,7 @@ export default async function HeroSection() {
             </Link>
             <Link
               href={"/explore?brand=louis_vuitton"}
-              className=" px-2 md:px-3 py-1 md:py-2 text-white  max-md:justify-center  max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
+              className=" whitespace-nowrap px-2 md:px-3 py-1 md:py-2 text-white  max-md:justify-center  max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
             >
               Louis Vuitton
               <ChevronRightIcon

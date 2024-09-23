@@ -32,7 +32,7 @@ const sliderSettings = (productsLength: number) => ({
     {
       breakpoint: 640,
       settings: {
-        slidesToShow:  productsLength == 1 ? 3:2,
+        slidesToShow: productsLength == 1 ? 3 : 2,
       },
     },
     {
@@ -48,7 +48,7 @@ const SliderView = ({ products }: { products: Product[] }) => {
   return (
     <Slider {...sliderSettings(products?.length)} className="w-full">
       {products.map((item) => (
-        <Card {...item} key={item._id} productsLength={products?.length} />
+        <Card {...item} key={item._id} />
       ))}
     </Slider>
   );

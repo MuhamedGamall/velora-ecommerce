@@ -44,9 +44,7 @@ const ProductsSlider = ({
             "Shop our curated selection of trending items and elevate your wardrobe with the hottest pieces everyone is raving about. "}
         </p>
       </div>
-      <div className="lg:ml-10 ml-7">
-        <SliderView products={products} />
-      </div>
+      <SliderView products={products} />
     </div>
   );
 };
