@@ -170,7 +170,7 @@ export const ProductViewSkeleton = () => {
               alt={`Image skeleton`}
               width={400}
               height={200}
-              className="object-cover aspect-[3/4]  w-full animate-pulse h-full rounded-sm"
+              className="object-cover aspect-[3/5]  w-full animate-pulse h-full rounded-sm"
               placeholder="blur"
               blurDataURL="/cardSkeleton.png"
             />

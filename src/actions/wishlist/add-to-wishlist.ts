@@ -1,5 +1,6 @@
 "use server";
 import { client } from "@/sanity/lib/client";
+import { UserProfile } from "@/types";
 
 const addProductToWishlist = async ({
   userId,
@@ -18,11 +19,15 @@ const addProductToWishlist = async ({
       throw "Product ID is required";
     }
 
-    const user = await client.getDocument(userId);
+    const user = await client.getDocument(userId) as UserProfile;
 
     if (!user) {
       throw "User not found";
     }
+    const isExist = user?.wishlist?.find(
+      (item) => item?.product?._ref === productId
+    );
+    if (isExist) return true;
     const generateKey = () =>
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);

@@ -56,9 +56,15 @@ const useWishlistStore = create<WishlistState>((set) => ({
       if (!session?.user?._id) {
         throw "User ID not found";
       }
-      set((state) => ({
-        wishlist: [...state.wishlist, { product }],
-      }));
+      set((state) => {
+        const isExist = state.wishlist.find(
+          (item) => item?.product?._id === product?._id
+        );
+        if (isExist) return { wishlist: state.wishlist };
+        return {
+          wishlist: [...state.wishlist, { product }],
+        };
+      });
 
       const response = await addProductToWishlist({
         userId: session.user._id,
