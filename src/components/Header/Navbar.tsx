@@ -26,7 +26,7 @@ export default function Navber() {
   return (
     <header
       className={cn("fixed top-0 w-full z-[1000]", {
-        "border-b shadow-md": scrolled,
+        "shadow-header": scrolled,
       })}
     >
       <div
@@ -55,7 +55,7 @@ export default function Navber() {
             <div className="flex items-center gap-2">
               {loading ? (
                 <>
-                  <Skeleton className="h-10 w-[272px]" />
+                  <Skeleton className="md:h-10 md:w-[272px] h-5 w-5" />
                   <Skeleton className="h-5 w-5" />
                   <Skeleton className="h-5 w-5" />
                   <Skeleton className="h-5 w-5" />

@@ -11,6 +11,7 @@ const config: Config = {
     extend: {
       boxShadow: {
         menu: "0px 159px 95px rgba(13,12,34,0.01), 0px 71px 71px rgba(13,12,34,0.02), 0px 18px 39px rgba(13,12,34,0.02), 0px 0px 0px rgba(13,12,34,0.02)",
+        header:"0px 8px 20px rgba(0,0,0,0.06)" ,
         searchBar: " #00000045 1px 414px 45px 366px",
       },
       screens: {
