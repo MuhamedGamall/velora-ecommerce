@@ -27,7 +27,7 @@ export default async function Categories({
         <div className="flex-[2] max-sm:flex-col flex gap-2 ">
           <div className="flex-1 flex-col flex gap-2 ">
             <Link
-              href="/sale"
+              href="/explore/sale"
               className="relative flex flex-1 gap-2 overflow-hidden w-full"
             >
               <Image
@@ -44,7 +44,7 @@ export default async function Categories({
             </Link>
 
             <Link
-              href="/accessories"
+              href="/explore/accessories"
               className="relative flex flex-1 gap-2 overflow-hidden w-full"
             >
               <Image
@@ -62,7 +62,7 @@ export default async function Categories({
           </div>
           <div className="flex-1 flex gap-2 ">
             <Link
-              href="/newSeason"
+              href="/explore/newSeason"
               className="relative flex flex-1 gap-2 overflow-hidden w-full"
             >
               <Image
@@ -83,7 +83,7 @@ export default async function Categories({
           {categoriesWithOutBaby?.map((category: CategoryTree, i: number) => (
             <Link
               key={category?.title}
-              href={"/" + category?.title}
+              href={"/explore/" + category?.title}
               className="relative flex flex-1 gap-2 overflow-hidden w-full"
             >
               <Image

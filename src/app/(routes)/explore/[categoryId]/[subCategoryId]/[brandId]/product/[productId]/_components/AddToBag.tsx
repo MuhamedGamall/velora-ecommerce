@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { CurrentClientSession, Product, ShoppingBag } from "@/types";
 import useShoppingBagStore from "@/zustand/store/cartStore";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 const AddToBag = ({
@@ -22,18 +23,22 @@ const AddToBag = ({
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [sizeError, setSizeError] = useState<boolean>(false);
-
   const {
     addToBag,
     removeFromBag,
     loading: bagLoading,
   } = useShoppingBagStore();
-
+  const router = useRouter();
   const addproductToBag = async () => {
     try {
+      if (session?.status === "unauthenticated")
+        return router.push("/auth/signIn");
+
       if (!size && product?.sizes) return setSizeError(true);
+
       if (quantity <= 0)
         return toast.error("Quantity should be greater than 0");
+      
       await addToBag({
         product,
         quantity,

@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { CurrentClientSession, Product, Wishlist } from "@/types";
 import useWishlistStore from "@/zustand/store/wishlistStore";
 import { Loader2 } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 const AddToWishlist = ({
@@ -24,9 +24,12 @@ const AddToWishlist = ({
     removeFromWishlist,
     loading: wishlistLoading,
   } = useWishlistStore();
-
+  const router = useRouter();
   const addProductToWishlist = async () => {
     try {
+      if (session?.status === "unauthenticated")
+        return router.push("/auth/signIn");
+
       await addToWishlist(product);
       toast.success("Product added to wishlist");
     } catch (error) {

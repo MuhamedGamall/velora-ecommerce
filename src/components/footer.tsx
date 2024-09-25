@@ -45,7 +45,7 @@ const Footer = () => {
                     className="flex flex-col  gap-2 ml-5 capitalize"
                   >
                     <Link
-                      href={category.title}
+                      href={'/explore/'+category.title}
                       className=" hover:underline font-bold text-[16px]"
                     >
                       {category.title}
@@ -53,8 +53,8 @@ const Footer = () => {
                     <div className="flex flex-col  gap-1 w-full text-[13px]">
                       {category?.subCategories?.map((subCategory: any) => (
                         <Link
-                          key={"/" + category.title + "/" + subCategory.title}
-                          href={"/" + category.title + "/" + subCategory.title}
+                          key={"/explore/" + category.title + "/" + subCategory.title}
+                          href={"/explore/" + category.title + "/" + subCategory.title}
                           className=" capitalize  hover:underline "
                         >
                           {subCategory.title}
