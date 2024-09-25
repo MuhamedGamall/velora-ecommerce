@@ -1,6 +1,7 @@
 import getCurrentSession from "@/actions/get-current-session";
 import { NextRequest, NextResponse } from "next/server";
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+import Stripe from "stripe";
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY) as Stripe;
 
 export async function POST(req: NextRequest) {
   try {
