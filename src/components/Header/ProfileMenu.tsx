@@ -6,19 +6,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User } from "lucide-react";
+import axios from "axios";
+import { Logs, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import OrdersButtn from "../OrdersButtn";
 export default function ProfileMenu() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const session = useSession();
 
-  return session.status === 'unauthenticated' ? (
+  return session.status === "unauthenticated" ? (
     <Link href={"/auth/signIn"}>
       <User
         size={20}
@@ -30,7 +32,7 @@ export default function ProfileMenu() {
   ) : (
     <DropdownMenu onOpenChange={setOpen} open={open}>
       <DropdownMenuTrigger asChild className="outline-none">
-        <button>
+        <button className="">
           <User size={20} strokeWidth={1.3} color="white " />
           <span className="sr-only">Toggle user menu</span>
         </button>
@@ -64,21 +66,20 @@ export default function ProfileMenu() {
         </div>
         <>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setOpen(false)} asChild>
-            <Link href={`/orders`} className="flex items-center gap-2 cursor-pointer">
-              <div className="h-4 w-4" />
-              <span>Orders</span>
-            </Link>
+          <DropdownMenuItem >
+            <OrdersButtn className="flex items-center gap-2 w-full cursor-pointer">
+              <Logs size={20} />
+              <span>Mange Orders</span>
+            </OrdersButtn>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
-          <DropdownMenuItem 
-            onClick={() => {
+          <DropdownMenuItem
+            onClick={async () => {
               setOpen(false);
 
-              signOut({ callbackUrl: "/" }).then(() => {
-                router.refresh();
-              });
+              await signOut({ callbackUrl: "/" });
+              router.refresh();
             }}
             asChild
             className="p-3 cursor-pointer text-slate-600"

@@ -27,7 +27,7 @@ export default async function RootLayout({
           <WindowTitle/>
           <Toaster duration={3000} />
           <Navber />
-          <main className="">{children}</main>
+          <main className="min-h-screen">{children}</main>
           <Footer />
         </AuthSessionProvider>
       </body>

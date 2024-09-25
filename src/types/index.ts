@@ -9,6 +9,7 @@ export interface UserProfile {
   _rev: string;
   shoppingBag: ShoppingBag[];
   wishlist: Wishlist[];
+  stripeCustomerId: string;
 }
 
 export interface CurrentServerSession {

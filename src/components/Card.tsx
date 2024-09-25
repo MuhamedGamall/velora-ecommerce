@@ -121,7 +121,7 @@ Card.Skeleton = function () {
             className=" z-10 h-full w-full rounded-sm animate-pulse object-cover"
             loading="lazy"
             placeholder="blur"
-            blurDataURL="/cardSkeleton.png"
+            blurDataURL="/cardSkiliton.png"
           />
         </div>
         <Skeleton className="h-5 w-[90%] " />

@@ -118,7 +118,7 @@ ProductsSelected.Skeleton = () => {
                 className="object-contain animate-pulse rounded-sm"
                 alt="image"
                 placeholder="blur"
-                blurDataURL="/cardSkiliton.png"
+                blurDataURL="/cardSkeleton.png"
               />
               <div className="w-full flex flex-col gap-4 items-start">
                 <div className="">

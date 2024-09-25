@@ -13,7 +13,7 @@ const ProductsSlider = ({
   loading: boolean;
 }) => {
   return (
-    <div className={"mx-auto my-20   containerWrapper"}>
+    <section className={"mx-auto my-20   containerWrapper"}>
       <div
         className={cn(
           "flex flex-col text-center gap-2 items-center mb-10 text-slate-700  ",
@@ -57,7 +57,7 @@ const ProductsSlider = ({
       </div>
 
       <SliderView products={products} loading={loading} />
-    </div>
+    </section>
   );
 };
 

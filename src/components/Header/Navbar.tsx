@@ -72,7 +72,7 @@ export default function Navber() {
           )}
         </div>
       </div>
-      <Navigation />
+      {!isStudioPage && <Navigation />}
     </header>
   );
 }

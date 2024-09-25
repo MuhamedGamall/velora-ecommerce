@@ -40,7 +40,7 @@ const ProductView = ({ product }: { product: Product | null }) => {
     setSize(isExistInBag?.size || "");
   }, [isExistInBag]);
   useEffect(() => {
-  document.title = `Velora | Explore | ${product?.title}`;
+    document.title = `Velora | Explore | ${product?.title}`;
   }, [isExistInBag]);
 
   return (
@@ -157,7 +157,7 @@ export const ProductViewSkeleton = () => {
                   alt={`Thumbnail ${index + 1}`}
                   className="object-contain animate-pulse rounded-sm"
                   placeholder="blur"
-                  blurDataURL="/cardSkiliton.png"
+                  blurDataURL="/cardSkeleton.png"
                   width={100}
                   height={100}
                 />
@@ -172,7 +172,7 @@ export const ProductViewSkeleton = () => {
               height={200}
               className="object-cover aspect-[3/4]  w-full animate-pulse h-full rounded-sm"
               placeholder="blur"
-              blurDataURL="/cardSkiliton.png"
+              blurDataURL="/cardSkeleton.png"
             />
           </div>
         </div>
@@ -218,7 +218,6 @@ export const ProductViewSkeleton = () => {
                 <Skeleton className="h-5 w-20" />
                 <Skeleton className="h-5 w-5" />
               </div>
-
             </>
           ))}
         </div>

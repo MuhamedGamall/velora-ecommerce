@@ -36,6 +36,11 @@ yarn-error.log*
 next-env.d.ts
 
 
+# Ignore the Sanity-related files
+.sanity/
+
+# Ignore build output (dist folder)
+dist/
 
 # hide personal filder | files
 original-code

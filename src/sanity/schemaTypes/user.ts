@@ -3,7 +3,6 @@ import { defineField, defineType } from "sanity";
 export const user = defineType({
   name: "user",
   title: "Users",
-
   type: "document",
   fields: [
     defineField({
@@ -45,6 +44,19 @@ export const user = defineType({
         ],
         layout: "radio",
       },
+    }),
+    defineField({
+      name: "stripeCustomerId",
+      title: "Stripe Customer ID",
+      type: "string",
+      readOnly: true,
+    }),
+    defineField({
+      name: "orders",
+      title: "Orders",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "order" }] }],
+      readOnly: true,
     }),
     defineField({
       readOnly: true,

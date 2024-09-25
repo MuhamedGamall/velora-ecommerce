@@ -32,7 +32,7 @@ const Images = ({ images }: { images: ImageObject[] }) => {
               width={100}
               height={100}
               placeholder="blur"
-              blurDataURL="/cardSkiliton.png"
+              blurDataURL="/cardSkeleton.png"
               className="object-contain"
             />
           </div>
@@ -45,7 +45,7 @@ const Images = ({ images }: { images: ImageObject[] }) => {
           width={1000}
           height={1000}
           placeholder="blur"
-          blurDataURL="/cardSkiliton.png"
+          blurDataURL="/cardSkeleton.png"
           className="object-contain"
         />
         <button

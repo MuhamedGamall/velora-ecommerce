@@ -1,10 +1,12 @@
+import getCurrentSession from "@/actions/get-current-session";
 import getUser from "@/actions/get-user";
-import updateUserRole from "@/actions/update-user-role";
+import updateUser from "@/actions/update-user";
 import { client } from "@/sanity/lib/client";
-import { user } from "@/sanity/schemaTypes/user";
 import { AuthOptions } from "next-auth";
 import { SanityAdapter, SanityCredentials } from "next-auth-sanity";
 import GoogleProvider from "next-auth/providers/google";
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 export const authOptions: AuthOptions = {
   adapter: SanityAdapter(client),
   providers: [
@@ -35,12 +37,27 @@ export const authOptions: AuthOptions = {
     async signIn({ user }) {
       try {
         if (!user || !user?.email) return false;
+
         if (process.env.CEO_EMAIL === user?.email) {
-          const updateUser = await updateUserRole({
+          const update = await updateUser({
             email: user.email,
-            newRole: "admin",
+            data: { role: "admin" },
           });
         }
+        
+        const fetchUser = await getUser({ email: user.email });
+        const haveStripeCustomer = fetchUser?.stripeCustomerId;
+
+        if (haveStripeCustomer) return true;
+
+        const { id: stripeCustomerId } = await stripe.customers.create({
+          email: user?.email,
+          description: "Customer created from Sanity Registration",
+        });
+        await updateUser({
+          email: user.email,
+          data: { stripeCustomerId },
+        });
         return true;
       } catch (error) {
         console.log("Error signing in", error);

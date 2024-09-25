@@ -1,19 +1,39 @@
-import { ShoppingBag } from "@/types";
-import { product } from "../../../../sanity/schemaTypes/product";
-import { formatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { formatPrice } from "@/lib/utils";
+import { ShoppingBag } from "@/types";
+import axios from "axios";
 import { ShoppingBagIcon } from "lucide-react";
 import Image from "next/image";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useRouter } from "next/navigation";
 
 export default function OrderSummary({
   shoppingBag,
 }: {
   shoppingBag: ShoppingBag[];
 }) {
+  const router = useRouter();
+
   const total = shoppingBag?.reduce((acc, item) => {
     return acc + item.product.price * item?.quantity;
   }, 0);
+
+  async function proceedToCheckout() {
+    try {
+      if (shoppingBag?.length === 0) {
+        throw "Your Bag is empty";
+      }
+      const { data } = await axios.post("/api/checkout", {
+        shoppingBag,
+      });
+  
+      if (!data || !data.url) throw("Session creation failed");
+      
+      return router.push(data.url);
+    } catch (error: any) {
+      console.error("Error creating checkout session: ", error);
+    }
+  }
   return (
     <div className="w-full py-5">
       <h2 className="mb-3 mt-2 font-medium text-[25px]">Order Summary</h2>
@@ -28,6 +48,7 @@ export default function OrderSummary({
         </span>
       </div>
       <Button
+        onClick={proceedToCheckout}
         disabled={!shoppingBag?.length}
         className="w-full rounded-none bg-black "
       >

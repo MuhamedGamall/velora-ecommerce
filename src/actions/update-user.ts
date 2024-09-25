@@ -2,12 +2,12 @@
 import { client } from "@/sanity/lib/client";
 import getUser from "./get-user";
 
-export default async function updateUserRole({
+export default async function updateUser({
   email,
-  newRole,
+  data,
 }: {
   email: string;
-  newRole: string;
+  data: any;
 }) {
   try {
     if (!email) {
@@ -19,11 +19,11 @@ export default async function updateUserRole({
       throw "User not found";
     }
 
-    await client.patch(user._id).set({ role: newRole }).commit();
+    await client.patch(user._id).set(data).commit();
 
     return user;
   } catch (error: any) {
-    console.error("Error updating user role: ", error.message);
+    console.error("Error updating user: ", error.message);
     return null;
   }
 }

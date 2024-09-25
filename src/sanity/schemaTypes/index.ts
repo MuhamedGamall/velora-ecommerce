@@ -4,6 +4,7 @@ import { account, user, verificationToken } from "./user";
 import category from "./category";
 import subCategory from "./subCategory";
 import { product } from "./product";
+import order from "./order";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -14,5 +15,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     category,
     subCategory,
     product,
+    order
   ],
 };

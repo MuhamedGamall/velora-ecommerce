@@ -77,7 +77,7 @@ export default function CheckoutContent() {
     );
   }
   return (
-    <div className="w-full containerWrapper mx-auto mt-[130px] px-10">
+    <div className="w-full containerWrapper mx-auto mt-[130px]  px-10">
       {shoppingBag?.length > 0 && (
         <h1 className="text-[22px] md:text-[32px]  font-semibold pt-5">
           Shopping Bag
