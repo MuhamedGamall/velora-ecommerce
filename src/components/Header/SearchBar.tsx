@@ -23,11 +23,12 @@ export default function Search() {
   }, [q]);
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const checkBath = pathname.includes("/explore");
+    const checkBathNotInExplore = !pathname.includes("/explore");
+    const checkBath = pathname.includes("/product") || checkBathNotInExplore;
     const url = qs.stringifyUrl(
       {
         query: { q: searchQuery.trim() },
-        url: !checkBath ? "/explore" : location?.href,
+        url: checkBath ? "/explore" : location?.href,
       },
       {
         skipNull: true,

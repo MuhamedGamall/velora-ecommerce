@@ -1,6 +1,6 @@
 "use server";
 import { client } from "@/sanity/lib/client";
-import { ShoppingBag, UserProfile } from "@/types";
+import { UserProfile } from "@/types";
 const userQuery = `
   *[_type == "user" && _id == $userId][0]{
   _id,
