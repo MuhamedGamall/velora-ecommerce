@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { MoreInformationObject } from "@/types";
+import { openPopup } from "../../../../../../../../../lib/utils";
 export default function Details({
   moreInformation,
   desc,
