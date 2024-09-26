@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Velora
+
+An e-commerce fashion store built using **Next.js**, **React**, **Sanity.io**, **ShadCN**, **NextAuth**, **TailwindCSS**, **Stripe**, and **Zustand** for managing state. This project includes features like shopping bag management, wishlist functionality, user authentication, order management, and enhanced product filtering.
+
+## Features
+
+- **Product Browsing**: Filter products by categories, sizes, and search terms.
+- **Shopping Bag & Wishlist**: Add/remove products to/from the shopping bag and wishlist.
+- **Authentication**: User login via **NextAuth**.
+- **Orders**: Manage orders, including viewing previous orders and Stripe integration for payments.
+- **Skeleton Loading**: Skeleton components implemented for all product pages.
+- **Responsive Design**: Tailored to work seamlessly across devices.
+
+## Tech Stack
+
+- **Frontend**: 
+  - [Next.js](https://nextjs.org) – Server-side rendering and React framework.
+  - [React](https://reactjs.org) – Component-based UI library.
+  - [TailwindCSS](https://tailwindcss.com) – Utility-first CSS framework for responsive design.
+  - [ShadCN](https://shadcn.dev) – UI components and patterns.
+
+- **Backend**:
+  - [Sanity.io](https://www.sanity.io) – Headless CMS for managing content.
+  - [NextAuth](https://next-auth.js.org) – Authentication and authorization.
+  - [Stripe](https://stripe.com) – Payment processing.
+
+- **State Management**:
+- [Zustand](https://zustand.pmnd.rs) – State management for handling the shopping bag and wishlist.
+
+## Screenshots
+
+### Home Page
+<img src="https://github.com/MuhamedGamall/velora-ecommerce/blob/main/public/readme/velora-readme-image%20(4).png" width="400px" />
+
+### Product Page
+<img src="https://github.com/MuhamedGamall/velora-ecommerce/blob/main/public/readme/velora-readme-image%20(2).png" width="400px" /> 
+
+### Shopping Bag
+<img src="https://github.com/MuhamedGamall/velora-ecommerce/blob/main/public/readme/velora-readme-image%20(1).png" width="400px" /> 
+
+### Explore Page - Search page
+<img src="https://github.com/MuhamedGamall/velora-ecommerce/blob/main/public/readme/velora-readme-image%20(3).png" width="400px" /> 
+
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Ensure you have the following installed:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Node.js](https://nodejs.org/en/download/)
+- [Yarn](https://yarnpkg.com/getting-started/install) (or use npm)
+- Sanity CLI for managing content: 
+  ```bash
+  npm install -g @sanity/cli
+  ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Clone the repository**:
 
-## Learn More
+   ```bash
+   git clone https://github.com/MuhamedGamall/velora-ecommerce.git
+   cd velora-ecommerce
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install dependencies**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   yarn install
+   # or
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Set up environment variables**:
 
-## Deploy on Vercel
+   Create a `.env.local` file at the root of the project and fill in your specific environment variables.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Run Sanity Studio**:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   If you're using Sanity for content management, navigate to your Sanity folder and start the studio:
+
+   ```bash
+   cd sanity
+   sanity start
+   ```
+
+5. **Run the Next.js development server**:
+
+   Start the Next.js development server:
+
+   ```bash
+   yarn dev
+   # or
+   npm run dev
+   ```
+
+   Your app should now be running at [http://localhost:3000](http://localhost:3000).
+
+## Functionality
+
+### Shopping Bag
+
+- Add products to the shopping bag, and remove products using Zustand for state management.
+
+### Wishlist
+
+- Add products to the wishlist, and remove products using Zustand for state management.
+
+### Orders
+
+- Manage order status, Stripe integration for payments, and view order history.
+
+### Product Filtering
+
+- Search products by name, filter by category, and apply additional filters to refine results.
+
+---
+
+## License
+
+This project is licensed under the MIT License.
