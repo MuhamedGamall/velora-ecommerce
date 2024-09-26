@@ -41,7 +41,3 @@ next-env.d.ts
 
 # Ignore build output (dist folder)
 dist/
-
-# hide personal filder | files
-original-code
-original-api
