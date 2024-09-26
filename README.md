@@ -44,6 +44,30 @@ An e-commerce fashion store built using **Next.js**, **React**, **Sanity.io**, *
 
 ## Getting Started
 
+### Setup .env file
+
+```env
+# sanity
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=
+NEXT_PUBLIC_SANITY_TOKEN=
+
+# google
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# next auth
+NEXTAUTH_URL=
+NEXTAUTH_SECRET=
+
+# stripe
+STRIPE_PUBLISHABLE_KEY=
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SIGNING_SECRET_KEY=
+
+
+```
+
 ### Prerequisites
 
 Ensure you have the following installed:
