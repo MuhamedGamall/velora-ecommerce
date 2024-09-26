@@ -21,10 +21,9 @@ const removeFromWishlist = async ({
     if (!user) {
       throw "User not found";
     }
-    const updatedWishlist = user.wishlist.filter(
+    const updatedWishlist = user?.wishlist?.filter(
       (item) => item.product._ref !== productId
     );
-
     await client.patch(userId).set({ wishlist: updatedWishlist }).commit();
     return true;
   } catch (error) {

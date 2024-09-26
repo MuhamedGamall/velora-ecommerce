@@ -61,6 +61,8 @@ const useWishlistStore = create<WishlistState>((set) => ({
           (item) => item?.product?._id === product?._id
         );
         if (isExist) return { wishlist: state.wishlist };
+        console.log(product);
+        
         return {
           wishlist: [...state.wishlist, { product }],
         };

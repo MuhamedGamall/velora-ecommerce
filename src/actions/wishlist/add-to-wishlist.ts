@@ -19,7 +19,7 @@ const addProductToWishlist = async ({
       throw "Product ID is required";
     }
 
-    const user = await client.getDocument(userId) as UserProfile;
+    const user = (await client.getDocument(userId)) as UserProfile;
 
     if (!user) {
       throw "User not found";
@@ -28,12 +28,13 @@ const addProductToWishlist = async ({
       (item) => item?.product?._ref === productId
     );
     if (isExist) return true;
+
     const generateKey = () =>
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
-    await client
+    const log = await client
       .patch(userId)
-      .setIfMissing({ shoppingBag: [] })
+      .setIfMissing({ wishlist: [] })
       .append("wishlist", [
         {
           _key: generateKey(),
@@ -43,6 +44,8 @@ const addProductToWishlist = async ({
         },
       ])
       .commit();
+    console.log(log);
+
     return true;
   } catch (error: any) {
     console.error("Error adding product to the wishlist:", error);

@@ -21,7 +21,7 @@ const removeProductFromBag = async ({
     if (!user) {
       throw ("User not found");
     }
-    const updatedShoppingBag = user.shoppingBag.filter(
+    const updatedShoppingBag = user?.shoppingBag?.filter(
       (item) => item.product._ref !== productId
     );
 

@@ -44,6 +44,7 @@ export const user = defineType({
         ],
         layout: "radio",
       },
+      initialValue: "user",
     }),
     defineField({
       name: "stripeCustomerId",

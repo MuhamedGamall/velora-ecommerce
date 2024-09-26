@@ -39,8 +39,7 @@ export default function ProfileMenu() {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        align="end"
-        className="bg-white border rounded-none mt-5 !z-[1600] p-2"
+        className="bg-white border rounded-none mt-5 !p-5  !z-[1600] mr-5  max-sm:w-screen min-w-[350px]"
       >
         <div className="flex items-center gap-2 p-2">
           {session?.data?.user?.image ? (
