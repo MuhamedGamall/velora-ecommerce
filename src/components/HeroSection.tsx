@@ -1,9 +1,9 @@
+"use client";
 import { getHeroSection } from "@/actions/get-hero-section";
-import { urlFor } from "@/sanity/lib/image";
 import { ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { Suspense } from "react";
+import React, { use, useEffect } from "react";
 import { Skeleton } from "./ui/skeleton";
 
 const brands = [
@@ -18,10 +18,16 @@ const brands = [
   "/brands/slam-jam.webp",
 ];
 
-export default async function HeroSection() {
-  const { image, title, description, loading } = await getHeroSection();
-
-  const heroImage = image || "/hero-image.jpg";
+export default function HeroSection() {
+  const [loading, setLoading] = React.useState(true);
+  const [heroSection, setHeroSection] = React.useState({}) as any;
+  useEffect(() => {
+    getHeroSection().then((data) => {
+      setHeroSection(data);
+      setLoading(false);
+    });
+  }, [heroSection]);
+  const heroImage = heroSection?.image || "/hero-image.jpg";
 
   return (
     <section className="relative  max-h-[300px]   sm:max-h-[580px] overflow-hidden w-full">
@@ -54,18 +60,18 @@ export default async function HeroSection() {
       <div className=" absolute bottom-2 md:top-20  left-0 md:px-5 w-full ">
         <div className="  w-full containerWrapper mx-auto flex flex-col   overflow-hidden justify-start ">
           {loading ? (
-            <Skeleton className="bg-slate-300  h-8 md:h-16 w-[220px]" />
+            <Skeleton className="  h-8 md:h-14 w-full max-w-[500px] mb-3" />
           ) : (
             <h1 className="capitalize text-[20px] sm:text-[28px] md:text-[70px] leading-[1] text-white font-bold">
-              {title || "The Fall Collection"}
+              {heroSection?.title || "The Fall Collection"}
             </h1>
           )}
 
           {loading ? (
-            <Skeleton className="bg-slate-300  h-4 md:h-8 w-[320px]" />
+            <Skeleton className="  h-4 md:h-8 max-w-[700px] w-full" />
           ) : (
             <p className="text-white text-[10px] md:text-[15px] font-bold uppercase">
-              {description || "NEW READY-TO-WEAR FROM OUR FAVORITE BRANDS"}
+              {heroSection?.subtitle || "NEW READY-TO-WEAR FROM OUR FAVORITE BRANDS"}
             </p>
           )}
           <div className="flex items-center max-md:justify-between gap-3 mt-5 w-full">

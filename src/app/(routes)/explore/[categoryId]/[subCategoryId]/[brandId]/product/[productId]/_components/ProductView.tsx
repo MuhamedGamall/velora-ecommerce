@@ -32,13 +32,16 @@ const ProductView = ({ product }: { product: Product | null }) => {
       fetchWishlist();
     }
   }, [session?.status]);
+
   const isExistInBag = shoppingBag.find(
     (item) => item?.product?._id === product?._id
   );
+
   useEffect(() => {
     setQuantity(isExistInBag?.quantity || 1);
     setSize(isExistInBag?.size || "");
   }, [isExistInBag]);
+
   useEffect(() => {
     document.title = `Velora | Explore | ${product?.title}`;
   }, [isExistInBag]);
@@ -50,10 +53,26 @@ const ProductView = ({ product }: { product: Product | null }) => {
         <div className="text-sm mt-12 p-5 max-md:hidden border-t">
           <span className="text-[16px] font-bold mb-5">VEIW MORE</span>
           <div className="flex items-center text-[14px] gap-2  capitalize">
-              <Link className="underline  text-mainBlack" href={"/explore/"+product?.category.title +"?brand="+product?.brand}>
+            <Link
+              className="underline  text-mainBlack"
+              href={
+                "/explore/" +
+                product?.category.title +
+                "?brand=" +
+                product?.brand
+              }
+            >
               {product?.brand?.replaceAll("_", " ")}
             </Link>
-            <Link className="underline  text-mainBlack" href={"/explore/"+product?.category.title + "/" + product?.subCategory.title}>
+            <Link
+              className="underline  text-mainBlack"
+              href={
+                "/explore/" +
+                product?.category.title +
+                "/" +
+                product?.subCategory.title
+              }
+            >
               {product?.subCategory?.title}
             </Link>
           </div>
@@ -126,10 +145,26 @@ const ProductView = ({ product }: { product: Product | null }) => {
         <div className="text-sm  md:hidden ">
           <span className="text-[16px] font-bold mb-2 block">VEIW MORE</span>
           <div className="flex items-center text-[14px] gap-2  capitalize">
-            <Link className="underline  text-mainBlack" href={"/explore/"+product?.category.title +"?brand="+product?.brand}>
+            <Link
+              className="underline  text-mainBlack"
+              href={
+                "/explore/" +
+                product?.category.title +
+                "?brand=" +
+                product?.brand
+              }
+            >
               {product?.brand?.replaceAll("_", " ")}
             </Link>
-            <Link className="underline  text-mainBlack" href={"/explore/"+product?.category.title + "/" + product?.subCategory.title}>
+            <Link
+              className="underline  text-mainBlack"
+              href={
+                "/explore/" +
+                product?.category.title +
+                "/" +
+                product?.subCategory.title
+              }
+            >
               {product?.subCategory?.title}
             </Link>
           </div>

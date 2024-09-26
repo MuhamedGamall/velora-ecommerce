@@ -55,7 +55,9 @@ const SliderView = ({
   return (
     <Slider {...sliderSettings(products?.length)} className="w-full">
       {loading
-        ? Array.from({ length: 4 }).map((_, index) => <Card.Skeleton key={index} />)
+        ? Array.from({ length: 4 }).map((_, index) => (
+            <Card.Skeleton key={index} />
+          ))
         : products.map((item) => <Card {...item} key={item._id} />)}
     </Slider>
   );
