@@ -1,6 +1,6 @@
 # Velora
 
-An e-commerce fashion store built using **Next.js**, **React**, **Sanity.io**, **ShadCN**, **NextAuth**, **TailwindCSS**, **Stripe**, and **Zustand** for managing state. This project includes features like shopping bag management, wishlist functionality, user authentication, order management, and enhanced product filtering.
+An e-commerce fashion store built using **Next.js**, **React**,**TypeScript** ,**Sanity.io**, **ShadCN**, **NextAuth**, **TailwindCSS**, **Stripe**, and **Zustand** for managing state. This project includes features like shopping bag management, wishlist functionality, user authentication, order management, and enhanced product filtering.
 
 ## Features
 
