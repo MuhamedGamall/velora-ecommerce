@@ -1,5 +1,4 @@
 "use server";
-import { isNewSeason } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/types";
 const productsQuery = `*[_type == "product" && brand == $brand && category->title == $category && _id != $excludedId]{
@@ -70,7 +69,6 @@ export default async function getRelatedProducts({
   category: string;
 }) {
   try {
-    let loading = true;
     if (!brand) {
       throw "Brand is required";
     }
@@ -89,20 +87,15 @@ export default async function getRelatedProducts({
         ? await client.fetch(allDataQuery, { excludedId })
         : products;
 
-    loading = false;
-
     return {
       products,
-      loading,
     } as {
       products: Product[];
-      loading: boolean;
     };
   } catch (error: any) {
     console.error("Error fetching related products: ", error);
     return {
       products: [],
-      loading: false,
     };
   }
 }

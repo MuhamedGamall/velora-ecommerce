@@ -60,11 +60,11 @@ export default Breadcrumb;
 export const BreadcrumbSkeleton = () => {
   return (
     <div className="w-full my-5 flex items-center gap-2">
-      <Skeleton className=" h-5 w-[100px]" />
+      <Skeleton className=" h-5 w-full max-w-[100px]" />
       <Skeleton className=" h-2 w-2" />
-      <Skeleton className=" h-5 w-[100px]" />
+      <Skeleton className=" h-5 w-full max-w-[100px]" />
       <Skeleton className=" h-2 w-2" />
-      <Skeleton className=" h-5 w-[100px]" />
+      <Skeleton className=" h-5 w-full max-w-[100px]" />
     </div>
   );
 };

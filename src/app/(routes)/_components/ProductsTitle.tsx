@@ -52,13 +52,13 @@ ProductsTitle.Skeleton = () => {
   return (
     <div className="w-full mb-6">
       <Skeleton
-        className=" h-7 w-[150px]
+        className=" h-7 w-full max-w-[150px]
       mb-2"
       />
 
       <div className="flex items-center gap-2">
-        <Skeleton className="w-4 h-4" />
-        <Skeleton className=" w-[100px] h-5" />
+        <Skeleton className="w-full max-w-4 h-4" />
+        <Skeleton className=" w-full max-w-[100px] h-5" />
       </div>
     </div>
   );

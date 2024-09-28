@@ -23,7 +23,7 @@ interface WishlistState {
 const useWishlistStore = create<WishlistState>((set) => ({
   wishlist: [],
   isOpen: false,
-  loading: false,
+  loading: true,
   setLoading: (value) => set({ loading: value }),
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),

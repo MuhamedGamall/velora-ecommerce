@@ -139,10 +139,10 @@ Footer.LinksSkeleton = () => {
     <ul className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
       {Array.from({ length: 5 })?.map((_, i) => (
         <li key={i} className="flex flex-col  gap-2 ml-5 capitalize">
-          <Skeleton className="h-5 w-16" />
+          <Skeleton  className="h-5 w-16" />
           <div className="flex flex-col  gap-1 w-full">
             {Array.from({ length: 5 })?.map((_, i) => (
-              <Skeleton className="h-3 w-14" />
+              <Skeleton  key={i} className="h-3 w-14" />
             ))}
           </div>
         </li>

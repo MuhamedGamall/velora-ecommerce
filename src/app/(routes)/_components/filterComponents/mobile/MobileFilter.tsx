@@ -16,11 +16,11 @@ MobileFilter.Skeleton = () => {
   return (
     <div className="flex items-center gap-3 w-full">
       <div className="flex items-center justify-between w-full gap-2 border-[#efefef] border  py-2 px-3 h-[55px]  ">
-        <Skeleton className="h-5 w-20" />
+        <Skeleton className="h-5 w-full max-w-20" />
         <Skeleton className="h-5 w-5" />
       </div>
       <div className="flex items-center justify-between w-full gap-2 border-[#efefef] border  py-2 px-3 h-[55px]  ">
-        <Skeleton className="h-5 w-20" />
+        <Skeleton className="h-5 w-full max-w-20" />
         <Skeleton className="h-5 w-5" />
       </div>
     </div>

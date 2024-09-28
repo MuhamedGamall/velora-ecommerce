@@ -1,10 +1,7 @@
 "use server";
 
 import { client } from "@/sanity/lib/client";
-import getCategoryByTitle from "./get-category-by-title";
 import { Product, SearchParams } from "@/types";
-import { revalidatePath } from "next/cache";
-import { cache } from "react";
 
 // Fetch the current year dynamically
 const currentYear = new Date().getFullYear();
@@ -31,14 +28,17 @@ const getProducts = async ({
   category,
   subCategory,
   searchParams,
+  page = 1,
+  limit = 10,
 }: {
   category?: string;
   subCategory?: string;
   searchParams?: SearchParams;
+  page?: number; // new parameter for the page number
+  limit?: number; // new parameter for the number of products per page
 }) => {
   try {
     const conditions = [];
-    let loading = true;
     // Handle category-specific conditions:
     // - "sale": filters products with a discount (oldPrice > 0)
     // - "newSeason": filters products marked as new season (newSeason == true)
@@ -104,21 +104,21 @@ const getProducts = async ({
     if (searchParams?.sortBy) {
       query += ` | order(${sortOptions[searchParams.sortBy] || "salesCount desc"})`;
     }
+    // Add infinite scrolling logic
+    const start = (page - 1) * limit;
+    query += ` [${start}...${start + limit}]`;
 
     const products = await client.fetch(query);
-    loading = false;
+
     return {
       products,
-      loading,
     } as {
       products: Product[];
-      loading: boolean;
     };
   } catch (error) {
     console.error("Error fetching products:", error);
     return {
       products: [],
-      loading: false,
     };
   }
 };

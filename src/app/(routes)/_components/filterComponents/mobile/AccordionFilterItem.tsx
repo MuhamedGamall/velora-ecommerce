@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
-import useFilterByDrawerModal from "@/zustand/store/filterByDrawerModal";
+
 
 export function AccordionFilterItem({
   type,

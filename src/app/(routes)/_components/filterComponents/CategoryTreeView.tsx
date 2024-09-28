@@ -19,12 +19,10 @@ CategoryTreeView.Skeleton = () => {
   return (
     <div className="flex flex-col pt-3 w-full  ">
       {Array.from({ length: 5 })?.map((_, i) => (
-        <>
-          <div className="max-lg:px-5 flex items-center justify-between w-full gap-2 h-[64px]  border-t  ">
+          <div key={i} className="max-lg:px-5 flex items-center justify-between w-full gap-2 h-[64px]  border-t  ">
             <Skeleton className="h-5 w-20" />
             <Skeleton className="h-5 w-5" />
           </div>
-        </>
       ))}
     </div>
   );

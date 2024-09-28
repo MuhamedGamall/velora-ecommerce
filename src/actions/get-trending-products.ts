@@ -1,5 +1,4 @@
 "use server";
-import { isNewSeason } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/types";
 const productsQuery = `*[_type == "product" && "trending" in type]{
@@ -62,19 +61,17 @@ const allDataQuery = `*[_type == "product"][0...10]{
   }`;
 export default async function getTrendingProducts() {
   try {
-    let loading = true;
     let products = await client.fetch(productsQuery);
 
     products =
       products.length === 0 ? await client.fetch(allDataQuery) : products;
-    loading = false;
 
-    return { products, loading } as {
+    return { products } as {
       products: Product[];
       loading: boolean;
     };
   } catch (error: any) {
     console.error("Error fetching trending products: ", error);
-    return { products: [], loading: false };
+    return { products: [] };
   }
 }

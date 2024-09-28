@@ -239,7 +239,7 @@ export const ProductViewSkeleton = () => {
         </div>
         <div className="flex items-center gap-2 flex-wrap max-w-[500px]">
           {Array.from({ length: 12 })?.map((_, i) => (
-            <Skeleton className="h-8 w-14" />
+            <Skeleton key={i} className="h-8 w-14" />
           ))}
         </div>
         <div className="flex flex-col gap-3">
@@ -248,12 +248,10 @@ export const ProductViewSkeleton = () => {
         </div>
         <div className="flex flex-col pt-3  ">
           {Array.from({ length: 4 })?.map((_, i) => (
-            <>
-              <div className="flex justify-between items-center gap-3 p-4  border-t">
+              <div key={i} className="flex justify-between items-center gap-3 p-4  border-t">
                 <Skeleton className="h-5 w-20" />
                 <Skeleton className="h-5 w-5" />
               </div>
-            </>
           ))}
         </div>
         <div className="text-sm  md:hidden ">
@@ -261,7 +259,7 @@ export const ProductViewSkeleton = () => {
             <Skeleton className="h-6 w-[150px] mb-3" />
             <div className="flex items-center text-[14px] gap-2  capitalize">
               {Array.from({ length: 2 })?.map((_, i) => (
-                <Skeleton className="h-3 w-[100px]" />
+                <Skeleton key={i} className="h-3 w-[100px]" />
               ))}
             </div>
           </div>

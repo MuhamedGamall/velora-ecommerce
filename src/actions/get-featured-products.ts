@@ -62,16 +62,13 @@ const allDataQuery = `*[_type == "product"][0...10]{
   }`;
 export default async function getFeaturedProducts() {
   try {
-    let loading = true;
     let products = await client.fetch(productsQuery);
 
     products =
       products.length === 0 ? await client.fetch(allDataQuery) : products;
 
-    loading = false;
-    return { products, loading } as {
+    return { products } as {
       products: Product[];
-      loading: boolean;
     };
   } catch (error: any) {
     console.error("Error fetching featured products: ", error);

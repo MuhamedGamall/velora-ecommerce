@@ -78,7 +78,7 @@ export const ActiveValuesSkeleton = () => {
         {Array.from({ length: 5 }).map((_, index) => (
           <Skeleton
             key={index}
-            className=" h-5 w-20 flex items-center gap-3  "
+            className=" h-5 w-full max-w-20 flex items-center gap-3  "
           />
         ))}
       </div>

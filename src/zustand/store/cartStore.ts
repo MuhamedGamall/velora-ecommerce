@@ -27,7 +27,7 @@ interface ShoppingBagState {
 
 const useShoppingBagStore = create<ShoppingBagState>((set) => ({
   shoppingBag: [],
-  loading: false,
+  loading: true,
   setLoading: (value: boolean) => set({ loading: value }),
 
   isOpen: false,

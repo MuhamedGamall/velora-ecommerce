@@ -4,7 +4,6 @@ import { client } from "../sanity/lib/client";
 
 export const getHeroSection = async () => {
   try {
-    let loading = true;
     const query = `*[_type == "heroSection"][0]{
       title,
       description,
@@ -17,12 +16,10 @@ export const getHeroSection = async () => {
     }`;
 
     const { image, title, description } = await client.fetch(query);
-    loading = false;
     return {
       image: image?.asset?.url,
       title,
       description,
-      loading,
     };
   } catch (error) {
     console.error("Error fetching hero image: ", error);
@@ -30,7 +27,6 @@ export const getHeroSection = async () => {
       image: null,
       title: null,
       description: null,
-      loading: false,
     };
   }
 };
