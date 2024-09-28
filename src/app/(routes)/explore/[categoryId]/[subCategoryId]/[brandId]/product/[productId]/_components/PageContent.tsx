@@ -5,6 +5,8 @@ import ProductsSlider from "@/components/SliderProducts";
 import ProductView, { ProductViewSkeleton } from "./../_components/ProductView";
 import { useEffect, useState } from "react";
 import { Product } from "@/types";
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 
 type Props = {
   params: {
@@ -47,7 +49,11 @@ export default function ProductPageContentClient({ params }: Props) {
   }, [productId, brandId, categorId]);
 
   return (
-    <div className="w-full mt-[90px] md:mt-[130px]">
+    <div className="w-full mt-[90px] md:mt-[130px] containerWrapper mx-auto ">
+      <Link  href="/" className="flex items-center text-slate-600  my-3">
+        <ChevronLeft className="" size={18} />
+        <span className="ml-2">Back to home page</span>
+      </Link>
       {loading ? <ProductViewSkeleton /> : <ProductView product={product} />}
       <div className="border-t w-full">
         <ProductsSlider

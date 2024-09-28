@@ -47,7 +47,7 @@ const ProductView = ({ product }: { product: Product | null }) => {
   }, [isExistInBag]);
 
   return (
-    <div className="flex items justify-between max-md:flex-col gap-[100px] containerWrapper mx-auto my-5  px-5  ">
+    <div className="flex items justify-between max-md:flex-col gap-[100px] my-5  px-5  ">
       <div className="flex-1">
         <Images images={product?.images} />
         <div className="text-sm mt-12 p-5 max-md:hidden border-t">

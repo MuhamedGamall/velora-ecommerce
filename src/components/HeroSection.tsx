@@ -26,7 +26,7 @@ export default function HeroSection() {
       setHeroSection(data);
       setLoading(false);
     });
-  }, [heroSection]);
+  }, []);
   const heroImage = heroSection?.image || "/hero-image.jpg";
 
   return (
