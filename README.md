@@ -3,7 +3,7 @@
 An e-commerce fashion store built using **Next.js**, **React**,**TypeScript** ,**Sanity.io**, **ShadCN**, **NextAuth**, **TailwindCSS**, **Stripe**, and **Zustand** for managing state. This project includes features like shopping bag management, wishlist functionality, user authentication, order management, and enhanced product filtering.
 
 ## Features
-
+- **Infinite Scrolling**: Seamlessly load more products as the user scrolls down, enhancing the browsing experience.
 - **Product Browsing**: Filter products by categories, sizes, and search terms.
 - **Shopping Bag & Wishlist**: Add/remove products to/from the shopping bag and wishlist.
 - **Authentication**: User login via **NextAuth**.
@@ -137,7 +137,10 @@ Ensure you have the following installed:
 
 ### Product Filtering
 
-- Search products by name, filter by category, and apply additional filters to refine results.
+- Search products by name, filter by category, and apply additional filters to refine results
+ 
+### Infinite Scrolling
+- Products load dynamically as the user scrolls down the page, providing a smoother browsing experience without the need for pagination.
 
 ---
 
