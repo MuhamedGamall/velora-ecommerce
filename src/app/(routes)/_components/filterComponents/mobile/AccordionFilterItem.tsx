@@ -17,21 +17,24 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
- 
+
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
+import useFilterByDrawerModal from "@/zustand/store/filterByDrawerModal";
 
 export function AccordionFilterItem({
   type,
   data,
   initialValue,
+  onClose
 }: {
   type: string;
   data: { value: string; title: string }[];
   initialValue: string;
+  onClose: () => void;
 }) {
   const [selectedData, setSelectedData] = useState<string[]>([]);
   const router = useRouter();
@@ -63,6 +66,7 @@ export function AccordionFilterItem({
     );
     router.push(`${url}`);
     router.refresh();
+    onClose();
   };
   const handleDelete = () => {
     let data = parseURL(location?.search);
@@ -77,6 +81,7 @@ export function AccordionFilterItem({
     setSelectedData([]);
     router.push(`?${url}`);
     router.refresh();
+    onClose();
   };
 
   const handleSelect = (item: string) => {

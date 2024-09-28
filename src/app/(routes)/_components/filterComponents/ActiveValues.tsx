@@ -47,8 +47,8 @@ export default function ActiveValues({
   };
 
   return (
-    <div className="w-full my-3 px-2max-w-[900px] overflow-x-auto py-1">
-      <ul className="flex items-center gap-3">
+    <div className="w-full my-3 px-2  max-w-[900px]  py-1">
+      <ul className="flex items-center flex-wrap gap-3">
         {actives.map((active) =>
           Object.entries(active).map(([key, value]) => {
             return (

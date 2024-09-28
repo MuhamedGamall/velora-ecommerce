@@ -15,9 +15,11 @@ import { useRouter } from "next/navigation";
 export default function SelectPrice({
   minPrice,
   maxPrice,
+  onClose
 }: {
   minPrice: string;
   maxPrice: string;
+  onClose: () => void
 }) {
   const [priceValue, setPriceValue] = useState({ min: 0, max: 100000000 });
   const [open, setOpen] = useState(false);
@@ -67,6 +69,7 @@ export default function SelectPrice({
     setOpen(false);
     router.push(`${url}`);
     router.refresh();
+    onClose(); // to close the drawer for mobile view
   };
   return (
     <>

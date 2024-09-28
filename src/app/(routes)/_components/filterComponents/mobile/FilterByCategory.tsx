@@ -1,3 +1,5 @@
+"use client";
+import getCategories from "@/actions/get-categories";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -8,16 +10,24 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { ChevronDown, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import CategoryTreeView from "../CategoryTreeView";
-import getCategories from "@/actions/get-categories";
-import { SearchParams } from "@/types";
+import { CategoryTree } from "@/types";
+import useCategoriesFilterDrawerModal from "@/zustand/store/categoriesFilterDrawerModal";
 
-export default async function FilterBy() {
-  const { categories, loading } = await getCategories();
-
+export default function FilterBy() {
+  const { onOpen, isOpen, onClose } = useCategoriesFilterDrawerModal();
+  const [categories, setCategories] = useState<CategoryTree[]>([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getCategories().then((data) => {
+      setCategories(data?.categories);
+      setLoading(false);
+    });
+  }, []);
   return (
-    <Drawer>
-      <DrawerTrigger asChild>
+    <Drawer open={isOpen} onClose={onClose}>
+      <DrawerTrigger asChild onClick={onOpen}>
         <Button
           variant={"outline"}
           className="w-full  px-2 justify-between rounded-none border-mainBlack  h-11 "
@@ -31,17 +41,15 @@ export default async function FilterBy() {
           <DrawerTitle className="text-center w-full ml-9 text-[20px]">
             Category
           </DrawerTitle>
-          <DrawerClose>
+          <DrawerClose onClick={onClose}>
             <X size={30} strokeWidth={1.3} />
           </DrawerClose>
         </DrawerHeader>
-        <div className="">
-          {loading ? (
-            <CategoryTreeView.Skeleton />
-          ) : (
-            <CategoryTreeView categories={categories} />
-          )}
-        </div>
+        {loading ? (
+          <CategoryTreeView.Skeleton />
+        ) : (
+          <CategoryTreeView categories={categories} />
+        )}
       </DrawerContent>
     </Drawer>
   );

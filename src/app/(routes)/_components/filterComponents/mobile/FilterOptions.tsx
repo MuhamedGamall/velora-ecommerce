@@ -12,6 +12,7 @@ import { Dispatch, SetStateAction } from "react";
 
 export default function FilterOptions({
   searchParams: { minPrice, maxPrice, colour, material, pattern, size, brand },
+  onClose,
 }: {
   searchParams: {
     minPrice: string;
@@ -22,6 +23,7 @@ export default function FilterOptions({
     size: string;
     brand: string;
   };
+  onClose: () => void;
 }) {
   const filterOptions = [
     { type: "brand", data: BRANDS_OPTIONS, initialValue: brand },
@@ -33,7 +35,7 @@ export default function FilterOptions({
 
   return (
     <div className="flex items-center max-lg:flex-col lg:gap-3 w-full">
-      <SelectPrice minPrice={minPrice} maxPrice={maxPrice} />
+      <SelectPrice minPrice={minPrice} maxPrice={maxPrice} onClose={onClose} />
       <Accordion type="single" collapsible className="w-full">
         {filterOptions.map(({ type, data, initialValue }) => (
           <AccordionFilterItem
@@ -41,6 +43,7 @@ export default function FilterOptions({
             type={type}
             data={data}
             initialValue={initialValue}
+            onClose={onClose}
           />
         ))}
       </Accordion>

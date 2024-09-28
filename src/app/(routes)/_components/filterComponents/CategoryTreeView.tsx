@@ -1,4 +1,3 @@
-import getCategories from "@/actions/get-categories";
 import CategoryItem from "./CategoryItem";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CategoryTree } from "@/types";

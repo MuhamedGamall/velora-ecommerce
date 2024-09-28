@@ -13,12 +13,18 @@ import SortBy from "../SortBy";
 import FilterOptions from "./FilterOptions";
 import CheckboxFilter from "../CheckboxFilter";
 import { SearchParams } from "@/types";
+import useFilterByDrawerModal from "@/zustand/store/filterByDrawerModal";
 
-export default function FilterBy({ searchParams }: { searchParams: SearchParams}) {
+export default function FilterBy({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   const sortBy = searchParams?.sortBy;
+  const { isOpen, onOpen, onClose } = useFilterByDrawerModal();
   return (
-    <Drawer >
-      <DrawerTrigger asChild>
+    <Drawer open={isOpen} onClose={onClose}>
+      <DrawerTrigger asChild onClick={onOpen}>
         <Button
           variant={"outline"}
           className="w-full  px-2 justify-between rounded-none border-mainBlack  h-11 "
@@ -32,14 +38,15 @@ export default function FilterBy({ searchParams }: { searchParams: SearchParams}
           <DrawerTitle className="text-center w-full ml-9 text-[20px]">
             Filter by
           </DrawerTitle>
-          <DrawerClose>
+          <DrawerClose onClick={onClose}>
             <X size={30} strokeWidth={1.3} />
           </DrawerClose>
         </DrawerHeader>
         <div className="">
-          <SortBy initialValue={sortBy} />
-          <FilterOptions searchParams={searchParams} />
+          <SortBy initialValue={sortBy} onClose={onClose} />
+          <FilterOptions searchParams={searchParams} onClose={onClose} />
           <CheckboxFilter
+            onClose={onClose}
             saleValue={searchParams.sale}
             bestsellerValue={searchParams.bestseller}
             newSeasonValue={searchParams.newSeason}

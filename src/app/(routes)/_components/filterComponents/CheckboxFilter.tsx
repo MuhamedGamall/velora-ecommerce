@@ -12,16 +12,19 @@ export default function CheckboxFilter({
   saleValue,
   newSeasonValue,
   bestsellerValue,
+  onClose,
 }: {
   saleValue: string;
   newSeasonValue: string;
   bestsellerValue: string;
+  onClose?: () => void;
 }) {
   const [selectedData, setSelectedData] = useState<{ [key: string]: boolean }>({
     sale: false,
     newSeason: false,
     bestseller: false,
   });
+  const [loading, setLoading] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const CHECKBOX_FILTERS = [
@@ -41,25 +44,34 @@ export default function CheckboxFilter({
   }, [saleValue, newSeasonValue, bestsellerValue]);
 
   const handleToggle = (key: string) => {
-    const updatedValue = !selectedData[key];
-    const currentParams = qs.parse(location.search);
-    const updatedParams = {
-      ...currentParams,
-      [key]: updatedValue ? "true" : null,
-    };
-    const cleanParams = Object.fromEntries(
-      Object.entries(updatedParams).filter(([_, v]) => v !== null)
-    );
-    const url = `${location.pathname}?${qs.stringify(cleanParams)}`;
-    router.push(url);
-    router.refresh();
+    setLoading(true);
+    setTimeout(() => {
+      const updatedValue = !selectedData[key];
+      const currentParams = qs.parse(location.search);
+      const updatedParams = {
+        ...currentParams,
+        [key]: updatedValue ? "true" : null,
+      };
+      const cleanParams = Object.fromEntries(
+        Object.entries(updatedParams).filter(([_, v]) => v !== null)
+      );
+      const url = `${location.pathname}?${qs.stringify(cleanParams)}`;
 
-    setSelectedData((prev) => ({ ...prev, [key]: updatedValue }));
+      router.push(url);
+      router.refresh();
+      setSelectedData((prev) => ({ ...prev, [key]: updatedValue }));
+      setLoading(false);
+    }, 1000);
+
   };
 
   return (
     <>
-      <div className="flex items-center gap-3 my-5 max-lg:hidden">
+      <div
+        className={cn("flex items-center gap-3 my-5 max-lg:hidden", {
+          "opacity-50 pointer-events-none": loading,
+        })}
+      >
         {CHECKBOX_FILTERS.map(({ id, label }) => (
           <div key={id} className="flex items-center gap-1">
             <Checkbox
@@ -67,6 +79,7 @@ export default function CheckboxFilter({
               className="rounded-none"
               checked={selectedData[id]}
               onCheckedChange={() => handleToggle(id)}
+              disabled={loading}
             />
             <Label
               htmlFor={id}
@@ -78,14 +91,23 @@ export default function CheckboxFilter({
         ))}
       </div>
 
-      <div className="lg:hidden">
+      <div
+        className={cn("lg:hidden", {
+          "opacity-50 pointer-events-none": loading,
+        })}
+      >
         {CHECKBOX_FILTERS.map(({ id, label }) => (
-          <div key={id} className="flex items-center gap-1 border-b group">
+          <div
+            key={id}
+            className="flex items-center gap-1 border-b group"
+            onClick={() => onClose?.()}
+          >
             <Checkbox
               id={id}
               className="hidden"
               checked={selectedData[id]}
               onCheckedChange={() => handleToggle(id)}
+              disabled={loading}
             />
             <Label
               htmlFor={id}
@@ -111,6 +133,7 @@ export default function CheckboxFilter({
     </>
   );
 }
+
 export const CheckboxFilterSkeleton = () => {
   return (
     <div className="flex items-center gap-3 w-full">

@@ -1,12 +1,15 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { CategoryTree } from "@/types";
+import useCategoriesFilterDrawerModal from "@/zustand/store/categoriesFilterDrawerModal";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const CategoryItem = ({ cateItem }: { cateItem: CategoryTree }) => {
+  const { onClose } = useCategoriesFilterDrawerModal(); // to close the drawer  for mobile view
+
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const { categoryId, subCategoryId } = useParams();
   const isMainCategory = categoryId === cateItem?.title?.toLocaleLowerCase();
@@ -44,6 +47,8 @@ const CategoryItem = ({ cateItem }: { cateItem: CategoryTree }) => {
           onClick={() => onExpand(cateItem?.title)}
         >
           <Link
+            key={cateItem?.title}
+            onClick={onClose}
             href={`/explore/${cateItem?.title?.toLocaleLowerCase()?.trim()}`}
             className={cn(
               "flex items-center cursor-pointer text-lg w-fit underline capitalize",
@@ -69,6 +74,7 @@ const CategoryItem = ({ cateItem }: { cateItem: CategoryTree }) => {
           <div className="max-lg:pl-10 pl-5 ">
             {cateItem?.subCategories.map((subCate, index) => (
               <Link
+                onClick={onClose}
                 href={`/explore/${cateItem?.title?.toLocaleLowerCase()?.trim()}/${subCate?.title?.toLocaleLowerCase()?.trim()}`}
                 key={subCate?.title}
                 className={cn(

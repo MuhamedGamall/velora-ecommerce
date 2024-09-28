@@ -14,7 +14,13 @@ import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
 
-export default function SortBy({ initialValue }: { initialValue: string }) {
+export default function SortBy({
+  initialValue,
+  onClose,
+}: {
+  initialValue: string;
+  onClose?: () => void;
+}) {
   const [selectedValue, setSelectedValue] = useState<{
     value: string;
     title: string;
@@ -96,7 +102,7 @@ export default function SortBy({ initialValue }: { initialValue: string }) {
           className="flex gap-4 justify-start mx-2 flex-wrap"
         >
           {SORT_BY_OPTIONS.map((option) => (
-            <ToggleGroupItem
+            <ToggleGroupItem onClick={onClose}
               aria-label={option.title}
               key={option.value}
               value={option.value}
