@@ -43,19 +43,19 @@ export default function CatalogContent({
   }, [searchParams, params?.categoryId, params?.subCategoryId]);
 
   const fetchProducts = async () => {
-
-    const data = await getProducts({
-      searchParams: {
-        ...searchParams,
-        minPrice: searchParams?.minPrice || "0",
-        maxPrice: searchParams?.maxPrice || "100000000",
-        sortBy: searchParams?.sortBy || "popular",
-      },
-      page,
-      limit: 10,
-      category: params?.categoryId,
-      subCategory: params?.subCategoryId,
-    });
+    if (page === 1 && products?.length) setProductsLoading(true);
+      const data = await getProducts({
+        searchParams: {
+          ...searchParams,
+          minPrice: searchParams?.minPrice || "0",
+          maxPrice: searchParams?.maxPrice || "100000000",
+          sortBy: searchParams?.sortBy || "popular",
+        },
+        page,
+        limit: 10,
+        category: params?.categoryId,
+        subCategory: params?.subCategoryId,
+      });
 
     // If this is the first page and we have 10 or fewer products, set the products directly
     if (data?.products.length < 10 && page === 1) {
