@@ -4,7 +4,7 @@ import Breadcrumb, { BreadcrumbSkeleton } from "@/components/BreadCrumbs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Product, SearchParams } from "@/types";
 import { ChevronRight, HomeIcon, Loader } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import EmptyState from "../../../components/EmptyState";
@@ -20,6 +20,7 @@ import FilterOptionsbar from "../_components/filterComponents/FilterOptionsbar";
 import SidebarFilter from "../_components/filterComponents/SidebarFilter";
 import SortBy, { SortBySkeleton } from "../_components/filterComponents/SortBy";
 import MobileFilter from "../_components/filterComponents/mobile/MobileFilter";
+import { cn } from "@/lib/utils";
 
 export default function CatalogContent({
   searchParams,
@@ -31,12 +32,13 @@ export default function CatalogContent({
   };
   searchParams: SearchParams;
 }) {
+  const pathname = usePathname();
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const [productsLoading, setProductsLoading] = useState(true);
-  
+
   //  reset the products when the category or subcategory or search params changes
   useEffect(() => {
     setProducts([]);
@@ -45,18 +47,18 @@ export default function CatalogContent({
 
   const fetchProducts = async () => {
     if (page === 1 && products?.length) setProductsLoading(true);
-      const data = await getProducts({
-        searchParams: {
-          ...searchParams,
-          minPrice: searchParams?.minPrice || "0",
-          maxPrice: searchParams?.maxPrice || "100000000",
-          sortBy: searchParams?.sortBy || "popular",
-        },
-        page,
-        limit: 10,
-        category: params?.categoryId,
-        subCategory: params?.subCategoryId,
-      });
+    const data = await getProducts({
+      searchParams: {
+        ...searchParams,
+        minPrice: searchParams?.minPrice || "0",
+        maxPrice: searchParams?.maxPrice || "100000000",
+        sortBy: searchParams?.sortBy || "popular",
+      },
+      page,
+      limit: 10,
+      category: params?.categoryId,
+      subCategory: params?.subCategoryId,
+    });
 
     // If this is the first page and we have 10 or fewer products, set the products directly
     if (data?.products.length < 10 && page === 1) {
@@ -86,14 +88,17 @@ export default function CatalogContent({
   useEffect(() => {
     fetchProducts();
   }, [searchParams, params?.categoryId, params?.subCategoryId, page]);
+  const isSearchParamsEmpty = Object.keys(searchParams).length === 0;
 
   const resetAll = () => {
     setPage(1);
+    if (isSearchParamsEmpty) return;
+
     if (params?.subCategoryId && params?.categoryId) {
       router.push(`/explore/${params?.categoryId}/${params?.subCategoryId}`);
     } else if (params?.categoryId && !params?.subCategoryId) {
       console.log(params?.categoryId);
-      
+
       router.push(`/explore/${params?.categoryId}`);
     } else {
       router.push(`/explore`);
@@ -129,7 +134,11 @@ export default function CatalogContent({
           <Skeleton className="h-5 w-[100px] ml-auto my-3" />
         ) : (
           <button
-            className="text-slate-600 font-semibold my-3 w-fit ml-auto block border-none outline-none"
+            disabled={isSearchParamsEmpty}
+            type="button"
+            className={cn("text-slate-600 hover:underline font-semibold my-3 w-fit ml-auto block border-none outline-none",{
+              "cursor-not-allowed opacity-50": isSearchParamsEmpty,
+            })}
             onClick={resetAll}
           >
             Reset All
