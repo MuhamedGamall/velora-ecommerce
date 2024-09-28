@@ -46,7 +46,6 @@ export default function FilterBy() {
           </DrawerClose>
         </DrawerHeader>
         <div  className=" overflow-y-auto h-[calc(100vh-70px)] ">
-
         {loading ? (
           <CategoryTreeView.Skeleton />
         ) : (

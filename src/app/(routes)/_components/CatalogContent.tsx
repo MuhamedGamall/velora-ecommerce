@@ -36,6 +36,7 @@ export default function CatalogContent({
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const [productsLoading, setProductsLoading] = useState(true);
+  
   //  reset the products when the category or subcategory or search params changes
   useEffect(() => {
     setProducts([]);

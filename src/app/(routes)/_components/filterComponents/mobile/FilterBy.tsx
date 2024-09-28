@@ -42,7 +42,7 @@ export default function FilterBy({
             <X size={30} strokeWidth={1.3} />
           </DrawerClose>
         </DrawerHeader>
-        <div className=" overflow-y-auto h-[calc(100vh-70px)] ">
+        <div className=" overflow-y-auto h-[calc(100vh-165px)] ">
           <SortBy initialValue={sortBy} onClose={onClose} />
           <FilterOptions searchParams={searchParams} onClose={onClose} />
           <CheckboxFilter
