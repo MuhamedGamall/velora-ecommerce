@@ -7,18 +7,8 @@ export default async function ExplorePage({
 }: {
   searchParams: SearchParams;
 }) {
-  const { products, loading } = await getProducts({
-    searchParams: {
-      ...searchParams,
-      minPrice: searchParams?.minPrice || "0",
-      maxPrice: searchParams?.maxPrice || "100000000",
-      sortBy: searchParams?.sortBy || "popular",
-    },
-  });
   return (
     <CatalogContent
-      productsLoading={loading}
-      products={products}
       searchParams={searchParams}
     />
   );

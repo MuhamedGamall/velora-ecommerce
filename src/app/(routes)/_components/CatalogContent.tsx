@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+"use client";
 import ProductsContent from "../_components/ProductsContent";
 import SidebarFilter from "../_components/filterComponents/SidebarFilter";
 import ProductsTitle from "../_components/ProductsTitle";
@@ -15,21 +15,64 @@ import { Product, SearchParams } from "@/types";
 import Breadcrumb, { BreadcrumbSkeleton } from "@/components/BreadCrumbs";
 import { ChevronRight, HomeIcon } from "lucide-react";
 import EmptyState from "../../../components/EmptyState";
+import { useEffect, useState } from "react";
+import getProducts from "@/actions/get-products";
+import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
+// export interface SearchParams {
+//   q: string;
+//   minPrice: string;
+//   maxPrice: string;
+//   colour: string;
+//   material: string;
+//   pattern: string;
+//   size: string;
+//   brand: string;
+//   sale: string;
+//   newSeason: string;
+//   bestseller: string;
+//   sortBy: string;
+// }
 
-export default async function CatalogContent({
+export default function CatalogContent({
   searchParams,
   params,
-  products,
-  productsLoading,
 }: {
   params?: {
     categoryId: string;
     subCategoryId: string;
   };
   searchParams: SearchParams;
-  products: Product[];
-  productsLoading: boolean;
 }) {
+  const router = useRouter();
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [productsLoading, setProductsLoading] = useState(true);
+  useEffect(() => {
+    getProducts({
+      searchParams: {
+        ...searchParams,
+        minPrice: searchParams?.minPrice || "0",
+        maxPrice: searchParams?.maxPrice || "100000000",
+        sortBy: searchParams?.sortBy || "popular",
+      },
+      category: params?.categoryId,
+      subCategory: params?.subCategoryId,
+    }).then((data) => {
+      setProducts(data?.products);
+      setProductsLoading(false);
+    });
+  }, [searchParams, params?.categoryId, params?.subCategoryId]);
+  const resetAll = () => {
+    if (params?.subCategoryId && params?.categoryId)
+      return router.push(
+        `/explore/${params?.categoryId}/${params?.subCategoryId}`
+      );
+    if (params?.categoryId && !params?.subCategoryId)
+      return router.push(`/explore/${params?.categoryId}`);
+    return router.push(`/explore`);
+  };
+
   return (
     <div className="w-full flex mb-10  ">
       <SidebarFilter />
@@ -54,6 +97,14 @@ export default async function CatalogContent({
             params={params}
             productsLength={products.length}
           />
+        )}
+        {productsLoading ? <Skeleton className="h-5 w-[100px] ml-auto my-3"/>: (
+          <button
+            className="text-slate-600 font-semibold my-3 w-full text-right"
+            onClick={resetAll}
+          >
+            Reset All
+          </button>
         )}
         <div className="max-lg:hidden">
           {productsLoading ? (
@@ -94,7 +145,7 @@ export default async function CatalogContent({
             )}
           </div>
         </div>
-        {products.length === 0 ? (
+        {products.length === 0 && !productsLoading ? (
           <EmptyState
             q={searchParams.q}
             showButton={false}

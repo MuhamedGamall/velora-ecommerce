@@ -67,9 +67,9 @@ export function CustomSelectMenu({
         skipEmptyString: true,
       }
     );
-    setOpen(false);
     router.push(`${url}`);
     router.refresh();
+    setOpen(false);
   };
   const handleDelete = () => {
     let data = parseURL(location?.search);
@@ -84,6 +84,7 @@ export function CustomSelectMenu({
     setSelectedData([]);
     router.push(`?${url}`);
     router.refresh();
+    setOpen(false);
   };
 
   const handleSelect = (item: string) => {

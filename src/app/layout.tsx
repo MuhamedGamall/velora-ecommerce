@@ -4,7 +4,6 @@ import AuthSessionProvider from "@/components/providers/SessionProvder";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { Toaster } from "sonner";
-import "swiper/css";
 import "./globals.css";
 import Footer from "@/components/footer";
 import Navber from "@/components/Header/Navbar";

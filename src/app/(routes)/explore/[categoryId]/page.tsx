@@ -1,4 +1,3 @@
-import getProducts from "@/actions/get-products";
 import { SearchParams } from "@/types";
 import { notFound } from "next/navigation";
 import CatalogContent from "../../_components/CatalogContent";
@@ -21,23 +20,5 @@ export default async function CategoryPage({
     return notFound();
   }
 
-  const { products, loading } = await getProducts({
-    category: params.categoryId,
-    subCategory: params.subCategoryId,
-    searchParams: {
-      ...searchParams,
-      minPrice: searchParams?.minPrice || "0",
-      maxPrice: searchParams?.maxPrice || "100000000",
-      sortBy: searchParams?.sortBy || "popular",
-    },
-  });
-
-  return (
-    <CatalogContent
-      productsLoading={loading}
-      searchParams={searchParams}
-      products={products}
-      params={params}
-    />
-  );
+  return <CatalogContent searchParams={searchParams} params={params} />;
 }

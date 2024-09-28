@@ -2,7 +2,7 @@ import CategoryItem from "./CategoryItem";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CategoryTree } from "@/types";
 
-export default async function CategoryTreeView({
+export default  function CategoryTreeView({
   categories,
 }: {
   categories: CategoryTree[];

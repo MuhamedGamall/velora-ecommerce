@@ -12,7 +12,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
   if (["/auth/signIn", "/auth/register", "/studio"].includes(pathname)) return;
   const [categories, setCategories] = useState<CategoryTree[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const isStudioPage = pathname.includes("/studio");
   if (isStudioPage) {
@@ -22,7 +22,7 @@ const Footer = () => {
     getCategories()
       .then((data) => {
         setCategories(data.categories);
-        setLoading(data.loading);
+        setLoading(false);
       })
       .catch((error) => {
         setCategories([]);

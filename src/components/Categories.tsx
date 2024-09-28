@@ -4,7 +4,7 @@ import Image from "next/image";
 import { CategoryTree } from "@/types";
 import { Skeleton } from "./ui/skeleton";
 
-export default async function Categories({
+export default  function Categories({
   categories,
 }: {
   categories: CategoryTree[];

@@ -27,7 +27,7 @@ export default function HeroSection() {
       setLoading(false);
     });
   }, []);
-  const heroImage = heroSection?.image || "/hero-image.jpg";
+  const heroImage = heroSection?.image || '/cardSkeleton.png'
 
   return (
     <section className="relative  max-h-[300px]   sm:max-h-[580px] overflow-hidden w-full">

@@ -19,7 +19,7 @@ export default function SelectPrice({
 }: {
   minPrice: string;
   maxPrice: string;
-  onClose: () => void
+  onClose?: () => void
 }) {
   const [priceValue, setPriceValue] = useState({ min: 0, max: 100000000 });
   const [open, setOpen] = useState(false);
@@ -54,6 +54,7 @@ export default function SelectPrice({
     setPriceValue({ min: 0, max: 100000000 });
     router.push(`?${url}`);
     router.refresh();
+    setOpen(false);
   };
 
   const handleApply = () => {
@@ -66,10 +67,10 @@ export default function SelectPrice({
         skipNull: true,
       }
     );
-    setOpen(false);
     router.push(`${url}`);
     router.refresh();
-    onClose(); // to close the drawer for mobile view
+    setOpen(false);  // to close the menu
+    onClose?.(); // to close the drawer for mobile view
   };
   return (
     <>
