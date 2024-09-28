@@ -33,7 +33,7 @@ export default function FilterBy({
           <ChevronDown size={20} />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="rounded-none overflow-y-auto h-[calc(100vh-70px)] ">
+      <DrawerContent className="rounded-none">
         <DrawerHeader className="flex items-center w-full border-b p-5 justify-between">
           <DrawerTitle className="text-center w-full ml-9 text-[20px]">
             Filter by
@@ -42,7 +42,7 @@ export default function FilterBy({
             <X size={30} strokeWidth={1.3} />
           </DrawerClose>
         </DrawerHeader>
-        <div className="">
+        <div className=" overflow-y-auto h-[calc(100vh-70px)] ">
           <SortBy initialValue={sortBy} onClose={onClose} />
           <FilterOptions searchParams={searchParams} onClose={onClose} />
           <CheckboxFilter

@@ -91,6 +91,8 @@ export default function CatalogContent({
     if (params?.subCategoryId && params?.categoryId) {
       router.push(`/explore/${params?.categoryId}/${params?.subCategoryId}`);
     } else if (params?.categoryId && !params?.subCategoryId) {
+      console.log(params?.categoryId);
+      
       router.push(`/explore/${params?.categoryId}`);
     } else {
       router.push(`/explore`);
@@ -126,7 +128,7 @@ export default function CatalogContent({
           <Skeleton className="h-5 w-[100px] ml-auto my-3" />
         ) : (
           <button
-            className="text-slate-600 font-semibold my-3 w-full text-right"
+            className="text-slate-600 font-semibold my-3 w-fit ml-auto block border-none outline-none"
             onClick={resetAll}
           >
             Reset All

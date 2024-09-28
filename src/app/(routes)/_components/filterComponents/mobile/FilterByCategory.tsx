@@ -45,11 +45,14 @@ export default function FilterBy() {
             <X size={30} strokeWidth={1.3} />
           </DrawerClose>
         </DrawerHeader>
+        <div  className=" overflow-y-auto h-[calc(100vh-70px)] ">
+
         {loading ? (
           <CategoryTreeView.Skeleton />
         ) : (
           <CategoryTreeView categories={categories} />
         )}
+        </div>
       </DrawerContent>
     </Drawer>
   );
