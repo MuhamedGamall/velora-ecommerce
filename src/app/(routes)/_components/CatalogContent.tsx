@@ -43,7 +43,6 @@ export default function CatalogContent({
   }, [searchParams, params?.categoryId, params?.subCategoryId]);
 
   const fetchProducts = async () => {
-    if (products.length && page === 1) setProductsLoading(true);
 
     const data = await getProducts({
       searchParams: {
