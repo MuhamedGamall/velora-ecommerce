@@ -1,21 +1,34 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CATEGORIES } from "./CategoriesSheet";
 import { Skeleton } from "../ui/skeleton";
 
 export default function Navigation() {
+  const [fakeLoading, setFakeLoading] = useState(true);
+  useEffect(() => {
+    const ID = setTimeout(() => {
+      setFakeLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(ID);
+  }, []);
   return (
     <nav className="max-md:hidden w-full bg-slate-100  text-mainBlack/80 font-medium text-sm">
-      <ul className="containerWrapper flex items-center mx-auto overflow-x-auto ">
-        {CATEGORIES.map((cate) => (
-          <li
-            className="p-2.5 hover:bg-white whitespace-nowrap"
-            key={cate.href + cate.title}
-          >
-            <Link href={cate.href}>{cate.title}</Link>
-          </li>
-        ))}
-      </ul>
+      {fakeLoading ? (
+        <Navigation.Skeleton />
+      ) : (
+        <ul className="containerWrapper flex items-center mx-auto overflow-x-auto ">
+          {CATEGORIES.map((cate) => (
+            <li
+              className="p-2.5 hover:bg-white whitespace-nowrap"
+              key={cate.href + cate.title}
+            >
+              <Link href={cate.href}>{cate.title}</Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </nav>
   );
 }

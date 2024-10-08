@@ -4,11 +4,13 @@ import { CategoryTree } from "@/types";
 import { Github, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
+import { toast } from "sonner";
 
 const Footer = () => {
   const pathname = usePathname();
+  const [value, setValue] = useState("");
   const year = new Date().getFullYear();
   if (["/auth/signIn", "/auth/register", "/studio"].includes(pathname)) return;
   const [categories, setCategories] = useState<CategoryTree[]>([]);
@@ -28,7 +30,13 @@ const Footer = () => {
         setCategories([]);
       });
   }, []);
-
+  const send = (e: any) => {
+    e.preventDefault();
+    if (!value.trim()) return;
+    // TODO: CREATE SEND FUNCTIONALITY
+    toast.success("Email successfuly sending.");
+    setValue("");
+  };
   return (
     <footer className="bg-mainBlack text-white py-10 ">
       <div className="containerWrapper mx-auto">
@@ -45,7 +53,7 @@ const Footer = () => {
                     className="flex flex-col  gap-2 ml-5 capitalize"
                   >
                     <Link
-                      href={'/explore/'+category.title}
+                      href={"/explore/" + category.title}
                       className=" hover:underline font-bold text-[16px]"
                     >
                       {category.title}
@@ -53,8 +61,18 @@ const Footer = () => {
                     <div className="flex flex-col  gap-1 w-full text-[13px]">
                       {category?.subCategories?.map((subCategory: any) => (
                         <Link
-                          key={"/explore/" + category.title + "/" + subCategory.title}
-                          href={"/explore/" + category.title + "/" + subCategory.title}
+                          key={
+                            "/explore/" +
+                            category.title +
+                            "/" +
+                            subCategory.title
+                          }
+                          href={
+                            "/explore/" +
+                            category.title +
+                            "/" +
+                            subCategory.title
+                          }
                           className=" capitalize  hover:underline "
                         >
                           {subCategory.title}
@@ -100,16 +118,22 @@ const Footer = () => {
             <h4 className="font-bold text-lg mb-2">
               Subscribe to our newsletter
             </h4>
-            <div className="flex">
+            <form onSubmit={send} className="flex">
               <input
+                onChange={(e) => setValue(e?.target?.value)}
                 type="email"
+                value={value}
                 placeholder="Enter your email address here"
                 className="p-2 rounded-l bg-black border text-gray-300 w-full focus:outline-none"
               />
-              <button className="bg-white text-gray-900 font-semibold px-4 py-2 rounded-r">
+              <button
+                disabled={!value.trim()}
+                type="submit"
+                className="bg-white disabled:opacity-50 text-gray-900 font-semibold px-4 py-2 rounded-r"
+              >
                 OK
               </button>
-            </div>
+            </form>
           </div>
         </div>
 
@@ -139,10 +163,10 @@ Footer.LinksSkeleton = () => {
     <ul className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
       {Array.from({ length: 5 })?.map((_, i) => (
         <li key={i} className="flex flex-col  gap-2 ml-5 capitalize">
-          <Skeleton  className="h-5 w-16" />
+          <Skeleton className="h-5 w-16" />
           <div className="flex flex-col  gap-1 w-full">
             {Array.from({ length: 5 })?.map((_, i) => (
-              <Skeleton  key={i} className="h-3 w-14" />
+              <Skeleton key={i} className="h-3 w-14" />
             ))}
           </div>
         </li>

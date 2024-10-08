@@ -2,7 +2,8 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Skeleton } from "../ui/skeleton";
 
 export const CATEGORIES = [
   { title: "Women's", href: "/explore/women" },
@@ -16,7 +17,18 @@ export const CATEGORIES = [
 
 export default function CategoriesSheet() {
   const [open, setOpen] = useState(false);
-  return (
+  const [fakeLoading, setFakeLoading] = useState(true);
+  useEffect(() => {
+    const ID = setTimeout(() => {
+      setFakeLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(ID);
+  }, []);
+
+  return fakeLoading ? (
+    <Skeleton className="h-5 w-5" />
+  ) : (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         <MenuIcon strokeWidth={1.7} scale={25} className="text-white" />
