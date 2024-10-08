@@ -74,7 +74,7 @@ export default function HeroSection() {
               {heroSection?.subtitle || "NEW READY-TO-WEAR FROM OUR FAVORITE BRANDS"}
             </p>
           )}
-          <div className="flex items-center max-md:justify-between gap-3 mt-5 w-full">
+        { loading?<Skeleton className="h-10 w-full max-w-[600px]  mt-3"/>: <div className="flex items-center max-md:justify-between gap-3 mt-5 w-full">
             <Link
               href={"/explore?brand=mui_mui"}
               className=" px-2 md:px-3 whitespace-nowrap py-1 md:py-2 text-white max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
@@ -105,7 +105,7 @@ export default function HeroSection() {
                 size={30}
               />
             </Link>
-          </div>
+          </div>}
         </div>
       </div>
     </section>

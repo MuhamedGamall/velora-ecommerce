@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface Params {
   categoryId?: string;
@@ -25,14 +25,14 @@ export default function WindowTitle() {
         checkoutStatus &&
         ["cancelled", "successful"].includes(checkoutStatus)
       ) {
-        document.title = `Velora | Checkout | ${checkoutStatus}`;
+        document.title = `Checkout | ${checkoutStatus}`;
         return;
       }
-      document.title = "Velora | Checkout";
+      document.title = "Checkout";
       return;
     }
     if (pathname.includes("/wishlist")) {
-      document.title = "Velora | Wishlist";
+      document.title = "Wishlist";
       return;
     }
     if (pathname.includes("/auth/signIn")) {
@@ -49,7 +49,7 @@ export default function WindowTitle() {
       if (searchQuery) titleParts.push(searchQuery);
       if (categoryId) titleParts.push(categoryId);
       if (subCategoryId) titleParts.push(subCategoryId);
-      document.title = `Velora | ${titleParts.join(" | ")}`;
+      document.title = `${titleParts.join(" | ")}`;
     } else {
       document.title = "Velora";
     }
