@@ -27,7 +27,7 @@ export default function HeroSection() {
       setLoading(false);
     });
   }, []);
-  const heroImage = heroSection?.image || '/cardSkeleton.png'
+  const heroImage = heroSection?.image || "/cardSkeleton.png";
 
   return (
     <section className="relative  max-h-[300px]   sm:max-h-[580px] overflow-hidden w-full">
@@ -44,17 +44,21 @@ export default function HeroSection() {
 
       <div className="max-md:hidden absolute bottom-0 left-0 p-5 bg-black/50 w-full ">
         <div className=" flex containerWrapper h-[50px] mx-auto  gap-10 overflow-hidden justify-start ">
-          {brands.map((brand, i) => (
-            <Image
-              key={brand + i}
-              src={brand}
-              width={500}
-              height={120}
-              alt="brand"
-              className=""
-              priority
-            />
-          ))}
+          {loading ? (
+            <Skeleton className="h-16 w-full" />
+          ) : (
+            brands.map((brand, i) => (
+              <Image
+                key={brand + i}
+                src={brand}
+                width={500}
+                height={120}
+                alt="brand"
+                className=""
+                priority
+              />
+            ))
+          )}
         </div>
       </div>
       <div className=" absolute bottom-2 md:top-20  left-0 md:px-5 w-full ">
@@ -71,41 +75,46 @@ export default function HeroSection() {
             <Skeleton className="  h-4 md:h-8 max-w-[700px] w-full" />
           ) : (
             <p className="text-white text-[10px] md:text-[15px] font-bold uppercase">
-              {heroSection?.subtitle || "NEW READY-TO-WEAR FROM OUR FAVORITE BRANDS"}
+              {heroSection?.subtitle ||
+                "NEW READY-TO-WEAR FROM OUR FAVORITE BRANDS"}
             </p>
           )}
-        { loading?<Skeleton className="h-10 w-full max-w-[600px]  mt-3"/>: <div className="flex items-center max-md:justify-between gap-3 mt-5 w-full">
-            <Link
-              href={"/explore?brand=mui_mui"}
-              className=" px-2 md:px-3 whitespace-nowrap py-1 md:py-2 text-white max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
-            >
-              Mui Mui
-              <ChevronRightIcon
-                className="text-white max-md:hidden "
-                size={30}
-              />
-            </Link>
-            <Link
-              href={"/explore?brand=gucci"}
-              className=" px-2 md:px-3 whitespace-nowrap py-1 md:py-2 text-white  max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
-            >
-              Gucci
-              <ChevronRightIcon
-                className="text-white  max-md:hidden"
-                size={30}
-              />
-            </Link>
-            <Link
-              href={"/explore?brand=louis_vuitton"}
-              className=" whitespace-nowrap px-2 md:px-3 py-1 md:py-2 text-white  max-md:justify-center  max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
-            >
-              Louis Vuitton
-              <ChevronRightIcon
-                className="text-white  max-md:hidden"
-                size={30}
-              />
-            </Link>
-          </div>}
+          {loading ? (
+            <Skeleton className="h-10 w-full max-w-[600px]  mt-3" />
+          ) : (
+            <div className="flex items-center max-md:justify-between gap-3 mt-5 w-full">
+              <Link
+                href={"/explore?brand=mui_mui"}
+                className=" px-2 md:px-3 whitespace-nowrap py-1 md:py-2 text-white max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
+              >
+                Mui Mui
+                <ChevronRightIcon
+                  className="text-white max-md:hidden "
+                  size={30}
+                />
+              </Link>
+              <Link
+                href={"/explore?brand=gucci"}
+                className=" px-2 md:px-3 whitespace-nowrap py-1 md:py-2 text-white  max-md:justify-center max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
+              >
+                Gucci
+                <ChevronRightIcon
+                  className="text-white  max-md:hidden"
+                  size={30}
+                />
+              </Link>
+              <Link
+                href={"/explore?brand=louis_vuitton"}
+                className=" whitespace-nowrap px-2 md:px-3 py-1 md:py-2 text-white  max-md:justify-center  max-md:w-full flex items-center gap-5 text-[14px] sm:text-[16px] font-bold bg-slate-900/70"
+              >
+                Louis Vuitton
+                <ChevronRightIcon
+                  className="text-white  max-md:hidden"
+                  size={30}
+                />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </section>
