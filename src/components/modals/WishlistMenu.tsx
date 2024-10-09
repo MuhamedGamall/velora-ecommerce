@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect } from "react";
-import ProductsMenu from "../ProductsMenu";
 import useWishlistStore from "@/zustand/store/wishlistStore";
-import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import ProductsMenu from "../ProductsMenu";
 
 export default function WishlistMenu() {
   const {
@@ -14,10 +13,9 @@ export default function WishlistMenu() {
     isOpen,
     loading,
   } = useWishlistStore();
-  const session = useSession();
   useEffect(() => {
-    if (session?.status === "authenticated") fetchWishlist();
-  }, [session?.status]);
+    fetchWishlist();
+  }, []);
 
   return (
     <ProductsMenu

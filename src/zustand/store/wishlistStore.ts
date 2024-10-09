@@ -42,7 +42,7 @@ const useWishlistStore = create<WishlistState>((set) => ({
       set({ wishlist: wishlist || [] });
     } catch (error: any) {
       set({ wishlist: [] });
-      throw new Error("fetching wishlist:", error);
+      console.error("fetching wishlist:", error);
     } finally {
       set({ loading: false });
     }

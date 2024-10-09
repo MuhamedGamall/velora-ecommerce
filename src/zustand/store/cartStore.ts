@@ -40,7 +40,7 @@ const useShoppingBagStore = create<ShoppingBagState>((set) => ({
       const session = await getCurrentSession();
 
       if (!session?.user?._id) {
-        throw new Error("User ID not found");
+        throw "User ID not found";
       }
 
       const { shoppingBag } = await getShoppingBag({

@@ -1,13 +1,12 @@
 "use client";
 import ProductsSelected from "@/components/ProductsSelected";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "@/types";
 import useShoppingBagStore from "@/zustand/store/cartStore";
 import useWishlistStore from "@/zustand/store/wishlistStore";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { useSession } from "next-auth/react";
 import EmptyState from "../../../../components/EmptyState";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export default function WishlistContent() {
   const {
@@ -18,12 +17,9 @@ export default function WishlistContent() {
     loading,
   } = useWishlistStore();
   const { addToBag } = useShoppingBagStore();
-  const session = useSession();
   useEffect(() => {
-    if (session?.status === "authenticated") {
-      fetchWishlist();
-    }
-  }, [session?.status]);
+    fetchWishlist();
+  }, []);
   const handleRemove = async (productId: string) => {
     try {
       return await removeFromWishlist(productId);

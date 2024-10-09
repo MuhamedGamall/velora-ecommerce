@@ -27,11 +27,9 @@ const ProductView = ({ product }: { product: Product | null }) => {
   if (!product) notFound();
 
   useEffect(() => {
-    if (session?.status === "authenticated") {
-      fetchShoppingBag();
-      fetchWishlist();
-    }
-  }, [session?.status]);
+    fetchShoppingBag();
+    fetchWishlist();
+  }, []);
 
   const isExistInBag = shoppingBag.find(
     (item) => item?.product?._id === product?._id
@@ -248,10 +246,13 @@ export const ProductViewSkeleton = () => {
         </div>
         <div className="flex flex-col pt-3  ">
           {Array.from({ length: 4 })?.map((_, i) => (
-              <div key={i} className="flex justify-between items-center gap-3 p-4  border-t">
-                <Skeleton className="h-5 w-20" />
-                <Skeleton className="h-5 w-5" />
-              </div>
+            <div
+              key={i}
+              className="flex justify-between items-center gap-3 p-4  border-t"
+            >
+              <Skeleton className="h-5 w-20" />
+              <Skeleton className="h-5 w-5" />
+            </div>
           ))}
         </div>
         <div className="text-sm  md:hidden ">

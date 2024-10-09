@@ -10,39 +10,43 @@ import { toast } from "sonner";
 
 const Footer = () => {
   const pathname = usePathname();
-  const [value, setValue] = useState("");
-  const year = new Date().getFullYear();
-  if (["/auth/signIn", "/auth/register", "/studio"].includes(pathname)) return;
   const [categories, setCategories] = useState<CategoryTree[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [value, setValue] = useState("");
 
+  const year = new Date().getFullYear();
   const isStudioPage = pathname.includes("/studio");
-  if (isStudioPage) {
-    return;
-  }
+
   useEffect(() => {
-    getCategories()
-      .then((data) => {
-        setCategories(data.categories);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setCategories([]);
-      });
-  }, []);
-  const send = (e: any) => {
+    if (!isStudioPage) {
+      getCategories()
+        .then((data) => {
+          setCategories(data.categories);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setCategories([]);
+        });
+    }
+  }, [isStudioPage]);
+
+  const send = (e: FormEvent) => {
     e.preventDefault();
     if (!value.trim()) return;
-    // TODO: CREATE SEND FUNCTIONALITY
-    toast.success("Email successfuly sending.");
+    toast.success("Email successfully sent.");
     setValue("");
   };
+
+  if (["/auth/signIn", "/auth/register", "/studio"].includes(pathname)) {
+    return null;
+  }
+
   return (
     <footer className="bg-mainBlack text-white py-10 ">
       <div className="containerWrapper mx-auto">
         <div className=" flex justify-between max-sm:flex-wrap gap-8 px-4">
           <div className=" ">
-            <h4 className="font-bold text-lg mb-4">Ctegories</h4>
+            <h4 className="font-bold text-lg mb-4">Categories</h4>
             {loading ? (
               <Footer.LinksSkeleton />
             ) : (
@@ -138,7 +142,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-8 flex items-center gap-4 pt-6  text-center">
-          <p>©{year} VEROLA</p>
+          <p>©{year} VELORA</p>
           <div className="flex justify-center gap-2">
             <Link href="/privacy-policy" className="hover:underline">
               Privacy Policy
