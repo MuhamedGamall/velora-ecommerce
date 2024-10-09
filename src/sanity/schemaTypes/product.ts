@@ -12,7 +12,7 @@ export const product = defineType({
   title: "Product",
   type: "document",
   liveEdit: false,
-  fields: [
+  fields: [ 
     defineField({
       name: "title",
       title: "Title",
